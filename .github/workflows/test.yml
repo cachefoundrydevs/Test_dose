@@ -1,0 +1,49 @@
+name: test
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y iverilog verilator
+      - name: lint and simulate
+        run: |
+          set -u
+          mkdir -p build logs
+          RTL=$(grep -v '^-' filelists/rtl.f)
+          DL2=$(cat filelists/dummy_l2.f)
+          TBC="tb/common/axi_mem_model.v tb/common/snoop_gen.v"
+          status=0
+          for top in l1d_top l1d_top_axi l1d_top_soc; do
+            verilator --lint-only -Wall -Wno-fatal -Wno-DECLFILENAME -Wno-UNUSEDPARAM -Irtl/include --top-module $top $RTL $DL2 >> logs/lint.log 2>&1
+          done
+          grep -c '%Warning' logs/lint.log | xargs echo "lint warnings:"
+          if grep -q '%Error' logs/lint.log; then grep '%Error' logs/lint.log | head -80; echo "LINT: FAIL"; status=1; else echo "LINT: PASS"; fi
+          passed=0; failed=0
+          while read -r line; do
+            [ -z "$line" ] && continue
+            set -- $(echo "$line" | tr -d '"')
+            t=$1; shift; defs=""; name=$t
+            while [ $# -gt 0 ]; do
+              if [ "$1" = "-d" ]; then defs="$defs -D$2"; name="${name}_$(echo "$2" | tr '=' '_')"; shift 2; else shift; fi
+            done
+            src=tb/tests/$t.v; [ -f "$src" ] || src=tb/tests/$t.sv
+            echo "--- $name ---"
+            if ! iverilog -g2012 -Irtl/include -Itb/common $defs -s $t -o build/$name.vvp $RTL $DL2 $TBC $src > logs/${name}_compile.log 2>&1; then
+              head -60 logs/${name}_compile.log; echo "FAIL $name (compile)"; failed=$((failed+1)); status=1; continue
+            fi
+            timeout 3000 vvp -n build/$name.vvp > logs/$name.log 2>&1
+            tail -15 logs/$name.log
+            if grep -q "TEST PASSED" logs/$name.log; then echo "PASS $name"; passed=$((passed+1)); else echo "FAIL $name"; failed=$((failed+1)); status=1; fi
+          done < tests.txt
+          echo "=== Summary: $passed passed, $failed failed ==="
+          grep -E 'RESULT|issued c0' logs/tb_latency.log || true
+          exit $status
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs
+          path: logs

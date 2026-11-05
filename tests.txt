@@ -1,0 +1,25 @@
+tb_smoke
+tb_l1d_random
+tb_l1d_random -d TINY
+tb_l1d_random -d TINY -d "SEED=5"
+tb_latency
+tb_l1d_soc
+tb_l1d_soc -d L1D_DEBUG -d "NOPS=200"
+tb_l1d_random -d TINY -d L1D_DEBUG -d "NOPS=300"
+tb_l1d_random -d "SHARED=30"
+tb_l1d_random -d TINY -d "SHARED=40" -d "SEED=7"
+tb_l1d_atomic
+tb_l1d_snoop
+tb_l1d_coh
+tb_l1d_coh -d MODEB
+tb_l1d_coh -d TINY
+tb_l1d_coh -d TINY -d MODEB -d "SEED=3"
+tb_l1d_coh -d TINY -d MODEB -d "SNP=20" -d "SEED=11"
+tb_l1d_coh -d TINY -d L1D_DEBUG -d "NOPS=300"
+tb_inflight_tracker
+tb_inflight_tracker -d SMALL -d "SEED=3"
+tb_l1d_random -d TINY -d "SEED=11" -d "NOPS=6000"
+tb_l1d_random -d TINY -d "SEED=23" -d "SHARED=40" -d "NOPS=6000"
+tb_l1d_coh -d TINY -d "SEED=21"
+tb_l1d_coh -d TINY -d MODEB -d "SEED=33" -d "SNP=30"
+tb_l1d_coh -d "SEED=45" -d "SNP=25"
