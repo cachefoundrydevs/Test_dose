@@ -2,6 +2,8 @@ name: test
 on:
   push:
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   test:
     runs-on: ubuntu-24.04
@@ -13,6 +15,7 @@ jobs:
         run: |
           set -u
           mkdir -p build logs
+          exec > >(tee logs/console.txt) 2>&1
           RTL=$(grep -v '^-' filelists/rtl.f)
           DL2=$(cat filelists/dummy_l2.f)
           TBC="tb/common/axi_mem_model.v tb/common/snoop_gen.v"
@@ -41,7 +44,17 @@ jobs:
           done < tests.txt
           echo "=== Summary: $passed passed, $failed failed ==="
           grep -E 'RESULT|issued c0' logs/tb_latency.log || true
-          exit $status
+          echo $status > logs/status.txt
+          exit 0
+      - name: publish results
+        if: always()
+        run: |
+          git config user.name ci; git config user.email ci@example.invalid
+          mkdir -p /tmp/res; cp -r logs /tmp/res/; for f in /tmp/res/logs/*.log; do tail -n 400 "$f" > "$f.t" && mv "$f.t" "$f"; done; git rev-parse HEAD > /tmp/res/commit.txt
+          git checkout --orphan results; git rm -rq --cached . ; git clean -fdq
+          cp -r /tmp/res/* .; git add -A; git commit -qm "results"; git push -f origin results
+      - name: verdict
+        run: exit $(cat /tmp/res/logs/status.txt)
       - if: always()
         uses: actions/upload-artifact@v4
         with:
