@@ -2,7 +2,7 @@
 `include "l1d_defines.vh"
 module l1d_mshr_nc #(`L1D_PARAMS) (
     clk, rst,
-    allocate_valid, allocate_seat, allocate_is_write, allocate_access_size, allocate_master_id, allocate_rob_index, allocate_addr, allocate_store_data, can_allocate,
+    allocate_valid, allocate_seat, allocate_is_write, allocate_access_size, allocate_master_id, allocate_rob_index, allocate_port, allocate_addr, allocate_store_data, can_allocate,
     axi_read_req_valid, axi_read_req_ready, axi_read_req_addr, axi_read_req_size,
     axi_read_beat_valid, axi_read_beat_data, axi_read_beat_error,
     axi_write_req_valid, axi_write_req_ready, axi_write_req_addr, axi_write_req_size, axi_write_req_data, axi_write_req_strobe,
@@ -20,7 +20,8 @@ module l1d_mshr_nc #(`L1D_PARAMS) (
     localparam Q_SIZE  = Q_MID   + MASTER_ID_BITS;
     localparam Q_RDWR  = Q_SIZE  + MEM_SIZE_BITS;
     localparam Q_SEAT  = Q_RDWR  + 1;
-    localparam Q_W     = Q_SEAT  + SEAT_W;
+    localparam Q_PORT  = Q_SEAT  + SEAT_W;
+    localparam Q_W     = Q_PORT  + PORT_W;
     input  wire                        clk;
     input  wire                        rst;
     input  wire                        allocate_valid;
@@ -29,6 +30,7 @@ module l1d_mshr_nc #(`L1D_PARAMS) (
     input  wire [MEM_SIZE_BITS-1:0]    allocate_access_size;
     input  wire [MASTER_ID_BITS-1:0]   allocate_master_id;
     input  wire [IDX_BITS-1:0]         allocate_rob_index;
+    input  wire [PORT_W-1:0]           allocate_port;
     input  wire [ADDR_W-1:0]           allocate_addr;
     input  wire [WRITE_DATA_WIDTH-1:0] allocate_store_data;
     output wire                        can_allocate;
@@ -60,7 +62,7 @@ module l1d_mshr_nc #(`L1D_PARAMS) (
         .clk        (clk),
         .rst        (rst),
         .push       (allocate_valid),
-        .push_data  ({allocate_seat, allocate_is_write, allocate_access_size, allocate_master_id, allocate_rob_index, allocate_addr, allocate_store_data}),
+        .push_data  ({allocate_port, allocate_seat, allocate_is_write, allocate_access_size, allocate_master_id, allocate_rob_index, allocate_addr, allocate_store_data}),
         .pop        (q_pop),
         .front_data (head),
         .empty      (q_empty),
@@ -215,7 +217,7 @@ module l1d_mshr_nc #(`L1D_PARAMS) (
 `endif
     assign response_valid = (hs == H_RESP);
     assign response_seat  = head_q[Q_SEAT +: SEAT_W];
-    assign response_packet   = {h_rd_wr, h_size, head_q[Q_MID +: MASTER_ID_BITS], head_q[Q_IDX +: IDX_BITS],
+    assign response_packet   = {head_q[Q_PORT +: PORT_W], h_rd_wr, h_size, head_q[Q_MID +: MASTER_ID_BITS], head_q[Q_IDX +: IDX_BITS],
                          (h_rd_wr == OP_WRITE) ? {WRITE_DATA_WIDTH{1'b0}} : load_data};
 endmodule
 `default_nettype wire

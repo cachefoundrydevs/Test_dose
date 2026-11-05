@@ -44,6 +44,7 @@ module tb_l1d_random;
     always #5 clk = ~clk;
     reg                 flush = 0, clean = 0;
     wire                flush_complete, clean_complete, mem_err;
+    wire                stop;
     reg                 valid_cpu = 0, cacheable = 1, rd_wr_cpu = 0;
     reg  [1:0]          mem_size_cpu = 0;
     reg  [1:0]          master_id_from_cpu = 0;
@@ -76,6 +77,7 @@ module tb_l1d_random;
         .cpu_request_master_id(master_id_from_cpu), .cpu_request_rob_index(idx_from_cpu),
         .cpu_request_addr(PC_from_cpu), .cpu_request_store_data(data_from_cpu),
         .cpu_request_is_atomic(1'b0), .cpu_request_atomic_is_amo(1'b0), .cpu_request_amo_op(4'd0),
+        .input_queue_full(stop),
         .snoop_request_valid(1'b0), .snoop_request_ready(), .snoop_request_addr({ADDR_W{1'b0}}), .snoop_request_invalidate(1'b0),
         .snoop_response_valid(snpr_valid), .snoop_response_ready(1'b1), .snoop_response_addr(), .snoop_response_present(), .snoop_response_dirty(), .snoop_response_data(),
         .amo_lock_timeout_sticky(amo_err),
@@ -191,7 +193,7 @@ module tb_l1d_random;
         reg [WDW-1:0] wd;
         begin
             valid_cpu = 1'b0;
-            if (issued < op_limit && n_out < NIDX && ({$random(seed)} % 100) < pct) begin
+            if (issued < op_limit && n_out < NIDX && !stop && ({$random(seed)} % 100) < pct) begin
                 nc   = (({$random(seed)} % 100) < 8);
                 wr   = (({$random(seed)} % 100) < 45);
                 size = {$random(seed)} % 4;
@@ -270,7 +272,7 @@ module tb_l1d_random;
                     for (b = 0; b < NB; b = b + 1)
                         for (w = 0; w < LINE / 8; w = w + 1) begin
                             @(negedge clk);
-                            while (n_out >= NIDX) begin
+                            while (n_out >= NIDX || stop) begin
                                 valid_cpu = 1'b0;
                                 @(negedge clk);
                             end
@@ -368,18 +370,18 @@ module tb_l1d_random;
     generate
         for (gb = 0; gb < NB; gb = gb + 1) begin : g_cov
             always @(posedge clk) if (!rst) begin
-                if (dut.u_dcache.g_bank[gb].u_bank.s2_lsu && dut.u_dcache.g_bank[gb].u_bank.s2_hit)        ev_hit     = ev_hit + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.m_alloc && !dut.u_dcache.g_bank[gb].u_bank.m_swap)      ev_miss    = ev_miss + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.s3_load && dut.u_dcache.g_bank[gb].u_bank.s3_from_vc)   ev_vc_load = ev_vc_load + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.vc_swap)                                       ev_swap    = ev_swap + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.vc_wr_valid && dut.u_dcache.g_bank[gb].u_bank.vc_wr_ready) ev_wb   = ev_wb + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.act_valid && dut.u_dcache.g_bank[gb].u_bank.act_code == 3'd1) ev_wmshr = ev_wmshr + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.act_valid && dut.u_dcache.g_bank[gb].u_bank.act_code == 3'd2) ev_wany  = ev_wany + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.act_valid && dut.u_dcache.g_bank[gb].u_bank.act_code == 3'd3) ev_wvc   = ev_wvc + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.r_held)                                        ev_held    = ev_held + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.n_alloc)                                       ev_nc      = ev_nc + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.s1_lsu_th && dut.u_dcache.g_bank[gb].u_bank.m_upg)       ev_upg     = ev_upg + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.m_ev == 4'd4 && dut.u_dcache.g_bank[gb].u_bank.q1_state == 2'd1) ev_ins_s = ev_ins_s + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.s2_lsu && dut.u_ports.u_dcache.g_bank[gb].u_bank.s2_hit)        ev_hit     = ev_hit + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.m_alloc && !dut.u_ports.u_dcache.g_bank[gb].u_bank.m_swap)      ev_miss    = ev_miss + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.s3_load && dut.u_ports.u_dcache.g_bank[gb].u_bank.s3_from_vc)   ev_vc_load = ev_vc_load + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.vc_swap)                                       ev_swap    = ev_swap + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.vc_wr_valid && dut.u_ports.u_dcache.g_bank[gb].u_bank.vc_wr_ready) ev_wb   = ev_wb + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.act_valid && dut.u_ports.u_dcache.g_bank[gb].u_bank.act_code == 3'd1) ev_wmshr = ev_wmshr + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.act_valid && dut.u_ports.u_dcache.g_bank[gb].u_bank.act_code == 3'd2) ev_wany  = ev_wany + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.act_valid && dut.u_ports.u_dcache.g_bank[gb].u_bank.act_code == 3'd3) ev_wvc   = ev_wvc + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.r_held)                                        ev_held    = ev_held + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.n_alloc)                                       ev_nc      = ev_nc + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.s1_lsu_th && dut.u_ports.u_dcache.g_bank[gb].u_bank.m_upg)       ev_upg     = ev_upg + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.m_ev == 4'd4 && dut.u_ports.u_dcache.g_bank[gb].u_bank.q1_state == 2'd1) ev_ins_s = ev_ins_s + 1;
             end
         end
     endgenerate

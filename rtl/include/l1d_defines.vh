@@ -25,7 +25,8 @@
 `define L1D_RSV_CLR_ON_EVICT  1
 `define L1D_AXI_DATA_W        128
 `define L1D_AXI_ADDR_W        64
-`define L1D_LSU_PORTS         1
+`define L1D_LSU_PORTS         4
+`define L1D_PORT_QUEUE_DEPTH  2
 `define L1D_HAS_MISS          1
 `define L1D_HAS_VC            1
 `define L1D_HAS_NC            1
@@ -63,7 +64,8 @@
     parameter HAS_SNOOP        = `L1D_HAS_SNOOP, \
     parameter HAS_AMO          = `L1D_HAS_AMO, \
     parameter AXI_DATA_W       = `L1D_AXI_DATA_W, \
-    parameter AXI_ADDR_W       = `L1D_AXI_ADDR_W
+    parameter AXI_ADDR_W       = `L1D_AXI_ADDR_W, \
+    parameter LSU_PORTS        = `L1D_LSU_PORTS
 `define L1D_PARAMS_PASS \
     .ADDR_W(ADDR_W), \
     .LINE_BYTES(LINE_BYTES), \
@@ -91,5 +93,6 @@
     .HAS_SNOOP(HAS_SNOOP), \
     .HAS_AMO(HAS_AMO), \
     .AXI_DATA_W(AXI_DATA_W), \
-    .AXI_ADDR_W (AXI_ADDR_W)
+    .AXI_ADDR_W (AXI_ADDR_W), \
+    .LSU_PORTS(LSU_PORTS)
 `endif

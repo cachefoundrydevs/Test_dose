@@ -5,7 +5,8 @@ rtl/common/l1d_arb_rr.v
 rtl/common/l1d_age_matrix.v
 rtl/common/l1d_cam.v
 rtl/common/l1d_sram_tdp.v
-rtl/front/l1d_bank_sel.v
+rtl/front/l1d_bank_queue.v
+rtl/front/l1d_port_front.v
 rtl/front/l1d_resp_merge.v
 rtl/bank/fifo/l1d_lsu_req_buf.v
 rtl/bank/fifo/l1d_snoop_buf.v

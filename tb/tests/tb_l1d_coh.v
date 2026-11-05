@@ -62,6 +62,7 @@ module tb_l1d_coh;
     always #5 clk = ~clk;
     reg                 flush = 0, clean = 0;
     wire                flush_complete, clean_complete, mem_err, amo_err;
+    wire                stop;
     reg                 valid_cpu = 0, cacheable = 1, rd_wr_cpu = 0, amo_cpu = 0, amo_seq_cpu = 0;
     reg  [3:0]          amo_op_cpu = 0;
     reg  [1:0]          mem_size_cpu = 0;
@@ -101,6 +102,7 @@ module tb_l1d_coh;
         .cpu_request_master_id(master_id_from_cpu), .cpu_request_rob_index(idx_from_cpu),
         .cpu_request_addr(PC_from_cpu), .cpu_request_store_data(data_from_cpu),
         .cpu_request_is_atomic(amo_cpu), .cpu_request_atomic_is_amo(amo_seq_cpu), .cpu_request_amo_op(amo_op_cpu),
+        .input_queue_full(stop),
         .snoop_request_valid(snp_valid), .snoop_request_ready(snp_ready), .snoop_request_addr(snp_addr), .snoop_request_invalidate(snp_inv),
         .snoop_response_valid(snpr_valid), .snoop_response_ready(snpr_ready), .snoop_response_addr(snpr_addr),
         .snoop_response_present(snpr_present), .snoop_response_dirty(snpr_dirty), .snoop_response_data(snpr_data),
@@ -282,6 +284,15 @@ module tb_l1d_coh;
                 if (out_v[q] && !out_nc[q] && line_of(out_addr[q]) == line_of(a)) line_outstanding = 1'b1;
         end
     endfunction
+    function lrsc_active;
+        input integer dummy;
+        integer q;
+        begin
+            lrsc_active = 1'b0;
+            for (q = 0; q < N_ATOM; q = q + 1)
+                if (at_st[q] == A_LRW || at_st[q] == A_LRD || at_st[q] == A_SCW) lrsc_active = 1'b1;
+        end
+    endfunction
     function amo_pending;
         input integer dummy;
         integer q;
@@ -362,7 +373,7 @@ module tb_l1d_coh;
             amo_cpu = 1'b0;
             amo_seq_cpu = 1'b0;
             amo_op_cpu  = 4'd0;
-            room = NIDX - (amo_pending(0) ? 1 : 0);
+            room = stop ? 0 : (NIDX - (amo_pending(0) ? 1 : 0));
             for (q = 0; q < N_ATOM && !valid_cpu; q = q + 1) begin
                 if (at_st[q] == A_LRD && n_out < room) begin
                     if (at_wait[q] > 0) at_wait[q] = at_wait[q] - 1;
@@ -370,7 +381,7 @@ module tb_l1d_coh;
                         issue(C_SC, 1'b0, 2'd3, at_addr[q], {$random(seed), $random(seed)}, q);
                         at_st[q] = A_SCW;
                     end
-                end else if (at_st[q] == A_ARD && n_out < NIDX) begin
+                end else if (at_st[q] == A_ARD && n_out < NIDX && !stop) begin
                     if (at_wait[q] > 0) at_wait[q] = at_wait[q] - 1;
                     else begin
                         issue(C_AW, 1'b0, 2'd3, at_addr[q], at_old[q] + 64'h0000_0001_0000_0003, q);
@@ -392,7 +403,7 @@ module tb_l1d_coh;
                             issue(C_AR, 1'b0, 2'd3, a, 64'h0000_0001_0000_0003, q);
                             at_st[q] = A_ARW;
                             n_amo = n_amo + 1;
-                        end else if (r >= 5) begin
+                        end else if (r >= 5 && !lrsc_active(0)) begin
                             issue(C_LR, 1'b0, 2'd3, a, {WDW{1'b0}}, q);
                             at_st[q] = A_LRW;
                             n_lr = n_lr + 1;
@@ -451,7 +462,7 @@ module tb_l1d_coh;
                             at_st[q2] = A_LRD;
                             at_t[q2]  = cyc;
                             for (j1 = 0; j1 < N_ATOM; j1 = j1 + 1)
-                                if (j1 != q2 && at_st[j1] == A_LRD && bank_of(at_addr[j1]) == bank_of(out_addr[r_idx]) &&
+                                if (j1 != q2 && at_st[j1] == A_LRD &&
                                     out_t[r_idx] >= at_t[j1])
                                     at_brk[j1] = 1'b1;
                         end
@@ -468,7 +479,7 @@ module tb_l1d_coh;
                                 n_sc_fail = n_sc_fail + 1;
                             end
                             for (j1 = 0; j1 < N_ATOM; j1 = j1 + 1)
-                                if (j1 != q2 && at_st[j1] == A_LRD && bank_of(at_addr[j1]) == bank_of(out_addr[r_idx]) &&
+                                if (j1 != q2 && at_st[j1] == A_LRD &&
                                     out_t[r_idx] >= at_t[j1])
                                     at_brk[j1] = 1'b1;
                             at_st[q2] = A_IDLE;
@@ -579,7 +590,7 @@ module tb_l1d_coh;
                     for (b = 0; b < NB; b = b + 1)
                         for (w = 0; w < LINE / 8; w = w + 1) begin
                             @(negedge clk);
-                            while (n_out >= NIDX) begin
+                            while (n_out >= NIDX || stop) begin
                                 valid_cpu = 1'b0;
                                 @(negedge clk);
                             end
@@ -676,19 +687,19 @@ module tb_l1d_coh;
     generate
         for (gb = 0; gb < NB; gb = gb + 1) begin : g_cov
             always @(posedge clk) if (!rst) begin
-                if (dut.u_dcache.g_bank[gb].u_bank.s2_snp && dut.u_dcache.g_bank[gb].u_bank.s2_snp_hit)    ev_snp_hit  = ev_snp_hit + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.s2_snp && dut.u_dcache.g_bank[gb].u_bank.s2_hand)       ev_snp_hand = ev_snp_hand + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.vc_snp)                                        ev_snp_vc   = ev_snp_vc + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.snp_act_valid && dut.u_dcache.g_bank[gb].u_bank.snp_act_code == 2'd1) ev_snp_wmshr = ev_snp_wmshr + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.snp_act_valid && dut.u_dcache.g_bank[gb].u_bank.snp_act_code == 2'd2) ev_snp_wvc   = ev_snp_wvc + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.s2_snp && !dut.u_dcache.g_bank[gb].u_bank.s2_snp_hit && dut.u_dcache.g_bank[gb].u_bank.mshr_hit &&
-                    !dut.u_dcache.g_bank[gb].u_bank.mshr_hasd)                                    ev_snp_mshr_np = ev_snp_mshr_np + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.s1_lsu_th && dut.u_dcache.g_bank[gb].u_bank.m_upg)       ev_upg      = ev_upg + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.lock_snp && !dut.u_dcache.g_bank[gb].u_bank.u_fifo.u_snp.buffer_empty)  ev_lock_snp = ev_lock_snp + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.lock_valid && dut.u_dcache.g_bank[gb].u_bank.sel_valid == 1'b0 &&
-                    !dut.u_dcache.g_bank[gb].u_bank.buf_empty)                                    ev_lock_lsu = ev_lock_lsu + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.s1_refill && dut.u_dcache.g_bank[gb].u_bank.v_locked)  ev_vict_lock = ev_vict_lock + 1;
-                if (dut.u_dcache.g_bank[gb].u_bank.m_ev == 4'd4 && dut.u_dcache.g_bank[gb].u_bank.q1_state == 2'd1) ev_ins_s = ev_ins_s + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.s2_snp && dut.u_ports.u_dcache.g_bank[gb].u_bank.s2_snp_hit)    ev_snp_hit  = ev_snp_hit + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.s2_snp && dut.u_ports.u_dcache.g_bank[gb].u_bank.s2_hand)       ev_snp_hand = ev_snp_hand + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.vc_snp)                                        ev_snp_vc   = ev_snp_vc + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.snp_act_valid && dut.u_ports.u_dcache.g_bank[gb].u_bank.snp_act_code == 2'd1) ev_snp_wmshr = ev_snp_wmshr + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.snp_act_valid && dut.u_ports.u_dcache.g_bank[gb].u_bank.snp_act_code == 2'd2) ev_snp_wvc   = ev_snp_wvc + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.s2_snp && !dut.u_ports.u_dcache.g_bank[gb].u_bank.s2_snp_hit && dut.u_ports.u_dcache.g_bank[gb].u_bank.mshr_hit &&
+                    !dut.u_ports.u_dcache.g_bank[gb].u_bank.mshr_hasd)                                    ev_snp_mshr_np = ev_snp_mshr_np + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.s1_lsu_th && dut.u_ports.u_dcache.g_bank[gb].u_bank.m_upg)       ev_upg      = ev_upg + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.lock_snp && !dut.u_ports.u_dcache.g_bank[gb].u_bank.u_fifo.u_snp.buffer_empty)  ev_lock_snp = ev_lock_snp + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.lock_valid && dut.u_ports.u_dcache.g_bank[gb].u_bank.sel_valid == 1'b0 &&
+                    !dut.u_ports.u_dcache.g_bank[gb].u_bank.buf_empty)                                    ev_lock_lsu = ev_lock_lsu + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.s1_refill && dut.u_ports.u_dcache.g_bank[gb].u_bank.v_locked)  ev_vict_lock = ev_vict_lock + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.m_ev == 4'd4 && dut.u_ports.u_dcache.g_bank[gb].u_bank.q1_state == 2'd1) ev_ins_s = ev_ins_s + 1;
             end
         end
     endgenerate

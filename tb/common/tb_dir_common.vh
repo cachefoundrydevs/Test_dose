@@ -273,18 +273,18 @@
             s  = (a / SET_STRIDE) % SETS;
             tg = a / TAG_STRIDE;
             case (b)
-                0: begin sts = dut.u_dcache.g_bank[0].u_bank.u_meta.states[s];
-                         t0 = dut.u_dcache.g_bank[0].u_bank.u_tags.g_way[0].u_ram.mem[s];
-                         t1 = dut.u_dcache.g_bank[0].u_bank.u_tags.g_way[1].u_ram.mem[s]; end
-                1: begin sts = dut.u_dcache.g_bank[1].u_bank.u_meta.states[s];
-                         t0 = dut.u_dcache.g_bank[1].u_bank.u_tags.g_way[0].u_ram.mem[s];
-                         t1 = dut.u_dcache.g_bank[1].u_bank.u_tags.g_way[1].u_ram.mem[s]; end
-                2: begin sts = dut.u_dcache.g_bank[2].u_bank.u_meta.states[s];
-                         t0 = dut.u_dcache.g_bank[2].u_bank.u_tags.g_way[0].u_ram.mem[s];
-                         t1 = dut.u_dcache.g_bank[2].u_bank.u_tags.g_way[1].u_ram.mem[s]; end
-                default: begin sts = dut.u_dcache.g_bank[3].u_bank.u_meta.states[s];
-                         t0 = dut.u_dcache.g_bank[3].u_bank.u_tags.g_way[0].u_ram.mem[s];
-                         t1 = dut.u_dcache.g_bank[3].u_bank.u_tags.g_way[1].u_ram.mem[s]; end
+                0: begin sts = dut.u_ports.u_dcache.g_bank[0].u_bank.u_meta.states[s];
+                         t0 = dut.u_ports.u_dcache.g_bank[0].u_bank.u_tags.g_way[0].u_ram.mem[s];
+                         t1 = dut.u_ports.u_dcache.g_bank[0].u_bank.u_tags.g_way[1].u_ram.mem[s]; end
+                1: begin sts = dut.u_ports.u_dcache.g_bank[1].u_bank.u_meta.states[s];
+                         t0 = dut.u_ports.u_dcache.g_bank[1].u_bank.u_tags.g_way[0].u_ram.mem[s];
+                         t1 = dut.u_ports.u_dcache.g_bank[1].u_bank.u_tags.g_way[1].u_ram.mem[s]; end
+                2: begin sts = dut.u_ports.u_dcache.g_bank[2].u_bank.u_meta.states[s];
+                         t0 = dut.u_ports.u_dcache.g_bank[2].u_bank.u_tags.g_way[0].u_ram.mem[s];
+                         t1 = dut.u_ports.u_dcache.g_bank[2].u_bank.u_tags.g_way[1].u_ram.mem[s]; end
+                default: begin sts = dut.u_ports.u_dcache.g_bank[3].u_bank.u_meta.states[s];
+                         t0 = dut.u_ports.u_dcache.g_bank[3].u_bank.u_tags.g_way[0].u_ram.mem[s];
+                         t1 = dut.u_ports.u_dcache.g_bank[3].u_bank.u_tags.g_way[1].u_ram.mem[s]; end
             endcase
             st = ST_I;
             if (sts[1:0] != ST_I && t0 == tg) st = sts[1:0];
@@ -305,14 +305,14 @@
             found = 1'b0; vst = VC_FREE; dirty = 1'b0; shared = 1'b0;
             for (k = 0; k < VCS; k = k + 1) begin
                 case (b)
-                    0: begin la = dut.u_dcache.g_bank[0].u_bank.u_vc.la[k]; vst = dut.u_dcache.g_bank[0].u_bank.u_vc.st[k];
-                             dirty = dut.u_dcache.g_bank[0].u_bank.u_vc.dty[k]; shared = dut.u_dcache.g_bank[0].u_bank.u_vc.shr[k]; end
-                    1: begin la = dut.u_dcache.g_bank[1].u_bank.u_vc.la[k]; vst = dut.u_dcache.g_bank[1].u_bank.u_vc.st[k];
-                             dirty = dut.u_dcache.g_bank[1].u_bank.u_vc.dty[k]; shared = dut.u_dcache.g_bank[1].u_bank.u_vc.shr[k]; end
-                    2: begin la = dut.u_dcache.g_bank[2].u_bank.u_vc.la[k]; vst = dut.u_dcache.g_bank[2].u_bank.u_vc.st[k];
-                             dirty = dut.u_dcache.g_bank[2].u_bank.u_vc.dty[k]; shared = dut.u_dcache.g_bank[2].u_bank.u_vc.shr[k]; end
-                    default: begin la = dut.u_dcache.g_bank[3].u_bank.u_vc.la[k]; vst = dut.u_dcache.g_bank[3].u_bank.u_vc.st[k];
-                             dirty = dut.u_dcache.g_bank[3].u_bank.u_vc.dty[k]; shared = dut.u_dcache.g_bank[3].u_bank.u_vc.shr[k]; end
+                    0: begin la = dut.u_ports.u_dcache.g_bank[0].u_bank.u_vc.la[k]; vst = dut.u_ports.u_dcache.g_bank[0].u_bank.u_vc.st[k];
+                             dirty = dut.u_ports.u_dcache.g_bank[0].u_bank.u_vc.dty[k]; shared = dut.u_ports.u_dcache.g_bank[0].u_bank.u_vc.shr[k]; end
+                    1: begin la = dut.u_ports.u_dcache.g_bank[1].u_bank.u_vc.la[k]; vst = dut.u_ports.u_dcache.g_bank[1].u_bank.u_vc.st[k];
+                             dirty = dut.u_ports.u_dcache.g_bank[1].u_bank.u_vc.dty[k]; shared = dut.u_ports.u_dcache.g_bank[1].u_bank.u_vc.shr[k]; end
+                    2: begin la = dut.u_ports.u_dcache.g_bank[2].u_bank.u_vc.la[k]; vst = dut.u_ports.u_dcache.g_bank[2].u_bank.u_vc.st[k];
+                             dirty = dut.u_ports.u_dcache.g_bank[2].u_bank.u_vc.dty[k]; shared = dut.u_ports.u_dcache.g_bank[2].u_bank.u_vc.shr[k]; end
+                    default: begin la = dut.u_ports.u_dcache.g_bank[3].u_bank.u_vc.la[k]; vst = dut.u_ports.u_dcache.g_bank[3].u_bank.u_vc.st[k];
+                             dirty = dut.u_ports.u_dcache.g_bank[3].u_bank.u_vc.dty[k]; shared = dut.u_ports.u_dcache.g_bank[3].u_bank.u_vc.shr[k]; end
                 endcase
                 if (vst != VC_FREE && la == (a / LINE)) begin
                     found = 1'b1;

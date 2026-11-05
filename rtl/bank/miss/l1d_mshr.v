@@ -5,7 +5,7 @@ module l1d_mshr #(`L1D_PARAMS) (
     clk, rst,
     lookup_line_addr, lookup_hit, lookup_entry_id, lookup_entry_has_data,
     allocate_valid, allocate_line_addr, allocate_is_swap, allocate_swap_line_data, allocate_swap_dirty, allocate_swap_shared, allocate_swap_vc_slot,
-    allocate_unique_read, allocate_seat, allocate_is_write, allocate_no_response, allocate_access_size, allocate_master_id, allocate_rob_index, allocate_byte_offset, allocate_store_data, can_allocate, allocate_entry_id,
+    allocate_unique_read, allocate_seat, allocate_is_write, allocate_no_response, allocate_access_size, allocate_master_id, allocate_rob_index, allocate_port, allocate_byte_offset, allocate_store_data, can_allocate, allocate_entry_id,
     axi_read_req_valid, axi_read_req_ready, axi_read_req_line_addr, axi_read_req_sub_id, axi_read_req_unique,
     axi_read_beat_valid, axi_read_beat_sub_id, axi_read_beat_data, axi_read_beat_last, axi_read_beat_error, axi_read_beat_shared,
     response_valid, response_packet, response_seat, response_taken,
@@ -38,6 +38,7 @@ module l1d_mshr #(`L1D_PARAMS) (
     input  wire [MEM_SIZE_BITS-1:0]    allocate_access_size;
     input  wire [MASTER_ID_BITS-1:0]   allocate_master_id;
     input  wire [IDX_BITS-1:0]         allocate_rob_index;
+    input  wire [PORT_W-1:0]           allocate_port;
     input  wire [OFFSET_W-1:0]         allocate_byte_offset;
     input  wire [WRITE_DATA_WIDTH-1:0] allocate_store_data;
     output wire                        can_allocate;
@@ -279,6 +280,7 @@ module l1d_mshr #(`L1D_PARAMS) (
                 .allocate_access_size    (allocate_access_size),
                 .allocate_master_id      (allocate_master_id),
                 .allocate_rob_index      (allocate_rob_index),
+                .allocate_port           (allocate_port),
                 .allocate_byte_offset    (allocate_byte_offset),
                 .allocate_store_data     (allocate_store_data),
                 .axi_read_addr_accepted  (axi_read_req_ready && ar_gc[g]),

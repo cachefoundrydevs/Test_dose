@@ -7,6 +7,7 @@ module l1d_reservation_unit #(`L1D_PARAMS) (
     s2_install_valid, s2_install_line_addr,
     s1_clear_valid, s1_clear_line_addr,
     maint_clear,
+    other_bank_rsv_clear,
     reservation_valid, reservation_line_addr,
     amo_lock_valid, amo_lock_snoop_hold, amo_lock_line, amo_lock_timeout_pulse
 );
@@ -31,17 +32,18 @@ module l1d_reservation_unit #(`L1D_PARAMS) (
     input  wire                   s1_clear_valid;
     input  wire [LINE_ADDR_W-1:0] s1_clear_line_addr;
     input  wire                   maint_clear;
+    input  wire                   other_bank_rsv_clear;
     output reg                    reservation_valid;
     output reg  [LINE_ADDR_W-1:0] reservation_line_addr;
     output reg                    amo_lock_valid;
     output reg                    amo_lock_snoop_hold;
     output reg  [LINE_ADDR_W-1:0] amo_lock_line;
     output reg                    amo_lock_timeout_pulse;
-    assign sc_reservation_matches = reservation_valid && (reservation_line_addr == sc_check_line_addr);
+    assign sc_reservation_matches = reservation_valid && !other_bank_rsv_clear && (reservation_line_addr == sc_check_line_addr);
     reg                   v_s2;
     reg [LINE_ADDR_W-1:0] l_s2;
     always @* begin
-        v_s2 = reservation_valid;
+        v_s2 = reservation_valid && !other_bank_rsv_clear;
         l_s2 = reservation_line_addr;
         if (s2_lr_completed) begin
             v_s2 = 1'b1;

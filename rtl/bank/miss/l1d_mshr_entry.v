@@ -4,7 +4,7 @@
 module l1d_mshr_entry #(`L1D_PARAMS) (
     clk, rst,
     allocate_valid, allocate_line_addr, allocate_is_swap, allocate_swap_line_data, allocate_swap_dirty, allocate_swap_shared, allocate_swap_vc_slot,
-    allocate_unique_read, allocate_seat, allocate_is_write, allocate_no_response, allocate_access_size, allocate_master_id, allocate_rob_index, allocate_byte_offset, allocate_store_data,
+    allocate_unique_read, allocate_seat, allocate_is_write, allocate_no_response, allocate_access_size, allocate_master_id, allocate_rob_index, allocate_port, allocate_byte_offset, allocate_store_data,
     axi_read_addr_accepted, axi_read_beat_valid, axi_read_beat_data, axi_read_beat_last, axi_read_beat_error, axi_read_beat_shared,
     response_taken, refill_token_granted, refill_token_held_by_s1, install_done_by_s2,
     entry_busy, entry_line_addr, axi_read_addr_request, axi_read_is_unique, response_request, response_packet, response_seat, refill_token_request,
@@ -29,6 +29,7 @@ module l1d_mshr_entry #(`L1D_PARAMS) (
     input  wire [MEM_SIZE_BITS-1:0]    allocate_access_size;
     input  wire [MASTER_ID_BITS-1:0]   allocate_master_id;
     input  wire [IDX_BITS-1:0]         allocate_rob_index;
+    input  wire [PORT_W-1:0]           allocate_port;
     input  wire [OFFSET_W-1:0]         allocate_byte_offset;
     input  wire [WRITE_DATA_WIDTH-1:0] allocate_store_data;
     input  wire                        axi_read_addr_accepted;
@@ -94,6 +95,7 @@ module l1d_mshr_entry #(`L1D_PARAMS) (
     reg [MEM_SIZE_BITS-1:0]    p_size;
     reg [MASTER_ID_BITS-1:0]   p_mid;
     reg [IDX_BITS-1:0]         p_idx;
+    reg [PORT_W-1:0]           p_port;
     reg [OFFSET_W-1:0]         p_off;
     reg [WRITE_DATA_WIDTH-1:0] p_wdata;
     initial if (AXI_BEATS < 2) $display("ERROR l1d_mshr_entry: the store-merge pipeline needs AXI_BEATS >= 2 (it is %0d)", AXI_BEATS);
@@ -181,6 +183,7 @@ module l1d_mshr_entry #(`L1D_PARAMS) (
                     p_size  <= allocate_access_size;
                     p_mid   <= allocate_master_id;
                     p_idx   <= allocate_rob_index;
+                    p_port  <= allocate_port;
                     if (allocate_is_swap) begin
                         dirty_r  <= allocate_swap_dirty;
                         shared_r <= allocate_swap_shared;
@@ -297,7 +300,7 @@ module l1d_mshr_entry #(`L1D_PARAMS) (
     assign response_seat = p_seat;
     assign entry_freed_pulse     = (rs_q && response_taken && err_r) ||
                        (inst_q && install_done_by_s2 && !refill_token_held_by_s1);
-    assign response_packet = {p_rd_wr, p_size, p_mid, p_idx, ld_r};
+    assign response_packet = {p_port, p_rd_wr, p_size, p_mid, p_idx, ld_r};
 `ifdef L1D_DEBUG
     function [8*7-1:0] dbg_ename;
         input [2:0] s;

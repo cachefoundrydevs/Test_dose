@@ -23,3 +23,7 @@ tb_l1d_random -d TINY -d "SEED=23" -d "SHARED=40" -d "NOPS=6000"
 tb_l1d_coh -d TINY -d "SEED=21"
 tb_l1d_coh -d TINY -d MODEB -d "SEED=33" -d "SNP=30"
 tb_l1d_coh -d "SEED=45" -d "SNP=25"
+tb_ports
+tb_ports -d TINY
+tb_ports -d TINY -d "SEED=9" -d "NOPS=8000"
+tb_ports -d "SEED=4" -d "NOPS=10000"

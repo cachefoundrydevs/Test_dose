@@ -13,7 +13,8 @@ module l1d_bank #(`L1D_PARAMS, parameter BANK_ID = 0) (
     axi_write_resp_valid, axi_write_resp_sub_id, axi_write_resp_non_cacheable, axi_write_resp_error,
     refill_handover_busy,
     maint_start, maint_op_is_flush, maint_done,
-    amo_lock_timeout_pulse
+    amo_lock_timeout_pulse,
+    rsv_event_pulse, other_bank_rsv_event
 );
     `include "l1d_encodings.vh"
     `include "l1d_fields.vh"
@@ -24,7 +25,9 @@ module l1d_bank #(`L1D_PARAMS, parameter BANK_ID = 0) (
     output wire                     lsu_request_ready;
     output wire                     lsu_response_valid;
     output wire [RESP_W-1:0]        lsu_response_packet;
-    input  wire [RCNT_W-1:0]        lsu_response_fifo_free;
+    input  wire [LSU_PORTS*RCNT_W-1:0] lsu_response_fifo_free;
+    output wire                     rsv_event_pulse;
+    input  wire                     other_bank_rsv_event;
     input  wire                     snoop_request_valid;
     input  wire [LINE_ADDR_W-1:0]   snoop_request_line_addr;
     input  wire                     snoop_request_invalidate;
@@ -199,10 +202,23 @@ module l1d_bank #(`L1D_PARAMS, parameter BANK_ID = 0) (
     wire s2_lsu = s2_valid && (s2_kind == K_LSU);
     wire miss_push;
     wire m_resp_valid, n_resp_valid;
-    wire [RCNT_W+1:0] resv_miss  = r_lsu + s1_lsu;
-    wire [RCNT_W+1:0] resv_grant = r_lsu + s1_lsu + (s2_lsu || m_resp_valid || n_resp_valid);
-    wire miss_ok    = (lsu_response_fifo_free > resv_miss);
-    wire lsu_credit = (lsu_response_fifo_free > resv_grant);
+    wire [LSU_PORTS-1:0] port_miss_ok;
+    wire [LSU_PORTS-1:0] port_grant_ok;
+    wire                 push_this_cycle = s2_lsu || m_resp_valid || n_resp_valid;
+    genvar credit_port;
+    generate
+        for (credit_port = 0; credit_port < LSU_PORTS; credit_port = credit_port + 1) begin : g_port_credit
+            wire              r_on_port   = r_lsu  && (r_req[REQ_PORT_LSB +: PORT_W]  == credit_port);
+            wire              s1_on_port  = s1_lsu && (s1_req[REQ_PORT_LSB +: PORT_W] == credit_port);
+            wire [RCNT_W-1:0] port_free   = lsu_response_fifo_free[credit_port*RCNT_W +: RCNT_W];
+            wire [RCNT_W+1:0] resv_miss_port  = r_on_port + s1_on_port;
+            wire [RCNT_W+1:0] resv_grant_port = r_on_port + s1_on_port + push_this_cycle;
+            assign port_miss_ok[credit_port]  = (port_free > resv_miss_port);
+            assign port_grant_ok[credit_port] = (port_free > resv_grant_port);
+        end
+    endgenerate
+    wire miss_ok    = &port_miss_ok;
+    wire lsu_credit = &port_grant_ok;
     wire r_amor_any  = r_lsu  && r_req[REQ_AMO_BIT]  && r_req[REQ_SEQ_BIT]  && !r_req[REQ_RDWR_BIT];
     wire s1_amor_any = s1_lsu && s1_req[REQ_AMO_BIT] && s1_req[REQ_SEQ_BIT] && !s1_req[REQ_RDWR_BIT];
     wire s2_amor_any = s2_lsu && s2_req[REQ_AMO_BIT] && s2_req[REQ_SEQ_BIT] && !s2_req[REQ_RDWR_BIT];
@@ -497,6 +513,7 @@ module l1d_bank #(`L1D_PARAMS, parameter BANK_ID = 0) (
     wire [MEM_SIZE_BITS-1:0]    s2_size  = s2_req[REQ_SIZE_LSB +: MEM_SIZE_BITS];
     wire [MASTER_ID_BITS-1:0]   s2_mstid = s2_req[REQ_MID_LSB +: MASTER_ID_BITS];
     wire [IDX_BITS-1:0]         s2_idx   = s2_req[REQ_IDX_LSB +: IDX_BITS];
+    wire [PORT_W-1:0]           s2_port  = s2_req[REQ_PORT_LSB +: PORT_W];
     wire [WRITE_DATA_WIDTH-1:0] s2_wdata = s2_req[REQ_DATA_LSB +: WRITE_DATA_WIDTH];
     assign s2_refill = s2_valid && (s2_kind == K_REFILL) && !s2_held;
     wire s2_maint  = s2_valid && (s2_kind == K_MAINT);
@@ -641,9 +658,10 @@ module l1d_bank #(`L1D_PARAMS, parameter BANK_ID = 0) (
                                            s3_zero   ? {WRITE_DATA_WIDTH{1'b0}} :
                                            (s2_store && !s2_amo1) ? {WRITE_DATA_WIDTH{1'b0}} :
                                            (s3_from_vc ? vcl_data : hit_data);
-    wire [RESP_W-1:0] s2_pkt = {(s2_req[REQ_RDWR_BIT] && !s2_amo1), s2_size, s2_mstid, s2_idx, s2_rdata};
+    wire [RESP_W-1:0] s2_pkt = {s2_port, (s2_req[REQ_RDWR_BIT] && !s2_amo1), s2_size, s2_mstid, s2_idx, s2_rdata};
     wire s2_done_lsu = s2_lsu && (s3_load || (act_valid && act_code == ACT_OWNED));
     wire ev_lr   = s2_done_lsu && s2_cache && s2_is_lr;
+    assign rsv_event_pulse = ev_lr || ev_sc;
     wire ev_sc   = s2_done_lsu && s2_is_sc;
     wire ev_wr   = s2_done_lsu && s2_cache && s2_store && !s2_is_sc;
     assign ev_amor = 1'b0;
@@ -734,6 +752,7 @@ module l1d_bank #(`L1D_PARAMS, parameter BANK_ID = 0) (
         .s1_clear_valid         (s1_snp || s1_evict),
         .s1_clear_line_addr     (s1_snp ? s1_line : v_line),
         .maint_clear            (maint_start),
+        .other_bank_rsv_clear   (other_bank_rsv_event),
         .reservation_valid      (),
         .reservation_line_addr  (),
         .amo_lock_valid         (lock_valid),
@@ -769,6 +788,7 @@ module l1d_bank #(`L1D_PARAMS, parameter BANK_ID = 0) (
         .allocate_access_size     (s2_size),
         .allocate_master_id       (s2_mstid),
         .allocate_rob_index       (s2_idx),
+        .allocate_port            (s2_port),
         .allocate_byte_offset     (s2_off),
         .allocate_store_data      (s2_wdata),
         .can_allocate             (mshr_can),
@@ -823,6 +843,7 @@ module l1d_bank #(`L1D_PARAMS, parameter BANK_ID = 0) (
         .allocate_access_size (s2_size),
         .allocate_master_id   (s2_mstid),
         .allocate_rob_index   (s2_idx),
+        .allocate_port        (s2_port),
         .allocate_addr        (s2_addr),
         .allocate_store_data  (s2_wdata),
         .can_allocate         (nc_can),
@@ -988,8 +1009,8 @@ module l1d_bank #(`L1D_PARAMS, parameter BANK_ID = 0) (
             if (sel_valid && !gnt_lsu) begin
                 dbg_s0w = dbg_s0w + 1;
                 if (dbg_s0w % `L1D_DBG_WD == 0)
-                    $display("[%0t] L1D B%0d S0 STUCK seat %0d ready but not granted for %0d cycles: snoop=%b refill_token=%b maint_token=%b credit=%b (resp_free=%0d reserved=%0d); if all 0 it is the skip after a refill",
-                             $time, BANK_ID, sel_seat, dbg_s0w, gnt_snoop, tok_valid, mt_valid, lsu_credit, lsu_response_fifo_free, resv_grant);
+                    $display("[%0t] L1D B%0d S0 STUCK seat %0d ready but not granted for %0d cycles: snoop=%b refill_token=%b maint_token=%b credit=%b (resp_free per port=%h, port credit ok=%b); if all 0 it is the skip after a refill",
+                             $time, BANK_ID, sel_seat, dbg_s0w, gnt_snoop, tok_valid, mt_valid, lsu_credit, lsu_response_fifo_free, port_grant_ok);
             end else begin
                 dbg_s0w = 0;
             end

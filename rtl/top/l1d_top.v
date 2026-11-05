@@ -10,7 +10,7 @@ module l1d_top #(
     parameter MEM_SIZE_BITS    = `L1D_MEM_SIZE_BITS,
     parameter MASTER_ID_BITS   = `L1D_MASTER_ID_BITS,
     parameter IDX_BITS         = `L1D_IDX_BITS,
-    parameter INQ_DEPTH        = (1 << IDX_BITS),
+    parameter PORT_QUEUE_DEPTH = `L1D_PORT_QUEUE_DEPTH,
     parameter LSU_BUF_DEPTH    = `L1D_LSU_BUF_DEPTH,
     parameter TRK_ENTRIES      = `L1D_TRK_ENTRIES,
     parameter TRK_REFILL_RSV   = `L1D_TRK_REFILL_RSV,
@@ -45,25 +45,25 @@ module l1d_top #(
     input  wire                         clean_request,
     output reg                          flush_complete,
     output reg                          clean_complete,
-    input  wire                         cpu_request_valid,
-    input  wire                         cpu_request_cacheable,
-    input  wire                         cpu_request_is_write,
-    input  wire [MEM_SIZE_BITS-1:0]     cpu_request_size,
-    input  wire [MASTER_ID_BITS-1:0]    cpu_request_master_id,
-    input  wire [IDX_BITS-1:0]          cpu_request_rob_index,
-    input  wire [ADDR_W-1:0]            cpu_request_addr,
-    input  wire [WRITE_DATA_WIDTH-1:0]  cpu_request_store_data,
-    input  wire                         cpu_request_is_atomic,
-    input  wire                         cpu_request_atomic_is_amo,
-    input  wire [3:0]                   cpu_request_amo_op,
-    output wire                         input_queue_full,
-    input  wire                         lsu_response_read_enable,
-    output wire                         lsu_response_valid,
-    output wire                         lsu_response_is_write_ack,
-    output wire [MEM_SIZE_BITS-1:0]     lsu_response_size,
-    output wire [MASTER_ID_BITS-1:0]    lsu_response_master_id,
-    output wire [IDX_BITS-1:0]          lsu_response_rob_index,
-    output wire [WRITE_DATA_WIDTH-1:0]  lsu_response_data,
+    input  wire [LSU_PORTS-1:0]                  cpu_request_valid,
+    input  wire [LSU_PORTS-1:0]                  cpu_request_cacheable,
+    input  wire [LSU_PORTS-1:0]                  cpu_request_is_write,
+    input  wire [LSU_PORTS*MEM_SIZE_BITS-1:0]    cpu_request_size,
+    input  wire [LSU_PORTS*MASTER_ID_BITS-1:0]   cpu_request_master_id,
+    input  wire [LSU_PORTS*IDX_BITS-1:0]         cpu_request_rob_index,
+    input  wire [LSU_PORTS*ADDR_W-1:0]           cpu_request_addr,
+    input  wire [LSU_PORTS*WRITE_DATA_WIDTH-1:0] cpu_request_store_data,
+    input  wire [LSU_PORTS-1:0]                  cpu_request_is_atomic,
+    input  wire [LSU_PORTS-1:0]                  cpu_request_atomic_is_amo,
+    input  wire [LSU_PORTS*4-1:0]                cpu_request_amo_op,
+    output wire [LSU_PORTS-1:0]                  input_queue_full,
+    input  wire [LSU_PORTS-1:0]                  lsu_response_read_enable,
+    output wire [LSU_PORTS-1:0]                  lsu_response_valid,
+    output wire [LSU_PORTS-1:0]                  lsu_response_is_write_ack,
+    output wire [LSU_PORTS*MEM_SIZE_BITS-1:0]    lsu_response_size,
+    output wire [LSU_PORTS*MASTER_ID_BITS-1:0]   lsu_response_master_id,
+    output wire [LSU_PORTS*IDX_BITS-1:0]         lsu_response_rob_index,
+    output wire [LSU_PORTS*WRITE_DATA_WIDTH-1:0] lsu_response_data,
     input  wire                         snoop_request_valid,
     output wire                         snoop_request_ready,
     input  wire [ADDR_W-1:0]            snoop_request_addr,
@@ -87,46 +87,41 @@ module l1d_top #(
     `include "l1d_encodings.vh"
     `include "l1d_fields.vh"
     localparam NB = NUM_BANKS;
-    wire             amo_in  = (HAS_AMO != 0) && cpu_request_is_atomic;
-    wire             seq_in  = amo_in && cpu_request_atomic_is_amo;
-    wire [REQ_W-1:0] cpu_req = {(seq_in ? cpu_request_amo_op : 4'd0), seq_in, amo_in, (cpu_request_is_write || seq_in), cpu_request_cacheable, cpu_request_size, cpu_request_master_id,
-                                cpu_request_rob_index, cpu_request_addr, cpu_request_store_data};
-    wire             q_empty;
-    wire             sel_pop;
-    wire             h_empty = q_empty && !cpu_request_valid;
-    wire [REQ_W-1:0] h_req;
-    wire             q_push = cpu_request_valid && !(q_empty && sel_pop);
-    wire [REQ_W-1:0] q_head;
-    wire             q_pop = sel_pop && !q_empty;
-    assign           h_req = q_empty ? cpu_req : q_head;
-    l1d_fifo #(.WIDTH(REQ_W), .DEPTH(INQ_DEPTH)) u_inq (
-        .clk        (clk),
-        .rst        (rst),
-        .push       (q_push),
-        .push_data  (cpu_req),
-        .pop        (q_pop),
-        .front_data (q_head),
-        .empty      (q_empty),
-        .full       (input_queue_full),
-        .used_slots (),
-        .free_slots ()
-    );
-    wire [NB-1:0]    bk_req_valid;
-    wire [REQ_W-1:0] bk_req;
-    wire [NB-1:0]    bk_req_ready;
-    l1d_bank_sel #(`L1D_PARAMS_PASS) u_sel (
+    wire [LSU_PORTS*REQ_W-1:0] port_req_packet;
+    genvar pkt_port;
+    generate
+        for (pkt_port = 0; pkt_port < LSU_PORTS; pkt_port = pkt_port + 1) begin : g_req_pkt
+            wire                  amo_in  = (HAS_AMO != 0) && cpu_request_is_atomic[pkt_port];
+            wire                  seq_in  = amo_in && cpu_request_atomic_is_amo[pkt_port];
+            wire [PORT_W-1:0]     port_id = pkt_port;
+            wire [AMOOP_W-1:0]    amo_op  = seq_in ? cpu_request_amo_op[pkt_port*4 +: AMOOP_W] : {AMOOP_W{1'b0}};
+            assign port_req_packet[pkt_port*REQ_W +: REQ_W] =
+                {port_id, amo_op, seq_in, amo_in, (cpu_request_is_write[pkt_port] || seq_in), cpu_request_cacheable[pkt_port],
+                 cpu_request_size[pkt_port*MEM_SIZE_BITS +: MEM_SIZE_BITS],
+                 cpu_request_master_id[pkt_port*MASTER_ID_BITS +: MASTER_ID_BITS],
+                 cpu_request_rob_index[pkt_port*IDX_BITS +: IDX_BITS],
+                 cpu_request_addr[pkt_port*ADDR_W +: ADDR_W],
+                 cpu_request_store_data[pkt_port*WRITE_DATA_WIDTH +: WRITE_DATA_WIDTH]};
+        end
+    endgenerate
+    wire [NB-1:0]       bk_req_valid;
+    wire [NB*REQ_W-1:0] bk_req;
+    wire [NB-1:0]       bk_req_ready;
+    l1d_port_front #(`L1D_PARAMS_PASS, .PORT_QUEUE_DEPTH(PORT_QUEUE_DEPTH)) u_front (
         .clk                 (clk),
         .rst                 (rst),
-        .input_queue_empty   (h_empty),
-        .input_queue_head    (h_req),
-        .input_queue_pop     (sel_pop),
+        .port_request_valid  (cpu_request_valid),
+        .port_request_packet (port_req_packet),
+        .port_stop           (input_queue_full),
         .bank_request_valid  (bk_req_valid),
         .bank_request_packet (bk_req),
         .bank_request_ready  (bk_req_ready)
     );
     wire [NB-1:0]               bk_resp_valid;
     wire [NB*RESP_W-1:0]        bk_resp;
-    wire [NB*RCNT_W-1:0]        bk_resp_free;
+    wire [NB*LSU_PORTS*RCNT_W-1:0] bk_resp_free;
+    wire [NB-1:0]               bk_rsv_event;
+    reg  [NB-1:0]               other_rsv_event_q;
     wire [NB-1:0]               bk_rd_valid, bk_rd_ready, bk_rd_nc, bk_rd_unique;
     wire [NB*AXI_ADDR_W-1:0]    bk_rd_addr;
     wire [NB*8-1:0]             bk_rd_len;
@@ -165,11 +160,11 @@ module l1d_top #(
                 .clk                          (clk),
                 .rst                          (rst),
                 .lsu_request_valid            (bk_req_valid[b]),
-                .lsu_request_packet           (bk_req),
+                .lsu_request_packet           (bk_req[b*REQ_W +: REQ_W]),
                 .lsu_request_ready            (bk_req_ready[b]),
                 .lsu_response_valid           (bk_resp_valid[b]),
                 .lsu_response_packet          (bk_resp[b*RESP_W +: RESP_W]),
-                .lsu_response_fifo_free       (bk_resp_free[b*RCNT_W +: RCNT_W]),
+                .lsu_response_fifo_free       (bk_resp_free[b*LSU_PORTS*RCNT_W +: LSU_PORTS*RCNT_W]),
                 .snoop_request_valid          (bk_snp_valid[b]),
                 .snoop_request_line_addr      (bk_snp_line),
                 .snoop_request_invalidate     (bk_snp_inv),
@@ -212,7 +207,9 @@ module l1d_top #(
                 .maint_start                  (mt_start),
                 .maint_op_is_flush            (mt_op),
                 .maint_done                   (mt_done[b]),
-                .amo_lock_timeout_pulse       (bk_lock_err[b])
+                .amo_lock_timeout_pulse       (bk_lock_err[b]),
+                .rsv_event_pulse              (bk_rsv_event[b]),
+                .other_bank_rsv_event         (other_rsv_event_q[b])
             );
         end
     endgenerate
@@ -237,24 +234,45 @@ module l1d_top #(
         .snoop_response_dirty          (snoop_response_dirty),
         .snoop_response_data           (snoop_response_data)
     );
-    wire              out_valid;
-    wire [RESP_W-1:0] out_resp;
-    l1d_resp_merge #(`L1D_PARAMS_PASS) u_merge (
-        .clk                     (clk),
-        .rst                     (rst),
-        .bank_response_valid     (bk_resp_valid),
-        .bank_response_packet    (bk_resp),
-        .bank_response_fifo_free (bk_resp_free),
-        .merged_response_valid   (out_valid),
-        .merged_response_packet  (out_resp),
-        .lsu_read_enable         (lsu_response_read_enable)
-    );
-    assign lsu_response_valid = out_valid;
-    assign lsu_response_is_write_ack = out_resp[RESP_RDWR_BIT];
-    assign lsu_response_size  = out_resp[RESP_SIZE_LSB +: MEM_SIZE_BITS];
-    assign lsu_response_master_id = out_resp[RESP_MID_LSB  +: MASTER_ID_BITS];
-    assign lsu_response_rob_index       = out_resp[RESP_IDX_LSB  +: IDX_BITS];
-    assign lsu_response_data      = out_resp[RESP_DATA_LSB +: WRITE_DATA_WIDTH];
+    wire [LSU_PORTS-1:0]        out_valid;
+    wire [LSU_PORTS*RESP_W-1:0] out_resp;
+    genvar out_port;
+    genvar route_bank;
+    generate
+        for (out_port = 0; out_port < LSU_PORTS; out_port = out_port + 1) begin : g_port_out
+            wire [NB-1:0]        for_this_port;
+            wire [NB*RCNT_W-1:0] port_fifo_free;
+            for (route_bank = 0; route_bank < NB; route_bank = route_bank + 1) begin : g_route
+                assign for_this_port[route_bank] = bk_resp_valid[route_bank] &&
+                    (bk_resp[route_bank*RESP_W + RESP_PORT_LSB +: PORT_W] == out_port);
+                assign bk_resp_free[(route_bank*LSU_PORTS + out_port)*RCNT_W +: RCNT_W] =
+                    port_fifo_free[route_bank*RCNT_W +: RCNT_W];
+            end
+            l1d_resp_merge #(`L1D_PARAMS_PASS) u_merge (
+                .clk                     (clk),
+                .rst                     (rst),
+                .bank_response_valid     (for_this_port),
+                .bank_response_packet    (bk_resp),
+                .bank_response_fifo_free (port_fifo_free),
+                .merged_response_valid   (out_valid[out_port]),
+                .merged_response_packet  (out_resp[out_port*RESP_W +: RESP_W]),
+                .lsu_read_enable         (lsu_response_read_enable[out_port])
+            );
+            assign lsu_response_valid[out_port]        = out_valid[out_port];
+            assign lsu_response_is_write_ack[out_port] = out_resp[out_port*RESP_W + RESP_RDWR_BIT];
+            assign lsu_response_size[out_port*MEM_SIZE_BITS +: MEM_SIZE_BITS]        = out_resp[out_port*RESP_W + RESP_SIZE_LSB +: MEM_SIZE_BITS];
+            assign lsu_response_master_id[out_port*MASTER_ID_BITS +: MASTER_ID_BITS] = out_resp[out_port*RESP_W + RESP_MID_LSB  +: MASTER_ID_BITS];
+            assign lsu_response_rob_index[out_port*IDX_BITS +: IDX_BITS]             = out_resp[out_port*RESP_W + RESP_IDX_LSB  +: IDX_BITS];
+            assign lsu_response_data[out_port*WRITE_DATA_WIDTH +: WRITE_DATA_WIDTH]  = out_resp[out_port*RESP_W + RESP_DATA_LSB +: WRITE_DATA_WIDTH];
+        end
+    endgenerate
+    integer lr_bank;
+    always @(posedge clk) begin
+        if (rst) other_rsv_event_q <= {NB{1'b0}};
+        else
+            for (lr_bank = 0; lr_bank < NB; lr_bank = lr_bank + 1)
+                other_rsv_event_q[lr_bank] <= |(bk_rsv_event & ~({{(NB-1){1'b0}}, 1'b1} << lr_bank));
+    end
     l1d_l2_port #(`L1D_PARAMS_PASS, .L2_ADDR_W(L2_ADDR_W), .L2_MID_W(L2_MID_W), .L2_TID_W(L2_TID_W),
                   .L2_MASTER_ID(L2_MASTER_ID)) u_l2_port (
         .clk                           (clk),
@@ -338,55 +356,56 @@ module l1d_top #(
         end
     end
 `ifdef L1D_DEBUG
-    reg              dbg_ov [0:INQ_DEPTH-1];
-    reg              dbg_ow [0:INQ_DEPTH-1];
-    reg              dbg_oc [0:INQ_DEPTH-1];
-    reg [ADDR_W-1:0] dbg_oa [0:INQ_DEPTH-1];
-    integer          dbg_ot [0:INQ_DEPTH-1];
-    integer          dbg_cyc, dbg_i, dbg_age;
+    localparam DBG_N = LSU_PORTS * (1 << IDX_BITS);
+    reg              dbg_ov [0:DBG_N-1];
+    reg              dbg_ow [0:DBG_N-1];
+    reg              dbg_oc [0:DBG_N-1];
+    reg [ADDR_W-1:0] dbg_oa [0:DBG_N-1];
+    integer          dbg_ot [0:DBG_N-1];
+    integer          dbg_cyc, dbg_i, dbg_age, dbg_port, dbg_e;
     initial begin
         dbg_cyc = 0;
-        for (dbg_i = 0; dbg_i < INQ_DEPTH; dbg_i = dbg_i + 1) dbg_ov[dbg_i] = 1'b0;
+        for (dbg_i = 0; dbg_i < DBG_N; dbg_i = dbg_i + 1) dbg_ov[dbg_i] = 1'b0;
     end
     always @(posedge clk) begin
         if (rst) begin
             dbg_cyc = 0;
-            for (dbg_i = 0; dbg_i < INQ_DEPTH; dbg_i = dbg_i + 1) dbg_ov[dbg_i] = 1'b0;
+            for (dbg_i = 0; dbg_i < DBG_N; dbg_i = dbg_i + 1) dbg_ov[dbg_i] = 1'b0;
         end else begin
             dbg_cyc = dbg_cyc + 1;
-            if (lsu_response_valid && lsu_response_read_enable) begin
-                if (!dbg_ov[lsu_response_rob_index])
-                    $display("[%0t] L1D TOP  ERROR response for idx %0d, which is not outstanding",
-                             $time, lsu_response_rob_index);
-                else
-                    $display("[%0t] L1D TOP  DONE  idx=%0d %s %s addr=%h latency=%0d cycles",
-                             $time, lsu_response_rob_index,
-                             (dbg_ow[lsu_response_rob_index] ? "ST" : "LD"),
-                             (dbg_oc[lsu_response_rob_index] ? "C " : "NC"),
-                             dbg_oa[lsu_response_rob_index],
-                             dbg_cyc - dbg_ot[lsu_response_rob_index]);
-                dbg_ov[lsu_response_rob_index] = 1'b0;
+            for (dbg_port = 0; dbg_port < LSU_PORTS; dbg_port = dbg_port + 1) begin
+                if (lsu_response_valid[dbg_port] && lsu_response_read_enable[dbg_port]) begin
+                    dbg_e = dbg_port * (1 << IDX_BITS) + lsu_response_rob_index[dbg_port*IDX_BITS +: IDX_BITS];
+                    if (!dbg_ov[dbg_e])
+                        $display("[%0t] L1D TOP  ERROR port %0d response for idx %0d, which is not outstanding",
+                                 $time, dbg_port, lsu_response_rob_index[dbg_port*IDX_BITS +: IDX_BITS]);
+                    else
+                        $display("[%0t] L1D TOP  DONE  port %0d idx=%0d %s %s addr=%h latency=%0d cycles",
+                                 $time, dbg_port, lsu_response_rob_index[dbg_port*IDX_BITS +: IDX_BITS],
+                                 (dbg_ow[dbg_e] ? "ST" : "LD"), (dbg_oc[dbg_e] ? "C " : "NC"), dbg_oa[dbg_e],
+                                 dbg_cyc - dbg_ot[dbg_e]);
+                    dbg_ov[dbg_e] = 1'b0;
+                end
+                if (cpu_request_valid[dbg_port]) begin
+                    dbg_e = dbg_port * (1 << IDX_BITS) + cpu_request_rob_index[dbg_port*IDX_BITS +: IDX_BITS];
+                    if (dbg_ov[dbg_e])
+                        $display("[%0t] L1D TOP  ERROR port %0d idx %0d reused while still outstanding (old addr %h, issued %0d cycles ago; new addr %h). cpu_request_valid must be 1 for exactly one cycle per request, and an index may be reused only after its response.",
+                                 $time, dbg_port, cpu_request_rob_index[dbg_port*IDX_BITS +: IDX_BITS], dbg_oa[dbg_e],
+                                 dbg_cyc - dbg_ot[dbg_e], cpu_request_addr[dbg_port*ADDR_W +: ADDR_W]);
+                    dbg_ov[dbg_e] = 1'b1;
+                    dbg_ow[dbg_e] = cpu_request_is_write[dbg_port];
+                    dbg_oc[dbg_e] = cpu_request_cacheable[dbg_port];
+                    dbg_oa[dbg_e] = cpu_request_addr[dbg_port*ADDR_W +: ADDR_W];
+                    dbg_ot[dbg_e] = dbg_cyc;
+                end
             end
-            if (cpu_request_valid) begin
-                if (dbg_ov[cpu_request_rob_index])
-                    $display("[%0t] L1D TOP  ERROR idx %0d reused while still outstanding (old addr %h, issued %0d cycles ago; new addr %h). valid_cpu must be 1 for exactly one cycle per request, and an index may be reused only after its response.",
-                             $time, cpu_request_rob_index, dbg_oa[cpu_request_rob_index], dbg_cyc - dbg_ot[cpu_request_rob_index], cpu_request_addr);
-                if (input_queue_full)
-                    $display("[%0t] L1D TOP  ERROR request idx %0d while the input queue is full (stop=1): it is lost",
-                             $time, cpu_request_rob_index);
-                dbg_ov[cpu_request_rob_index] = 1'b1;
-                dbg_ow[cpu_request_rob_index] = cpu_request_is_write;
-                dbg_oc[cpu_request_rob_index] = cpu_request_cacheable;
-                dbg_oa[cpu_request_rob_index] = cpu_request_addr;
-                dbg_ot[cpu_request_rob_index] = dbg_cyc;
-            end
-            for (dbg_i = 0; dbg_i < INQ_DEPTH; dbg_i = dbg_i + 1) begin
+            for (dbg_i = 0; dbg_i < DBG_N; dbg_i = dbg_i + 1) begin
                 dbg_age = dbg_cyc - dbg_ot[dbg_i];
                 if (dbg_ov[dbg_i] && dbg_age > 0 && (dbg_age % `L1D_DBG_WD) == 0)
-                    $display("[%0t] L1D TOP  STUCK idx=%0d %s %s addr=%h (bank %0d) has waited %0d cycles for its response; input queue empty=%b, output valid=%b, read_enable=%b",
-                             $time, dbg_i, (dbg_ow[dbg_i] ? "ST" : "LD"), (dbg_oc[dbg_i] ? "C " : "NC"),
+                    $display("[%0t] L1D TOP  STUCK port %0d idx=%0d %s %s addr=%h (bank %0d) has waited %0d cycles for its response; stop=%b, output valid=%b, read_enable=%b",
+                             $time, dbg_i / (1 << IDX_BITS), dbg_i % (1 << IDX_BITS), (dbg_ow[dbg_i] ? "ST" : "LD"), (dbg_oc[dbg_i] ? "C " : "NC"),
                              dbg_oa[dbg_i], dbg_oa[dbg_i][BANK_LSB +: BANK_W], dbg_age,
-                             q_empty, lsu_response_valid, lsu_response_read_enable);
+                             input_queue_full, lsu_response_valid, lsu_response_read_enable);
             end
             if (!mt_busy && (flush_request || clean_request))
                 $display("[%0t] L1D TOP  MAINT start %s", $time, flush_request ? "flush" : "clean");
