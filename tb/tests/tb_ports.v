@@ -335,6 +335,7 @@ module tb_ports;
             if (lat1 < lat_min) lat_min = lat1; if (lat2 < lat_min) lat_min = lat2; if (lat3 < lat_min) lat_min = lat3;
             if (lat1 > lat_max) lat_max = lat1; if (lat2 > lat_max) lat_max = lat2; if (lat3 > lat_max) lat_max = lat3;
             check(lat_min == 4 && lat_max == 7 && lat_sum == 22, "CC-2: four hits to one bank in one cycle: 4, 5, 6, 7 cycles");
+            check(lat0 == 4 && lat1 == 5 && lat2 == 6 && lat3 == 7, "CC-2: in port order P0, P1, P2, P3 (same cycle)");
             repeat (6) idle;
         end
     endtask

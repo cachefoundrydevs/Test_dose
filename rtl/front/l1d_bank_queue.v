@@ -14,8 +14,8 @@ module l1d_bank_queue #(
 );
     `include "l1d_encodings.vh"
     `include "l1d_fields.vh"
-    localparam ORDER_DEPTH = LSU_PORTS * PORT_QUEUE_DEPTH;
-    localparam ORDER_PTR_W = (ORDER_DEPTH > 1) ? $clog2(ORDER_DEPTH) : 1;
+    localparam ORDER_NEED  = LSU_PORTS * PORT_QUEUE_DEPTH;
+    localparam ORDER_DEPTH = 1 << $clog2(ORDER_NEED);
     localparam QCNT_W      = $clog2(PORT_QUEUE_DEPTH + 1);
     localparam STOP_MARGIN = 2;
     input  wire                          clk;
@@ -51,40 +51,40 @@ module l1d_bank_queue #(
     endgenerate
     wire all_lines_empty = &line_empty;
     reg  [PORT_W-1:0]      order_port [0:ORDER_DEPTH-1];
-    reg  [ORDER_PTR_W-1:0] order_read_ptr;
-    reg  [ORDER_PTR_W-1:0] order_write_ptr;
-    wire [PORT_W-1:0]      oldest_port = order_port[order_read_ptr];
-    localparam [ORDER_PTR_W:0] ORDER_DEPTH_C = ORDER_DEPTH;
-    function [ORDER_PTR_W-1:0] order_ptr_add;
-        input [ORDER_PTR_W-1:0] base_ptr;
-        input [ORDER_PTR_W:0]   step_cnt;
-        reg   [ORDER_PTR_W:0]   sum_value;
+    reg  [ORDER_DEPTH-1:0] order_read_onehot;
+    reg  [ORDER_DEPTH-1:0] order_write_onehot;
+    function [ORDER_DEPTH-1:0] rotate_left;
+        input [ORDER_DEPTH-1:0] pointer_onehot;
+        input integer           step_cnt;
+        integer                 bit_idx;
         begin
-            sum_value = {1'b0, base_ptr} + step_cnt;
-            if (sum_value >= ORDER_DEPTH_C) sum_value = sum_value - ORDER_DEPTH_C;
-            order_ptr_add = sum_value[ORDER_PTR_W-1:0];
+            for (bit_idx = 0; bit_idx < ORDER_DEPTH; bit_idx = bit_idx + 1)
+                rotate_left[(bit_idx + step_cnt) % ORDER_DEPTH] = pointer_onehot[bit_idx];
         end
     endfunction
-    wire [LSU_PORTS-1:0] fresh_grant_onehot;
-    wire [PORT_W-1:0]    fresh_grant_index;
-    wire                 fresh_any;
-    wire                 bank_takes_offer = bank_request_valid && bank_request_ready;
-    wire                 fresh_issue      = all_lines_empty && fresh_any && bank_request_ready;
-    l1d_arb_rr #(.N(LSU_PORTS), .IDX_W(PORT_W)) u_fresh_pick (
-        .clk          (clk),
-        .rst          (rst),
-        .request_bits (port_request_valid),
-        .grant_taken  (fresh_issue),
-        .grant_onehot (fresh_grant_onehot),
-        .grant_index  (fresh_grant_index),
-        .any_request  (fresh_any)
-    );
+    reg     [PORT_W-1:0]    oldest_port;
+    integer                 read_place;
+    always @* begin
+        oldest_port = {PORT_W{1'b0}};
+        for (read_place = 0; read_place < ORDER_DEPTH; read_place = read_place + 1)
+            oldest_port = oldest_port | ({PORT_W{order_read_onehot[read_place]}} & order_port[read_place]);
+    end
+    reg  [LSU_PORTS-1:0] fresh_onehot;
+    integer              prio_port;
+    always @* begin
+        fresh_onehot = {LSU_PORTS{1'b0}};
+        for (prio_port = LSU_PORTS - 1; prio_port >= 0; prio_port = prio_port - 1)
+            if (port_request_valid[prio_port]) fresh_onehot = {{(LSU_PORTS-1){1'b0}}, 1'b1} << prio_port;
+    end
+    wire fresh_any        = |port_request_valid;
+    wire bank_takes_offer = bank_request_valid && bank_request_ready;
+    wire fresh_issue      = all_lines_empty && fresh_any && bank_request_ready;
     reg [REQ_W-1:0] fresh_packet;
     integer         fresh_port;
     always @* begin
         fresh_packet = {REQ_W{1'b0}};
         for (fresh_port = 0; fresh_port < LSU_PORTS; fresh_port = fresh_port + 1)
-            fresh_packet = fresh_packet | ({REQ_W{fresh_grant_onehot[fresh_port]}} & port_request_packet[fresh_port*REQ_W +: REQ_W]);
+            fresh_packet = fresh_packet | ({REQ_W{fresh_onehot[fresh_port]}} & port_request_packet[fresh_port*REQ_W +: REQ_W]);
     end
     reg [REQ_W-1:0] oldest_head_packet;
     integer         head_port;
@@ -99,37 +99,48 @@ module l1d_bank_queue #(
     genvar move_port;
     generate
         for (move_port = 0; move_port < LSU_PORTS; move_port = move_port + 1) begin : g_move
-            assign line_push[move_port] = port_request_valid[move_port] && !(fresh_issue && fresh_grant_onehot[move_port]);
+            assign line_push[move_port] = port_request_valid[move_port] && !(fresh_issue && fresh_onehot[move_port]);
             assign line_pop[move_port]  = !all_lines_empty && bank_takes_offer && (oldest_port == move_port);
             wire [QCNT_W:0] free_next = {1'b0, line_free_cnt[move_port*QCNT_W +: QCNT_W]}
                                         + {{QCNT_W{1'b0}}, line_pop[move_port]} - {{QCNT_W{1'b0}}, line_push[move_port]};
             assign port_queue_nearly_full_next[move_port] = (free_next < STOP_MARGIN);
         end
     endgenerate
-    reg [LSU_PORTS*ORDER_PTR_W-1:0] join_slot_flat;
-    reg [ORDER_PTR_W:0]             join_total;
-    integer                         slot_port;
+    reg     [ORDER_DEPTH-1:0] place_write_en;
+    reg     [ORDER_DEPTH*PORT_W-1:0] place_write_port;
+    reg     [ORDER_DEPTH-1:0] port_place_onehot;
+    integer                   rank_cnt;
+    integer                   join_port;
+    integer                   place_idx;
     always @* begin
-        join_total = {(ORDER_PTR_W+1){1'b0}};
-        for (slot_port = 0; slot_port < LSU_PORTS; slot_port = slot_port + 1) begin
-            join_slot_flat[slot_port*ORDER_PTR_W +: ORDER_PTR_W] = order_ptr_add(order_write_ptr, join_total);
-            join_total = join_total + {{ORDER_PTR_W{1'b0}}, line_push[slot_port]};
+        place_write_en   = {ORDER_DEPTH{1'b0}};
+        place_write_port = {(ORDER_DEPTH*PORT_W){1'b0}};
+        rank_cnt = 0;
+        for (join_port = 0; join_port < LSU_PORTS; join_port = join_port + 1) begin
+            port_place_onehot = rotate_left(order_write_onehot, rank_cnt);
+            if (port_request_valid[join_port]) begin
+                place_write_en = place_write_en | port_place_onehot;
+                for (place_idx = 0; place_idx < ORDER_DEPTH; place_idx = place_idx + 1)
+                    if (port_place_onehot[place_idx])
+                        place_write_port[place_idx*PORT_W +: PORT_W] = join_port[PORT_W-1:0];
+                rank_cnt = rank_cnt + 1;
+            end
         end
     end
-    wire [ORDER_PTR_W-1:0] order_write_ptr_next = order_ptr_add(order_write_ptr, join_total);
-    wire [ORDER_PTR_W-1:0] order_read_ptr_next  = order_ptr_add(order_read_ptr, {{ORDER_PTR_W{1'b0}}, 1'b1});
-    integer write_port;
+    wire [ORDER_DEPTH-1:0] order_write_onehot_next = rotate_left(order_write_onehot, rank_cnt);
+    wire [ORDER_DEPTH-1:0] order_read_onehot_next  = rotate_left(order_read_onehot, 1);
+    integer write_place;
     always @(posedge clk) begin
         if (rst) begin
-            order_read_ptr  <= {ORDER_PTR_W{1'b0}};
-            order_write_ptr <= {ORDER_PTR_W{1'b0}};
+            order_read_onehot  <= {{(ORDER_DEPTH-1){1'b0}}, 1'b1};
+            order_write_onehot <= {{(ORDER_DEPTH-1){1'b0}}, 1'b1};
         end else begin
-            for (write_port = 0; write_port < LSU_PORTS; write_port = write_port + 1)
-                if (line_push[write_port])
-                    order_port[join_slot_flat[write_port*ORDER_PTR_W +: ORDER_PTR_W]] <= write_port[PORT_W-1:0];
-            order_write_ptr <= order_write_ptr_next;
-            if (!all_lines_empty && bank_takes_offer)
-                order_read_ptr <= order_read_ptr_next;
+            for (write_place = 0; write_place < ORDER_DEPTH; write_place = write_place + 1)
+                if (place_write_en[write_place])
+                    order_port[write_place] <= place_write_port[write_place*PORT_W +: PORT_W];
+            order_write_onehot <= order_write_onehot_next;
+            if (bank_takes_offer)
+                order_read_onehot <= order_read_onehot_next;
         end
     end
     integer check_port;
