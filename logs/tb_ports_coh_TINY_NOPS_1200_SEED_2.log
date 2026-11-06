@@ -1,0 +1,23 @@
+SLOW 4905000: port 3 idx 3 kind 0 @0000000000000d16 took 419 cycles (sent at cycle 71)
+SLOW 6685000: port 1 idx 5 kind 1 @0000000000000470 took 413 cycles (sent at cycle 255)
+SLOW 7345000: port 2 idx 2 kind 4 @0000000000000180 took 423 cycles (sent at cycle 311)
+SLOW 18375000: port 1 idx 5 kind 0 @00000000000014df took 455 cycles (sent at cycle 1382)
+SLOW 31445000: port 0 idx 1 kind 1 @000000000000117a took 521 cycles (sent at cycle 2623)
+SLOW 32555000: port 3 idx 3 kind 0 @00000000000014b0 took 667 cycles (sent at cycle 2588)
+SLOW 40595000: port 0 idx 1 kind 1 @0000000000000470 took 466 cycles (sent at cycle 3593)
+SLOW 41175000: port 2 idx 4 kind 1 @000000000000119c took 415 cycles (sent at cycle 3702)
+SLOW 42855000: port 2 idx 7 kind 1 @0000000000000048 took 402 cycles (sent at cycle 3883)
+SLOW 56305000: port 3 idx 3 kind 0 @0000000000000de8 took 416 cycles (sent at cycle 5214)
+SLOW 56645000: port 0 idx 4 kind 0 @00000000000001e8 took 435 cycles (sent at cycle 5229)
+SLOW 56985000: port 1 idx 4 kind 1 @00000000000015dc took 429 cycles (sent at cycle 5269)
+SLOW 72355000: port 1 idx 0 kind 0 @000000000000154b took 446 cycles (sent at cycle 6789)
+SLOW 89435000: port 1 idx 0 kind 1 @0000000000001062 took 434 cycles (sent at cycle 8509)
+SLOW 93725000: port 3 idx 1 kind 0 @0000000000001867 took 406 cycles (sent at cycle 8966)
+random phase: 1200 requests, 0 outside writes (mode B), 0 clean / flush under load (0 started with requests outstanding)
+memory matches the reference after flush
+memory matches the reference after final flush
+snoops: 753 sent (388 invalidate), 753 answered (290 present, 125 dirty, 463 absent), 0 cancelled
+stats: 1648 requests (LD 1068, ST 550, LR 0, SC 0, AMO 30), 1648 answered; max latency per port: P0 521 P1 455 P2 423 P3 667
+latency histogram (cycles 4 | 5 | 6-7 | 8-11 | 12-23 | 24-63 | 64-255 | more): 97 31 22 24 54 624 663 133
+TEST PASSED: tb_ports_coh (1648 requests, seed 2)
+tb/common/tb_ports_common.vh:687: $finish called at 131150000 (1ps)

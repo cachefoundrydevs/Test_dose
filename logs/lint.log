@@ -1,0 +1,400 @@
+%Warning-WIDTHEXPAND: rtl/common/l1d_age_matrix.v:31:27: Operator EQ expects 32 bits on the RHS, but RHS's VARREF 'allocate_index' generates 1 bits.
+                                                       : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_snp.u_age'
+   31 |                     if (i == allocate_index) older[i] <= {N{1'b0}};
+      |                           ^~
+%Warning-WIDTHEXPAND: rtl/common/l1d_age_matrix.v:31:27: Operator EQ expects 32 bits on the RHS, but RHS's VARREF 'allocate_index' generates 3 bits.
+                                                       : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu.u_age'
+   31 |                     if (i == allocate_index) older[i] <= {N{1'b0}};
+      |                           ^~
+%Warning-WIDTHEXPAND: rtl/bank/fifo/l1d_snoop_buf.v:177:60: Operator EQ expects 32 bits on the LHS, but LHS's VARREF 's2_action_entry_id' generates 1 bits.
+                                                          : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_snp'
+  177 |                 if (s2_action_valid && (s2_action_entry_id == s)) begin
+      |                                                            ^~
+%Warning-WIDTHEXPAND: rtl/bank/fifo/l1d_lsu_req_buf.v:172:61: Operator EQ expects 32 bits on the LHS, but LHS's VARREF 's2_action_seat' generates 3 bits.
+                                                            : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu'
+  172 |             ev_act[e]  = s2_action_valid && (s2_action_seat == e);
+      |                                                             ^~
+%Warning-WIDTHEXPAND: rtl/bank/fifo/l1d_lsu_req_buf.v:173:61: Operator EQ expects 32 bits on the LHS, but LHS's VARREF 's3_done_seat' generates 3 bits.
+                                                            : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu'
+  173 |             ev_done[e] = s3_done_valid   && (s3_done_seat   == e);
+      |                                                             ^~
+%Warning-WIDTHEXPAND: rtl/bank/miss/l1d_mshr_entry.v:117:58: Operator EQ expects 32 bits on the LHS, but LHS's SEL generates 2 bits.
+                                                           : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_mshr.g_entry[7].u_entry'
+  117 |             off_hi_r[a] <= (p_off[OFFSET_W-1:BEAT_OFF_W] == a);
+      |                                                          ^~
+%Warning-WIDTHEXPAND: rtl/bank/miss/l1d_mshr_entry.v:119:51: Operator EQ expects 32 bits on the LHS, but LHS's SEL generates 4 bits.
+                                                           : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_mshr.g_entry[7].u_entry'
+  119 |             off_lo_r[a] <= (p_off[BEAT_OFF_W-1:0] == a);
+      |                                                   ^~
+%Warning-WIDTHEXPAND: rtl/bank/s3/l1d_bank_s3.v:122:34: Operator ASSIGNW expects 512 bits on the Assign RHS, but Assign RHS's VARREF 'n_wr_data' generates 128 bits.
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_s3'
+  122 |     wire [LINE_W-1:0] n_wr_line  = n_wr_data;
+      |                                  ^
+%Warning-WIDTHEXPAND: rtl/bank/s2/l1d_bank_s2.v:142:47: Operator EQ expects 32 bits on the LHS, but LHS's VARREF 's2_way' generates 2 bits.
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_s2'
+  142 |             line_q = line_q | ({LINE_W{s2_way == lw}} & s2_lines[lw*LINE_W +: LINE_W]);
+      |                                               ^~
+%Warning-WIDTHEXPAND: rtl/bank/s2/l1d_bank_s2.v:155:61: Operator EQ expects 32 bits on the LHS, but LHS's VARREF 's2_way' generates 2 bits.
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_s2'
+  155 |             hit_data = hit_data | ({WRITE_DATA_WIDTH{s2_way == hw}} & s2_words[hw*WRITE_DATA_WIDTH +: WRITE_DATA_WIDTH]);
+      |                                                             ^~
+%Warning-WIDTHEXPAND: rtl/bank/s1/l1d_bank_s1.v:184:35: Operator ASSIGNW expects 512 bits on the Assign RHS, but Assign RHS's VARREF 's1_wdata' generates 64 bits.
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_s1'
+  184 |     wire [LINE_W-1:0]     st_wext = s1_wdata;
+      |                                   ^
+%Warning-WIDTHEXPAND: rtl/bank/s1/l1d_bank_s1.v:191:71: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 's1_off' generates 6 bits.
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_s1'
+  191 |             st_be[bi] = s1_line_op || ((bi >= s1_off) && (bi < s1_off + nby));
+      |                                                                       ^
+%Warning-WIDTHEXPAND: rtl/bank/s0/l1d_bank_fifo_s0.v:114:59: Operator ADD expects 5 bits on the LHS, but LHS's VARREF 'r_on_port' generates 1 bits.
+                                                           : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0'
+  114 |             wire [RCNT_W+1:0] resv_miss_port  = r_on_port + s1_on_port;
+      |                                                           ^
+%Warning-WIDTHEXPAND: rtl/bank/s0/l1d_bank_fifo_s0.v:114:59: Operator ADD expects 5 bits on the RHS, but RHS's VARREF 's1_on_port' generates 1 bits.
+                                                           : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0'
+  114 |             wire [RCNT_W+1:0] resv_miss_port  = r_on_port + s1_on_port;
+      |                                                           ^
+%Warning-WIDTHEXPAND: rtl/bank/s0/l1d_bank_fifo_s0.v:115:59: Operator ADD expects 5 bits on the LHS, but LHS's VARREF 'r_on_port' generates 1 bits.
+                                                           : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0'
+  115 |             wire [RCNT_W+1:0] resv_grant_port = r_on_port + s1_on_port + push_this_cycle;
+      |                                                           ^
+%Warning-WIDTHEXPAND: rtl/bank/s0/l1d_bank_fifo_s0.v:115:59: Operator ADD expects 5 bits on the RHS, but RHS's VARREF 's1_on_port' generates 1 bits.
+                                                           : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0'
+  115 |             wire [RCNT_W+1:0] resv_grant_port = r_on_port + s1_on_port + push_this_cycle;
+      |                                                           ^
+%Warning-WIDTHEXPAND: rtl/bank/s0/l1d_bank_fifo_s0.v:115:72: Operator ADD expects 5 bits on the RHS, but RHS's VARREF 'push_this_cycle' generates 1 bits.
+                                                           : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0'
+  115 |             wire [RCNT_W+1:0] resv_grant_port = r_on_port + s1_on_port + push_this_cycle;
+      |                                                                        ^
+%Warning-WIDTHEXPAND: rtl/bank/s0/l1d_bank_fifo_s0.v:116:60: Operator GT expects 5 bits on the LHS, but LHS's VARREF 'port_free' generates 3 bits.
+                                                           : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0'
+  116 |             assign port_miss_ok[credit_port]  = (port_free > resv_miss_port);
+      |                                                            ^
+%Warning-WIDTHEXPAND: rtl/bank/s0/l1d_bank_fifo_s0.v:117:60: Operator GT expects 5 bits on the LHS, but LHS's VARREF 'port_free' generates 3 bits.
+                                                           : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0'
+  117 |             assign port_grant_ok[credit_port] = (port_free > resv_grant_port);
+      |                                                            ^
+%Warning-WIDTHEXPAND: rtl/bank/miss/l1d_victim_cache.v:70:41: Operator EQ expects 3 bits on the LHS, but LHS's ARRAYSEL generates 2 bits.
+                                                            : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_vc'
+   70 |             assign is_clean[g] = (st[g] == VC_VALID) && !dty[g] && !excl[g];
+      |                                         ^~
+%Warning-WIDTHEXPAND: rtl/bank/miss/l1d_victim_cache.v:71:41: Operator EQ expects 3 bits on the LHS, but LHS's ARRAYSEL generates 2 bits.
+                                                            : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_vc'
+   71 |             assign is_dirty[g] = (st[g] == VC_VALID) &&  dty[g] && !excl[g];
+      |                                         ^~
+%Warning-WIDTHEXPAND: rtl/bank/miss/l1d_victim_cache.v:72:41: Operator EQ expects 3 bits on the LHS, but LHS's ARRAYSEL generates 2 bits.
+                                                            : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_vc'
+   72 |             assign is_pend[g]  = (st[g] == VC_WBPEND) && !iss[g];
+      |                                         ^~
+%Warning-WIDTHEXPAND: rtl/bank/miss/l1d_victim_cache.v:98:55: Operator AND expects 3 bits on the RHS, but RHS's ARRAYSEL generates 2 bits.
+                                                            : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_vc'
+   98 |             lk_st   = lk_st   | ({3{lk_pick[q]}}      & st[q]);
+      |                                                       ^
+%Warning-WIDTHEXPAND: rtl/bank/miss/l1d_victim_cache.v:187:21: Operator ASSIGN expects 3 bits on the Assign RHS, but Assign RHS's ARRAYSEL generates 2 bits.
+                                                             : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_vc'
+  187 |             st_base = st[sn];
+      |                     ^
+%Warning-WIDTHEXPAND: rtl/bank/miss/l1d_victim_cache.v:188:65: Operator EQ expects 32 bits on the LHS, but LHS's VARREF 'writeback_done_slot_id' generates 3 bits.
+                                                             : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_vc'
+  188 |             if (writeback_done_valid && (writeback_done_slot_id == sn))     st_base = VC_FREE;
+      |                                                                 ^~
+%Warning-WIDTHEXPAND: rtl/bank/miss/l1d_victim_cache.v:189:41: Operator EQ expects 3 bits on the LHS, but LHS's ARRAYSEL generates 2 bits.
+                                                             : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_vc'
+  189 |             if (drain_enable && (st[sn] == VC_VALID) && !dty[sn])           st_base = VC_FREE;
+      |                                         ^~
+%Warning-WIDTHEXPAND: rtl/bank/miss/l1d_victim_cache.v:190:58: Operator EQ expects 32 bits on the LHS, but LHS's VARREF 'swap_start_slot' generates 3 bits.
+                                                             : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_vc'
+  190 |             h_swp = swap_start_valid && (swap_start_slot == sn);
+      |                                                          ^~
+%Warning-WIDTHEXPAND: rtl/bank/miss/l1d_victim_cache.v:191:76: Operator EQ expects 32 bits on the LHS, but LHS's VARREF 'snoop_hit_slot' generates 3 bits.
+                                                             : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_vc'
+  191 |             h_snp = snoop_hit_valid && snoop_invalidate && (snoop_hit_slot == sn);
+      |                                                                            ^~
+%Warning-WIDTHEXPAND: rtl/bank/miss/l1d_victim_cache.v:192:52: Operator EQ expects 32 bits on the LHS, but LHS's VARREF 'release_slot' generates 3 bits.
+                                                             : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_vc'
+  192 |             h_rel = release_valid && (release_slot == sn);
+      |                                                    ^~
+%Warning-WIDTHEXPAND: rtl/bank/miss/l1d_victim_cache.v:193:50: Operator EQ expects 32 bits on the LHS, but LHS's VARREF 'insert_slot' generates 3 bits.
+                                                             : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_vc'
+  193 |             h_ins = insert_valid && (insert_slot == sn);
+      |                                                  ^~
+%Warning-WIDTHEXPAND: rtl/bank/miss/l1d_victim_cache.v:201:67: Operator EQ expects 32 bits on the LHS, but LHS's VARREF 'wb_slot' generates 3 bits.
+                                                             : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_vc'
+  201 |             h_hand    = wb_act && writeback_req_ready && (wb_slot == sn);
+      |                                                                   ^~
+%Warning-WIDTHTRUNC: rtl/bank/miss/l1d_victim_cache.v:250:24: Operator ASSIGNDLY expects 2 bits on the Assign RHS, but Assign RHS's VARREF 'VC_FREE' generates 3 bits.
+                                                            : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_vc'
+  250 |                 st[s]  <= VC_FREE;
+      |                        ^~
+%Warning-WIDTHTRUNC: rtl/bank/miss/l1d_victim_cache.v:263:24: Operator ASSIGNDLY expects 2 bits on the Assign RHS, but Assign RHS's ARRAYSEL generates 3 bits.
+                                                            : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_vc'
+  263 |                 st[s]  <= st_n[s];
+      |                        ^~
+%Warning-WIDTHEXPAND: rtl/bank/miss/l1d_mshr_nc.v:85:38: Operator EQ expects 32 bits on the LHS, but LHS's VARREF 'f_lane' generates 4 bits.
+                                                       : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_nc'
+   85 |             lane_oh_q[ql] <= (f_lane == ql);
+      |                                      ^~
+%Warning-WIDTHEXPAND: rtl/bank/miss/l1d_mshr_nc.v:147:25: Operator ASSIGNW expects 3 bits on the Assign RHS, but Assign RHS's VARREF 'h_size' generates 2 bits.
+                                                        : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_nc'
+  147 |     wire [2:0] h_axsize = h_size;
+      |                         ^
+%Warning-WIDTHEXPAND: rtl/l2/l1d_l2_port.v:189:89: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'sel_offset' generates 6 bits.
+                                                 : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.u_l2_port'
+  189 |             nc_read_mask[mask_bit] = (mask_bit >= sel_offset) && (mask_bit < sel_offset + nc_read_bytes);
+      |                                                                                         ^
+%Warning-WIDTHEXPAND: dummy_l2/l2_pkt_axi_bridge.v:169:16: Operator ADD expects 32 bits on the RHS, but RHS's SEL generates 1 bits.
+                                                         : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_bridge'
+  169 |          n = n + rq_mask[km];
+      |                ^
+%Warning-WIDTHEXPAND: dummy_l2/l2_pkt_axi_bridge.v:261:33: Operator EQ expects 32 or 5 bits on the LHS, but LHS's VARREF 'resp_sel' generates 4 bits.
+                                                         : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_bridge'
+  261 |             rr_ptr <= (resp_sel == N_OUT - 1) ? {SLOT_W{1'b0}} :
+      |                                 ^~
+%Warning-UNUSEDSIGNAL: dummy_l2/l1d_top_soc.v:112:46: Bits of signal are not used: 'axi_wr_res_addr_id'[8:6]
+                                                    : ... note: In instance 'l1d_top_soc'
+  112 |     input  wire [D_AXI_WRITE_ADDR_BITS-1:0]  axi_wr_res_addr_id,
+      |                                              ^~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: dummy_l2/l1d_top_soc.v:143:35: Bits of signal are not used: 'awlen'[7:3]
+                                                    : ... note: In instance 'l1d_top_soc'
+  143 |     wire [7:0]                    awlen, arlen;
+      |                                   ^~~~~
+%Warning-UNUSEDSIGNAL: dummy_l2/l1d_top_soc.v:143:42: Bits of signal are not used: 'arlen'[7:3]
+                                                    : ... note: In instance 'l1d_top_soc'
+  143 |     wire [7:0]                    awlen, arlen;
+      |                                          ^~~~~
+%Warning-UNUSEDSIGNAL: dummy_l2/l1d_top_axi.v:115:43: Bits of signal are not used: 'port_stop'[3:1]
+                                                    : ... note: In instance 'l1d_top_soc.u_l1d'
+  115 |     wire [LSU_PORTS-1:0]                  port_stop;
+      |                                           ^~~~~~~~~
+%Warning-UNUSEDSIGNAL: dummy_l2/l1d_top_axi.v:116:43: Bits of signal are not used: 'port_rsp_valid'[3:1]
+                                                    : ... note: In instance 'l1d_top_soc.u_l1d'
+  116 |     wire [LSU_PORTS-1:0]                  port_rsp_valid;
+      |                                           ^~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: dummy_l2/l1d_top_axi.v:117:43: Bits of signal are not used: 'port_rsp_is_write_ack'[3:1]
+                                                    : ... note: In instance 'l1d_top_soc.u_l1d'
+  117 |     wire [LSU_PORTS-1:0]                  port_rsp_is_write_ack;
+      |                                           ^~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: dummy_l2/l1d_top_axi.v:118:43: Bits of signal are not used: 'port_rsp_size'[7:2]
+                                                    : ... note: In instance 'l1d_top_soc.u_l1d'
+  118 |     wire [LSU_PORTS*MEM_SIZE_BITS-1:0]    port_rsp_size;
+      |                                           ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: dummy_l2/l1d_top_axi.v:119:43: Bits of signal are not used: 'port_rsp_master_id'[7:2]
+                                                    : ... note: In instance 'l1d_top_soc.u_l1d'
+  119 |     wire [LSU_PORTS*MASTER_ID_BITS-1:0]   port_rsp_master_id;
+      |                                           ^~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: dummy_l2/l1d_top_axi.v:120:43: Bits of signal are not used: 'port_rsp_rob_index'[11:3]
+                                                    : ... note: In instance 'l1d_top_soc.u_l1d'
+  120 |     wire [LSU_PORTS*IDX_BITS-1:0]         port_rsp_rob_index;
+      |                                           ^~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: dummy_l2/l1d_top_axi.v:121:43: Bits of signal are not used: 'port_rsp_data'[255:64]
+                                                    : ... note: In instance 'l1d_top_soc.u_l1d'
+  121 |     wire [LSU_PORTS*WRITE_DATA_WIDTH-1:0] port_rsp_data;
+      |                                           ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/top/l1d_top.v:69:41: Signal is not used: 'vpu_req_is_write'
+                                              : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache'
+   69 |     input  wire                         vpu_req_is_write,
+      |                                         ^~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/top/l1d_top.v:71:41: Signal is not used: 'vpu_req_master_id'
+                                              : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache'
+   71 |     input  wire [MASTER_ID_BITS-1:0]    vpu_req_master_id,
+      |                                         ^~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/top/l1d_top.v:76:41: Signal is not used: 'vpu_resp_read_enable'
+                                              : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache'
+   76 |     input  wire                         vpu_resp_read_enable,
+      |                                         ^~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/top/l1d_top.v:285:33: Signal is not used: 'vpu_out_resp'
+                                               : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache'
+  285 |     wire [VPKT_W-1:0]           vpu_out_resp;
+      |                                 ^~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/top/l1d_top.v:292:34: Signal is not used: 'vpu_bank_resp'
+                                               : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache'
+  292 |             wire [NB*VPKT_W-1:0] vpu_bank_resp;
+      |                                  ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: dummy_l2/l2_pkt_axi_bridge.v:26:37: Bits of signal are not used: 'm_axi_bresp'[0]
+                                                         : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_bridge'
+   26 |    input  wire [1:0]                m_axi_bresp,
+      |                                     ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: dummy_l2/l2_pkt_axi_bridge.v:31:37: Bits of signal are not used: 'm_axi_rresp'[0]
+                                                         : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_bridge'
+   31 |    input  wire [1:0]                m_axi_rresp,
+      |                                     ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: dummy_l2/l2_pkt_axi_bridge.v:117:27: Bits of signal are not used: 'j'[31:4]
+                                                          : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_bridge'
+  117 |    integer                j;
+      |                           ^
+%Warning-UNUSEDSIGNAL: rtl/front/l1d_resp_merge.v:30:26: Signal is not used: 'sel_idx'
+                                                       : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_port_out[3].g_scalar_out.u_merge'
+   30 |     wire [BANK_W-1:0]    sel_idx;
+      |                          ^~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/l1d_bank.v:140:29: Signal is not used: 's2_amo1'
+                                                 : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank'
+  140 |     wire                    s2_amo1;
+      |                             ^~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/snoop/l1d_snoop_ctrl.v:18:37: Bits of signal are not used: 'snoop_request_addr'[5:0]
+                                                       : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.u_snoop'
+   18 |     input  wire [ADDR_W-1:0]        snoop_request_addr;
+      |                                     ^~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/snoop/l1d_snoop_ctrl.v:50:23: Signal is not used: 'sel_idx'
+                                                       : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.u_snoop'
+   50 |     wire [BANK_W-1:0] sel_idx;
+      |                       ^~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/l2/l1d_l2_port.v:48:40: Signal is not used: 'bank_read_req_burst_len'
+                                                 : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.u_l2_port'
+   48 |     input  wire [NB*8-1:0]             bank_read_req_burst_len;
+      |                                        ^~~~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/l2/l1d_l2_port.v:63:40: Signal is not used: 'bank_write_req_burst_len'
+                                                 : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.u_l2_port'
+   63 |     input  wire [NB*8-1:0]             bank_write_req_burst_len;
+      |                                        ^~~~~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/l2/l1d_l2_port.v:64:40: Signal is not used: 'bank_write_req_size'
+                                                 : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.u_l2_port'
+   64 |     input  wire [NB*3-1:0]             bank_write_req_size;
+      |                                        ^~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/l2/l1d_l2_port.v:98:29: Bits of signal are not used: 'sel_addr'[63:56]
+                                                 : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.u_l2_port'
+   98 |     wire [AXI_ADDR_W-1:0]   sel_addr;
+      |                             ^~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/front/l1d_bank_queue.v:31:42: Signal is not used: 'port_line_data'
+                                                       : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.u_front.g_bank[3].u_queue'
+   31 |     input  wire [LINE_W-1:0]             port_line_data;
+      |                                          ^~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/s0/l1d_bank_fifo_s0.v:144:28: Signal is not used: 'pf_sel_line'
+                                                            : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0'
+  144 |     wire [LINE_ADDR_W-1:0] pf_sel_line;
+      |                            ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/s2/l1d_bank_s2.v:37:40: Signal is not used: 's2_seat'
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_s2'
+   37 |     input  wire [SEAT_W-1:0]           s2_seat;
+      |                                        ^~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/s2/l1d_bank_s2.v:39:40: Signal is not used: 's2_mid'
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_s2'
+   39 |     input  wire [MSHR_ID_W-1:0]        s2_mid;
+      |                                        ^~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/s2/l1d_bank_s2.v:41:40: Signal is not used: 's2_sinv'
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_s2'
+   41 |     input  wire                        s2_sinv;
+      |                                        ^~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/s2/l1d_bank_s2.v:54:40: Signal is not used: 's2_wbpend'
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_s2'
+   54 |     input  wire                        s2_wbpend;
+      |                                        ^~~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/s2/l1d_bank_s2.v:56:40: Signal is not used: 's2_vdirty'
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_s2'
+   56 |     input  wire                        s2_vdirty;
+      |                                        ^~~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/s2/l1d_bank_s2.v:57:40: Signal is not used: 's2_vshared'
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_s2'
+   57 |     input  wire                        s2_vshared;
+      |                                        ^~~~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/s2/l1d_bank_s2.v:58:40: Signal is not used: 's2_vline'
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_s2'
+   58 |     input  wire [LINE_ADDR_W-1:0]      s2_vline;
+      |                                        ^~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/s2/l1d_bank_s2.v:59:40: Signal is not used: 's2_slot'
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_s2'
+   59 |     input  wire [VC_ID_W-1:0]          s2_slot;
+      |                                        ^~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/s2/l1d_bank_s2.v:121:24: Signal is not used: 's2_is_amr'
+                                                       : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_s2'
+  121 |     wire               s2_is_amr = s2_amo &&  s2_seq && !s2_store;
+      |                        ^~~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/s2/l1d_bank_s2.v:122:24: Signal is not used: 's2_is_amw'
+                                                       : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_s2'
+  122 |     wire               s2_is_amw = s2_amo &&  s2_seq &&  s2_store;
+      |                        ^~~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/s2/l1d_bank_s2.v:125:24: Bits of signal are not used: 's2_addr'[63:6]
+                                                       : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_s2'
+  125 |     wire [ADDR_W-1:0]  s2_addr   = s2_req[REQ_ADDR_LSB +: ADDR_W];
+      |                        ^~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/s3/l1d_bank_s3.v:30:40: Signal is not used: 'clk'
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_s3'
+   30 |     input  wire                        clk;
+      |                                        ^~~
+%Warning-UNUSEDSIGNAL: rtl/bank/s3/l1d_bank_s3.v:31:40: Signal is not used: 'rst'
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_s3'
+   31 |     input  wire                        rst;
+      |                                        ^~~
+%Warning-UNUSEDSIGNAL: rtl/bank/s3/l1d_bank_s3.v:49:40: Signal is not used: 'lsu_response_fifo_free'
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_s3'
+   49 |     input  wire [LSU_PORTS*RCNT_W-1:0] lsu_response_fifo_free;
+      |                                        ^~~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/miss/l1d_mshr.v:108:32: Signal is not used: 'rs_i'
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_mshr'
+  108 |     wire [MSHR_ID_W-1:0] ar_i, rs_i, tk_i;
+      |                                ^~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/miss/l1d_mshr.v:130:44: Bits of signal are not used: 'm7_ar_gm'[0]
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_mshr'
+  130 |     wire [N-1:0] m7_ar_next, m7_ar_masked, m7_ar_gm, m7_ar_gu;
+      |                                            ^~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/miss/l1d_mshr.v:130:54: Bits of signal are not used: 'm7_ar_gu'[0]
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_mshr'
+  130 |     wire [N-1:0] m7_ar_next, m7_ar_masked, m7_ar_gm, m7_ar_gu;
+      |                                                      ^~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/miss/l1d_mshr.v:155:44: Bits of signal are not used: 'm7_rs_gm'[0]
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_mshr'
+  155 |     wire [N-1:0] m7_rs_next, m7_rs_masked, m7_rs_gm, m7_rs_gu;
+      |                                            ^~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/miss/l1d_mshr.v:155:54: Bits of signal are not used: 'm7_rs_gu'[0]
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_mshr'
+  155 |     wire [N-1:0] m7_rs_next, m7_rs_masked, m7_rs_gm, m7_rs_gu;
+      |                                                      ^~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/miss/l1d_mshr.v:180:44: Bits of signal are not used: 'm7_tk_gm'[0]
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_mshr'
+  180 |     wire [N-1:0] m7_tk_next, m7_tk_masked, m7_tk_gm, m7_tk_gu;
+      |                                            ^~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/miss/l1d_mshr.v:180:54: Bits of signal are not used: 'm7_tk_gu'[0]
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_mshr'
+  180 |     wire [N-1:0] m7_tk_next, m7_tk_masked, m7_tk_gm, m7_tk_gu;
+      |                                                      ^~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/miss/l1d_mshr.v:204:18: Signal is not used: 'ar_sel'
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_mshr'
+  204 |     wire [N-1:0] ar_sel = {ar_g[N-1:1], ~|ar_g[N-1:1]};
+      |                  ^~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/miss/l1d_mshr.v:205:18: Signal is not used: 'rs_sel'
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_mshr'
+  205 |     wire [N-1:0] rs_sel = {rs_g[N-1:1], ~|rs_g[N-1:1]};
+      |                  ^~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/miss/l1d_mshr.v:206:18: Signal is not used: 'tk_sel'
+                                                      : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_mshr'
+  206 |     wire [N-1:0] tk_sel = {tk_g[N-1:1], ~|tk_g[N-1:1]};
+      |                  ^~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/miss/l1d_mshr_nc.v:99:26: Signal is not used: 'herr'
+                                                        : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_nc'
+   99 |     reg                  herr;
+      |                          ^~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/miss/l1d_victim_cache.v:22:35: Signal is not used: 'lookup_line_addr'
+                                                             : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_vc'
+   22 |     input  wire [LINE_ADDR_W-1:0] lookup_line_addr;
+      |                                   ^~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/miss/l1d_victim_cache.v:79:18: Signal is not used: 'lk_seen'
+                                                             : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_vc'
+   79 |     reg          lk_seen;
+      |                  ^~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/miss/l1d_victim_cache.v:131:24: Signal is not used: 'any_clean'
+                                                              : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_vc'
+  131 |     wire               any_clean;
+      |                        ^~~~~~~~~
+%Warning-UNUSEDSIGNAL: rtl/bank/fifo/l1d_lsu_req_buf.v:42:23: Signal is not used: 'st'
+                                                            : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu'
+   42 |     reg [2:0]         st   [0:N-1];
+      |                       ^~
+%Warning-UNUSEDSIGNAL: rtl/bank/fifo/l1d_lsu_req_buf.v:43:23: Signal is not used: 'wid'
+                                                            : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu'
+   43 |     reg [WID_W-1:0]   wid  [0:N-1];
+      |                       ^~~
+%Warning-UNOPTFLAT: rtl/bank/miss/l1d_victim_cache.v:216:30: Signal unoptimizable: Circular combinational logic: 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[0].u_bank.u_vc.g_lkd[0].tv'
+                                                           : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[0].u_bank.u_vc'
+  216 |             wire [LK_PW-1:0] tv [0:2*N-2];
+      |                              ^~
+                    rtl/bank/miss/l1d_victim_cache.v:216:30:      Example path: l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[0].u_bank.u_vc.g_lkd[0].tv
+                    rtl/bank/miss/l1d_victim_cache.v:228:35:      Example path: ASSIGNW
+                    rtl/bank/miss/l1d_victim_cache.v:216:30:      Example path: l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[0].u_bank.u_vc.g_lkd[0].tv
+%Warning-UNOPTFLAT: rtl/bank/miss/l1d_victim_cache.v:217:30: Signal unoptimizable: Circular combinational logic: 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[0].u_bank.u_vc.g_lkd[0].ta'
+                                                           : ... note: In instance 'l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[0].u_bank.u_vc'
+  217 |             wire             ta [0:2*N-2];
+      |                              ^~
+                    rtl/bank/miss/l1d_victim_cache.v:217:30:      Example path: l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[0].u_bank.u_vc.g_lkd[0].ta
+                    rtl/bank/miss/l1d_victim_cache.v:228:35:      Example path: ASSIGNW
+                    rtl/bank/miss/l1d_victim_cache.v:216:30:      Example path: l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[0].u_bank.u_vc.g_lkd[0].tv
+                    rtl/bank/miss/l1d_victim_cache.v:228:35:      Example path: ASSIGNW
+                    rtl/bank/miss/l1d_victim_cache.v:216:30:      Example path: l1d_top_soc.u_l1d.u_ports.u_dcache.g_bank[0].u_bank.u_vc.g_lkd[0].tv

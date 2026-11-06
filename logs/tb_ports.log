@@ -1,0 +1,22 @@
+=== timing: four ports at once ===
+  ok: a load hit on one port alone answers in 4 cycles
+  ok: a load hit on one port alone answers in 4 cycles
+  ok: a load hit on one port alone answers in 4 cycles
+  ok: a load hit on one port alone answers in 4 cycles
+  CC-1 latencies: P0 4, P1 4, P2 4, P3 4
+  ok: CC-1: four hits to four banks in one cycle: all four in 4 cycles
+  CC-2 latencies: P0 4, P1 5, P2 6, P3 7
+  ok: CC-2: four hits to one bank in one cycle: 4, 5, 6, 7 cycles
+  ok: CC-2: in port order P0, P1, P2, P3 (same cycle)
+=== LR / SC across ports (one global reservation) ===
+  ok: LR on P0, SC on P2 to the same line: success
+  ok: CC-9: LR A (bank 1, P0), LR B (bank 2, P1), SC A (P2) fails
+  ok: the failed SC ended the reservation: SC B fails too
+  ok: LR on P1 to bank 2, SC on P2: success
+  ok: LR on P0, store on P1 to the line, SC on P2: fail
+random part: 6030 requests in all (3473 loads, 2164 stores, 363 NC in the random part), 6030 answered
+memory matches the reference after clean
+memory matches the reference after flush
+events: cycles with 2+ banks seating 479, seated from a waiting line 2488, cycles with 2+ ports answering 274, stop cycles 47856
+TEST PASSED: tb_ports (6830 requests, seed 1)
+tb/tests/tb_ports.v:522: $finish called at 515880000 (1ps)

@@ -1,0 +1,330 @@
+tb_latency: RLAT = 10, BLAT = 6, AXI beats per line = 4
+
+=== 1. load miss, line not in cache / VC / MSHR (fetch) ===
+    c0+0  G   FAST ISSUE seat 0 (request at the pins, tag + data read of all ways)
+    c0+2  S1  tag miss
+    c0+3  S2  seat 0 -> action 5 (1=WMSHR 2=WANY 3=WVC 4=WNC 5=OWNED) id 0              
+    c0+6  AXI AR handshake id 0
+    c0+16  AXI R beat       
+    c0+17  AXI R beat       
+    c0+18  AXI R beat       
+    c0+19  AXI R beat (last)
+    c0+26  S2  answer pushed to the merger (    MSHR), seat 0 freed
+    c0+27  S0  grant REFILL/SWAP token (MSHR entry 0)
+    c0+27  OUT response idx 0 (load data)
+  RESULT load miss: latency 27 cycles (expected 27) OK
+
+=== 2. load hit ===
+    c0+0  G   FAST ISSUE seat 0 (request at the pins, tag + data read of all ways)
+    c0+2  S1  tag hit way 0 (                      load)
+    c0+3  S2  response built (  data array)
+    c0+3  S2  answer pushed to the merger (pipeline), seat 0 freed
+    c0+4  OUT response idx 0 (load data)
+  RESULT load hit: latency 4 cycles (expected 4) OK
+
+=== 3. store hit (8 bytes) ===
+    c0+0  G   FAST ISSUE seat 0 (request at the pins, tag + data read of all ways)
+    c0+2  S1  tag hit way 0 (store: bytes written in S2)
+    c0+3  S2  response built (  data array)
+    c0+3  S2  answer pushed to the merger (pipeline), seat 0 freed
+    c0+4  OUT response idx 0 (store ack)
+  RESULT store hit: latency 4 cycles (expected 4) OK
+
+=== 4. store miss (fetch, bytes merged in the MSHR) ===
+    c0+0  G   FAST ISSUE seat 0 (request at the pins, tag + data read of all ways)
+    c0+2  S1  tag miss
+    c0+3  S2  seat 0 -> action 5 (1=WMSHR 2=WANY 3=WVC 4=WNC 5=OWNED) id 0              
+    c0+6  AXI AR handshake id 0
+    c0+16  AXI R beat       
+    c0+17  AXI R beat       
+    c0+18  AXI R beat       
+    c0+19  AXI R beat (last)
+    c0+26  S2  answer pushed to the merger (    MSHR), seat 0 freed
+    c0+27  S0  grant REFILL/SWAP token (MSHR entry 0)
+    c0+27  OUT response idx 0 (store ack)
+  RESULT store miss: latency 27 cycles (expected 27) OK
+
+=== 5. load + load to the same line, consecutive cycles (both hit) ===
+    c0+0  G   FAST ISSUE seat 0 (request at the pins, tag + data read of all ways)
+    c0+1  G   FAST ISSUE seat 1 (request at the pins, tag + data read of all ways)
+    c0+2  S1  tag hit way 0 (                      load)
+    c0+3  S1  tag hit way 0 (                      load)
+    c0+3  S2  response built (  data array)
+    c0+3  S2  answer pushed to the merger (pipeline), seat 0 freed
+    c0+4  S2  response built (  data array)
+    c0+4  S2  answer pushed to the merger (pipeline), seat 1 freed
+    c0+4  OUT response idx 0 (load data)
+    c0+5  OUT response idx 1 (load data)
+  RESULT load A: latency 4 cycles (expected 4) OK
+  RESULT load B (same line): latency 4 cycles (expected 4) OK
+
+=== 6. load then store to the same line, consecutive cycles ===
+    c0+0  G   FAST ISSUE seat 0 (request at the pins, tag + data read of all ways)
+    c0+1  G   FAST ISSUE seat 1 (request at the pins, tag + data read of all ways)
+    c0+2  R   fast issue cancelled (seat blocked), back to READY
+    c0+2  S1  tag hit way 0 (                      load)
+    c0+3  S1  tag miss
+    c0+3  S2  response built (  data array)
+    c0+3  S2  answer pushed to the merger (pipeline), seat 0 freed
+    c0+4  S2  seat 1 -> action 0 (1=WMSHR 2=WANY 3=WVC 4=WNC 5=OWNED) id 0              
+    c0+4  OUT response idx 0 (load data)
+    c0+5  G   grant LSU seat 1
+    c0+7  S1  tag hit way 0 (store: bytes written in S2)
+    c0+8  S2  response built (  data array)
+    c0+8  S2  answer pushed to the merger (pipeline), seat 1 freed
+    c0+9  OUT response idx 1 (store ack)
+  RESULT load: latency 4 cycles (expected 4) OK
+  RESULT store behind load: latency 8 cycles (expected 8) OK
+
+=== 7. primary miss + secondary miss to the same line ===
+    c0+0  G   FAST ISSUE seat 0 (request at the pins, tag + data read of all ways)
+    c0+1  G   FAST ISSUE seat 1 (request at the pins, tag + data read of all ways)
+    c0+2  S1  tag miss
+    c0+3  S1  tag miss
+    c0+3  S2  seat 0 -> action 5 (1=WMSHR 2=WANY 3=WVC 4=WNC 5=OWNED) id 0              
+    c0+4  S2  seat 1 -> action 1 (1=WMSHR 2=WANY 3=WVC 4=WNC 5=OWNED) id 0              
+    c0+6  AXI AR handshake id 0
+    c0+16  AXI R beat       
+    c0+17  AXI R beat       
+    c0+18  AXI R beat       
+    c0+19  AXI R beat (last)
+    c0+26  S2  answer pushed to the merger (    MSHR), seat 0 freed
+    c0+27  S0  grant REFILL/SWAP token (MSHR entry 0)
+    c0+27  OUT response idx 0 (load data)
+    c0+29  S1  refill: victim way 0 valid=0 held=0
+    c0+30  S2  install: line + tag written, MSHR entry 0 freed
+    c0+31  G   grant LSU seat 1
+    c0+33  S1  tag hit way 0 (                      load)
+    c0+34  S2  response built (  data array)
+    c0+34  S2  answer pushed to the merger (pipeline), seat 1 freed
+    c0+35  OUT response idx 1 (load data)
+  RESULT primary miss: latency 27 cycles (expected 27) OK
+  RESULT secondary miss (waits for install): latency 34 cycles (expected 34) OK
+
+=== (setup) five misses to set 9 of bank 0, one victim goes to the victim cache ===
+
+=== 8. load that hits a VALID victim-cache slot (answered, then swapped back) ===
+    c0+0  G   FAST ISSUE seat 0 (request at the pins, tag + data read of all ways)
+    c0+2  S1  tag miss
+    c0+3  S2  response built (victim cache)
+    c0+3  S2  answer pushed to the merger (pipeline), seat 0 freed
+    c0+4  S0  grant REFILL/SWAP token (MSHR entry 0)
+    c0+4  OUT response idx 0 (load data)
+    c0+6  S1  refill: victim way 2 valid=1 held=0
+    c0+7  S2  install: line + tag written, MSHR entry 0 freed
+  RESULT victim-cache load hit: latency 4 cycles (expected 4) OK
+
+=== 9. store that hits a VALID victim-cache slot (swap back, retry, hit) ===
+    c0+0  G   FAST ISSUE seat 0 (request at the pins, tag + data read of all ways)
+    c0+2  S1  tag miss
+    c0+3  S2  seat 0 -> action 1 (1=WMSHR 2=WANY 3=WVC 4=WNC 5=OWNED) id 0, swap started
+    c0+4  S0  grant REFILL/SWAP token (MSHR entry 0)
+    c0+6  S1  refill: victim way 3 valid=1 held=0
+    c0+7  S2  install: line + tag written, MSHR entry 0 freed
+    c0+8  G   grant LSU seat 0
+    c0+10  S1  tag hit way 3 (store: bytes written in S2)
+    c0+11  S2  response built (  data array)
+    c0+11  S2  answer pushed to the merger (pipeline), seat 0 freed
+    c0+12  OUT response idx 0 (store ack)
+  RESULT victim-cache store hit: latency 12 cycles (expected 12) OK
+
+=== 10. non-cacheable load ===
+    c0+0  G   FAST ISSUE seat 0 (request at the pins, tag + data read of all ways)
+    c0+2  S1  tag miss
+    c0+3  S2  seat 0 -> action 5 (1=WMSHR 2=WANY 3=WVC 4=WNC 5=OWNED) id 0              
+    c0+7  AXI AR handshake id 0
+    c0+17  AXI R beat (last)
+    c0+20  S2  answer pushed to the merger (      NC), seat 0 freed
+    c0+21  OUT response idx 0 (load data)
+  RESULT NC load: latency 21 cycles (expected 21) OK
+
+=== 11. non-cacheable store ===
+    c0+7  AXI AW handshake id 0
+    c0+7  AXI W beat (last)
+    c0+13  AXI B id 0
+    c0+17  OUT response idx 0 (store ack)
+  RESULT NC store: latency 17 cycles (expected 17) OK
+
+=== 12. eight load hits to bank 0, one request per cycle ===
+    c0+0  G   FAST ISSUE seat 0 (request at the pins, tag + data read of all ways)
+    c0+1  G   FAST ISSUE seat 1 (request at the pins, tag + data read of all ways)
+    c0+2  G   FAST ISSUE seat 2 (request at the pins, tag + data read of all ways)
+    c0+2  S1  tag hit way 0 (                      load)
+    c0+3  G   FAST ISSUE seat 3 (request at the pins, tag + data read of all ways)
+    c0+3  S1  tag hit way 0 (                      load)
+    c0+3  S2  response built (  data array)
+    c0+3  S2  answer pushed to the merger (pipeline), seat 0 freed
+    c0+4  G   FAST ISSUE seat 0 (request at the pins, tag + data read of all ways)
+    c0+4  S1  tag hit way 0 (                      load)
+    c0+4  S2  response built (  data array)
+    c0+4  S2  answer pushed to the merger (pipeline), seat 1 freed
+    c0+4  OUT response idx 0 (load data)
+    c0+5  G   FAST ISSUE seat 1 (request at the pins, tag + data read of all ways)
+    c0+5  S1  tag hit way 0 (                      load)
+    c0+5  S2  response built (  data array)
+    c0+5  S2  answer pushed to the merger (pipeline), seat 2 freed
+    c0+5  OUT response idx 1 (load data)
+    c0+6  G   FAST ISSUE seat 2 (request at the pins, tag + data read of all ways)
+    c0+6  S1  tag hit way 0 (                      load)
+    c0+6  S2  response built (  data array)
+    c0+6  S2  answer pushed to the merger (pipeline), seat 3 freed
+    c0+6  OUT response idx 2 (load data)
+    c0+7  G   FAST ISSUE seat 3 (request at the pins, tag + data read of all ways)
+    c0+7  S1  tag hit way 0 (                      load)
+    c0+7  S2  response built (  data array)
+    c0+7  S2  answer pushed to the merger (pipeline), seat 0 freed
+    c0+7  OUT response idx 3 (load data)
+    c0+8  S1  tag hit way 0 (                      load)
+    c0+8  S2  response built (  data array)
+    c0+8  S2  answer pushed to the merger (pipeline), seat 1 freed
+    c0+8  OUT response idx 4 (load data)
+    c0+9  S1  tag hit way 0 (                      load)
+    c0+9  S2  response built (  data array)
+    c0+9  S2  answer pushed to the merger (pipeline), seat 2 freed
+    c0+9  OUT response idx 5 (load data)
+    c0+10  S2  response built (  data array)
+    c0+10  S2  answer pushed to the merger (pipeline), seat 3 freed
+    c0+10  OUT response idx 6 (load data)
+    c0+11  OUT response idx 7 (load data)
+  load 0: issued c0+0, answered c0+4, latency 4
+  load 1: issued c0+1, answered c0+5, latency 4
+  load 2: issued c0+2, answered c0+6, latency 4
+  load 3: issued c0+3, answered c0+7, latency 4
+  load 4: issued c0+4, answered c0+8, latency 4
+  load 5: issued c0+5, answered c0+9, latency 4
+  load 6: issued c0+6, answered c0+10, latency 4
+  load 7: issued c0+7, answered c0+11, latency 4
+  RESULT 12: load 0: latency 4 cycles (expected 4) OK
+  RESULT 12: load 3: latency 4 cycles (expected 4) OK
+  RESULT 12: load 4: latency 4 cycles (expected 4) OK
+  RESULT 12: load 7: latency 4 cycles (expected 4) OK
+
+=== 13. eight load hits, banks 0,1,2,3,0,1,2,3, one request per cycle ===
+    c0+0  G   FAST ISSUE seat 0 (request at the pins, tag + data read of all ways)
+    c0+2  S1  tag hit way 0 (                      load)
+    c0+3  S2  response built (  data array)
+    c0+3  S2  answer pushed to the merger (pipeline), seat 0 freed
+    c0+4  G   FAST ISSUE seat 0 (request at the pins, tag + data read of all ways)
+    c0+4  OUT response idx 0 (load data)
+    c0+5  OUT response idx 1 (load data)
+    c0+6  S1  tag hit way 0 (                      load)
+    c0+6  OUT response idx 2 (load data)
+    c0+7  S2  response built (  data array)
+    c0+7  S2  answer pushed to the merger (pipeline), seat 0 freed
+    c0+7  OUT response idx 3 (load data)
+    c0+8  OUT response idx 4 (load data)
+    c0+9  OUT response idx 5 (load data)
+    c0+10  OUT response idx 6 (load data)
+    c0+11  OUT response idx 7 (load data)
+  load 0 (bank 0): issued c0+0, answered c0+4, latency 4
+  load 1 (bank 1): issued c0+1, answered c0+5, latency 4
+  load 2 (bank 2): issued c0+2, answered c0+6, latency 4
+  load 3 (bank 3): issued c0+3, answered c0+7, latency 4
+  load 4 (bank 0): issued c0+4, answered c0+8, latency 4
+  load 5 (bank 1): issued c0+5, answered c0+9, latency 4
+  load 6 (bank 2): issued c0+6, answered c0+10, latency 4
+  load 7 (bank 3): issued c0+7, answered c0+11, latency 4
+  RESULT 13: load: latency 4 cycles (expected 4) OK
+  RESULT 13: load: latency 4 cycles (expected 4) OK
+  RESULT 13: load: latency 4 cycles (expected 4) OK
+  RESULT 13: load: latency 4 cycles (expected 4) OK
+  RESULT 13: load: latency 4 cycles (expected 4) OK
+  RESULT 13: load: latency 4 cycles (expected 4) OK
+  RESULT 13: load: latency 4 cycles (expected 4) OK
+  RESULT 13: load: latency 4 cycles (expected 4) OK
+
+=== 14. six load hits to bank 0 while read_enable_from_lsu = 0 for 20 cycles ===
+    c0+0  G   FAST ISSUE seat 0 (request at the pins, tag + data read of all ways)
+    c0+1  G   FAST ISSUE seat 1 (request at the pins, tag + data read of all ways)
+    c0+2  G   FAST ISSUE seat 2 (request at the pins, tag + data read of all ways)
+    c0+2  S1  tag hit way 0 (                      load)
+    c0+3  G   FAST ISSUE seat 3 (request at the pins, tag + data read of all ways)
+    c0+3  S1  tag hit way 0 (                      load)
+    c0+3  S2  response built (  data array)
+    c0+3  S2  answer pushed to the merger (pipeline), seat 0 freed
+    c0+4  G   FAST ISSUE seat 0 (request at the pins, tag + data read of all ways)
+    c0+4  S1  tag hit way 0 (                      load)
+    c0+4  S2  response built (  data array)
+    c0+4  S2  answer pushed to the merger (pipeline), seat 1 freed
+    c0+5  S1  tag hit way 0 (                      load)
+    c0+5  S2  response built (  data array)
+    c0+5  S2  answer pushed to the merger (pipeline), seat 2 freed
+    c0+6  S1  tag hit way 0 (                      load)
+    c0+6  S2  response built (  data array)
+    c0+6  S2  answer pushed to the merger (pipeline), seat 3 freed
+    c0+7  S2  response built (  data array)
+    c0+7  S2  answer pushed to the merger (pipeline), seat 0 freed
+    c0+20  OUT response idx 0 (load data)
+    c0+21  G   grant LSU seat 1
+    c0+21  OUT response idx 1 (load data)
+    c0+22  OUT response idx 2 (load data)
+    c0+23  S1  tag hit way 0 (                      load)
+    c0+23  OUT response idx 3 (load data)
+    c0+24  S2  response built (  data array)
+    c0+24  S2  answer pushed to the merger (pipeline), seat 1 freed
+    c0+24  OUT response idx 4 (load data)
+    c0+25  OUT response idx 5 (load data)
+  load 0: issued c0+0, answered c0+20, latency 20
+  load 1: issued c0+1, answered c0+21, latency 20
+  load 2: issued c0+2, answered c0+22, latency 20
+  load 3: issued c0+3, answered c0+23, latency 20
+  load 4: issued c0+4, answered c0+24, latency 20
+  load 5: issued c0+5, answered c0+25, latency 20
+
+=== 15. load hit arriving just as a refill token (same bank) is granted ===
+    c0+0  G   FAST ISSUE seat 0 (request at the pins, tag + data read of all ways)
+    c0+2  S1  tag miss
+    c0+3  S2  seat 0 -> action 5 (1=WMSHR 2=WANY 3=WVC 4=WNC 5=OWNED) id 0              
+    c0+6  AXI AR handshake id 0
+    c0+16  AXI R beat       
+    c0+17  AXI R beat       
+    c0+18  AXI R beat       
+    c0+19  AXI R beat (last)
+    c0+26  S2  answer pushed to the merger (    MSHR), seat 0 freed
+    c0+27  S0  grant REFILL/SWAP token (MSHR entry 0)
+    c0+27  OUT response idx 0 (load data)
+    c0+29  S1  refill: victim way 0 valid=0 held=0
+    c0+30  S2  install: line + tag written, MSHR entry 0 freed
+    c0+31  G   grant LSU seat 0
+    c0+33  S1  tag hit way 0 (                      load)
+    c0+34  S2  response built (  data array)
+    c0+34  S2  answer pushed to the merger (pipeline), seat 0 freed
+    c0+35  OUT response idx 1 (load data)
+  RESULT 15: miss: latency 27 cycles (expected 27) OK
+  RESULT 15: hit behind refill token: latency 8 cycles (expected 8) OK
+
+=== 16. store hit, then a load hit to another line granted in the store's write cycle ===
+    c0+0  G   FAST ISSUE seat 0 (request at the pins, tag + data read of all ways)
+    c0+2  S1  tag hit way 0 (store: bytes written in S2)
+    c0+3  G   FAST ISSUE seat 1 (request at the pins, tag + data read of all ways)
+    c0+3  S2  response built (  data array)
+    c0+3  S2  answer pushed to the merger (pipeline), seat 0 freed
+    c0+4  OUT response idx 0 (store ack)
+    c0+5  S1  tag hit way 0 (                      load)
+    c0+6  S2  response built (  data array)
+    c0+6  S2  answer pushed to the merger (pipeline), seat 1 freed
+    c0+7  OUT response idx 1 (load data)
+  RESULT 16: store hit: latency 4 cycles (expected 4) OK
+  RESULT : load hit, other line, during the write: latency 4 cycles (expected 4) OK
+
+=== 17. store hit, then a load of the same bytes granted in the store's write cycle (cancel + retry) ===
+    c0+0  G   FAST ISSUE seat 0 (request at the pins, tag + data read of all ways)
+    c0+2  S1  tag hit way 0 (store: bytes written in S2)
+    c0+3  G   FAST ISSUE seat 1 (request at the pins, tag + data read of all ways)
+    c0+3  S2  response built (  data array)
+    c0+3  S2  answer pushed to the merger (pipeline), seat 0 freed
+    c0+4  R   fast issue cancelled (seat blocked), back to READY
+    c0+4  OUT response idx 0 (store ack)
+    c0+5  S1  tag miss
+    c0+6  S2  seat 1 -> action 0 (1=WMSHR 2=WANY 3=WVC 4=WNC 5=OWNED) id 0              
+    c0+7  G   grant LSU seat 1
+    c0+9  S1  tag hit way 0 (                      load)
+    c0+10  S2  response built (  data array)
+    c0+10  S2  answer pushed to the merger (pipeline), seat 1 freed
+    c0+11  OUT response idx 1 (load data)
+  RESULT 17: store hit: latency 4 cycles (expected 4) OK
+  RESULT e stored bytes (cancelled once, retried): latency 8 cycles (expected 8) OK
+  RESULT 17: load returns the store's data 000045185a5a0000 OK
+
+TEST PASSED
+tb/tests/tb_latency.v:476: $finish called at 16140000 (1ps)

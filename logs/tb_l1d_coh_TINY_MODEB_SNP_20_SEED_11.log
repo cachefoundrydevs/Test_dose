@@ -1,0 +1,8 @@
+random phase: 4000 requests (1870 loads, 1596 stores, 209 NC, 93 LR, SC 18 ok / 75 fail, 139 AMO), 4000 answered
+snoops: 5938 sent (2955 invalidate), answers: 1890 present, 675 dirty, 4047 not present; 12 cancelled; mode B writes 1273
+flush finished after 97 cycles
+memory matches the reference after flush
+events: snoop tag hits 1438 (M handed over 641), snoop on VC slot 453, snoop waits install 51 / writeback 32, snoop vs MSHR still fetching 972
+        S installs 400, upgrades 226, cycles with a snoop buffered while a lock holds snoops 0, refill victim moved off the locked line 0
+TEST PASSED: tb_l1d_coh (4448 requests, 5938 snoops, mode B, seed 11)
+tb/tests/tb_l1d_coh.v:678: $finish called at 498890000 (1ps)

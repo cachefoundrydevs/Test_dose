@@ -1,0 +1,3 @@
+checks=200012  vectors with a blocked seat=142176  rule A=160317  rule B=94194  rule C=56768  A cancelled by AMO write=4168
+TEST PASSED
+tb/tests/tb_inflight_tracker.v:169: $finish called at 200012000 (1ps)

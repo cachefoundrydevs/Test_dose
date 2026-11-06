@@ -1,0 +1,400 @@
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=54 way=2 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=55 way=3 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=56 way=2 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=57 way=2
+[0] L1D B1 S0 GRANT clean token  set=54 way=3
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=56 way=0
+[0] L1D B2 S0 GRANT clean token  set=56 way=3
+[0] L1D B0 S1 MAINT set=57 way=2 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=54 way=3 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=56 way=0 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=56 way=3 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=57 way=3
+[0] L1D B1 S0 GRANT clean token  set=55 way=0
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=56 way=1
+[0] L1D B2 S0 GRANT clean token  set=57 way=0
+[0] L1D B0 S1 MAINT set=57 way=3 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=55 way=0 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=56 way=1 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=57 way=0 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=58 way=0
+[0] L1D B1 S0 GRANT clean token  set=55 way=1
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=56 way=2
+[0] L1D B2 S0 GRANT clean token  set=57 way=1
+[0] L1D B0 S1 MAINT set=58 way=0 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=55 way=1 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=56 way=2 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=57 way=1 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=58 way=1
+[0] L1D B1 S0 GRANT clean token  set=55 way=2
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=56 way=3
+[0] L1D B2 S0 GRANT clean token  set=57 way=2
+[0] L1D B0 S1 MAINT set=58 way=1 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=55 way=2 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=56 way=3 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=57 way=2 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=58 way=2
+[0] L1D B1 S0 GRANT clean token  set=55 way=3
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=57 way=0
+[0] L1D B2 S0 GRANT clean token  set=57 way=3
+[0] L1D B0 S1 MAINT set=58 way=2 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=55 way=3 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=57 way=0 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=57 way=3 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=58 way=3
+[0] L1D B1 S0 GRANT clean token  set=56 way=0
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=57 way=1
+[0] L1D B2 S0 GRANT clean token  set=58 way=0
+[0] L1D B0 S1 MAINT set=58 way=3 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=56 way=0 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=57 way=1 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=58 way=0 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=59 way=0
+[0] L1D B1 S0 GRANT clean token  set=56 way=1
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=57 way=2
+[0] L1D B2 S0 GRANT clean token  set=58 way=1
+[0] L1D B0 S1 MAINT set=59 way=0 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=56 way=1 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=57 way=2 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=58 way=1 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=59 way=1
+[0] L1D B1 S0 GRANT clean token  set=56 way=2
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=57 way=3
+[0] L1D B2 S0 GRANT clean token  set=58 way=2
+[0] L1D B0 S1 MAINT set=59 way=1 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=56 way=2 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=57 way=3 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=58 way=2 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=59 way=2
+[0] L1D B1 S0 GRANT clean token  set=56 way=3
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=58 way=0
+[0] L1D B2 S0 GRANT clean token  set=58 way=3
+[0] L1D B0 S1 MAINT set=59 way=2 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=56 way=3 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=58 way=0 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=58 way=3 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=59 way=3
+[0] L1D B1 S0 GRANT clean token  set=57 way=0
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=58 way=1
+[0] L1D B2 S0 GRANT clean token  set=59 way=0
+[0] L1D B0 S1 MAINT set=59 way=3 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=57 way=0 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=58 way=1 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=59 way=0 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=60 way=0
+[0] L1D B1 S0 GRANT clean token  set=57 way=1
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=58 way=2
+[0] L1D B2 S0 GRANT clean token  set=59 way=1
+[0] L1D B0 S1 MAINT set=60 way=0 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=57 way=1 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=58 way=2 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=59 way=1 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=60 way=1
+[0] L1D B1 S0 GRANT clean token  set=57 way=2
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=58 way=3
+[0] L1D B2 S0 GRANT clean token  set=59 way=2
+[0] L1D B0 S1 MAINT set=60 way=1 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=57 way=2 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=58 way=3 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=59 way=2 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=60 way=2
+[0] L1D B1 S0 GRANT clean token  set=57 way=3
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=59 way=0
+[0] L1D B2 S0 GRANT clean token  set=59 way=3
+[0] L1D B0 S1 MAINT set=60 way=2 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=57 way=3 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=59 way=0 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=59 way=3 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=60 way=3
+[0] L1D B1 S0 GRANT clean token  set=58 way=0
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=59 way=1
+[0] L1D B2 S0 GRANT clean token  set=60 way=0
+[0] L1D B0 S1 MAINT set=60 way=3 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=58 way=0 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=59 way=1 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=60 way=0 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=61 way=0
+[0] L1D B1 S0 GRANT clean token  set=58 way=1
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=59 way=2
+[0] L1D B2 S0 GRANT clean token  set=60 way=1
+[0] L1D B0 S1 MAINT set=61 way=0 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=58 way=1 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=59 way=2 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=60 way=1 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=61 way=1
+[0] L1D B1 S0 GRANT clean token  set=58 way=2
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=59 way=3
+[0] L1D B2 S0 GRANT clean token  set=60 way=2
+[0] L1D B0 S1 MAINT set=61 way=1 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=58 way=2 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=59 way=3 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=60 way=2 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=61 way=2
+[0] L1D B1 S0 GRANT clean token  set=58 way=3
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=60 way=0
+[0] L1D B2 S0 GRANT clean token  set=60 way=3
+[0] L1D B0 S1 MAINT set=61 way=2 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=58 way=3 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=60 way=0 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=60 way=3 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=61 way=3
+[0] L1D B1 S0 GRANT clean token  set=59 way=0
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=60 way=1
+[0] L1D B2 S0 GRANT clean token  set=61 way=0
+[0] L1D B0 S1 MAINT set=61 way=3 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=59 way=0 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=60 way=1 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=61 way=0 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=62 way=0
+[0] L1D B1 S0 GRANT clean token  set=59 way=1
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=60 way=2
+[0] L1D B2 S0 GRANT clean token  set=61 way=1
+[0] L1D B0 S1 MAINT set=62 way=0 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=59 way=1 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=60 way=2 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=61 way=1 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=62 way=1
+[0] L1D B1 S0 GRANT clean token  set=59 way=2
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=60 way=3
+[0] L1D B2 S0 GRANT clean token  set=61 way=2
+[0] L1D B0 S1 MAINT set=62 way=1 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=59 way=2 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=60 way=3 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=61 way=2 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=62 way=2
+[0] L1D B1 S0 GRANT clean token  set=59 way=3
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=61 way=0
+[0] L1D B2 S0 GRANT clean token  set=61 way=3
+[0] L1D B0 S1 MAINT set=62 way=2 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=59 way=3 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=61 way=0 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=61 way=3 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=62 way=3
+[0] L1D B1 S0 GRANT clean token  set=60 way=0
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=61 way=1
+[0] L1D B2 S0 GRANT clean token  set=62 way=0
+[0] L1D B0 S1 MAINT set=62 way=3 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=60 way=0 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=61 way=1 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=62 way=0 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=63 way=0
+[0] L1D B1 S0 GRANT clean token  set=60 way=1
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=61 way=2
+[0] L1D B2 S0 GRANT clean token  set=62 way=1
+[0] L1D B0 S1 MAINT set=63 way=0 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=60 way=1 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=61 way=2 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=62 way=1 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=63 way=1
+[0] L1D B1 S0 GRANT clean token  set=60 way=2
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=61 way=3
+[0] L1D B2 S0 GRANT clean token  set=62 way=2
+[0] L1D B0 S1 MAINT set=63 way=1 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=60 way=2 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=61 way=3 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=62 way=2 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=63 way=2
+[0] L1D B1 S0 GRANT clean token  set=60 way=3
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=62 way=0
+[0] L1D B2 S0 GRANT clean token  set=62 way=3
+[0] L1D B0 S1 MAINT set=63 way=2 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D B1 S1 MAINT set=60 way=3 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=62 way=0 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=62 way=3 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B0 S0 GRANT clean token  set=63 way=3
+[0] L1D B1 S0 GRANT clean token  set=61 way=0
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=62 way=1
+[0] L1D B2 S0 GRANT clean token  set=63 way=0
+[0] L1D B0 S1 MAINT set=63 way=3 state=0 dirty=0                               
+[0] L1D B0 S2 MAINT                                done
+[0] L1D MAINT tb_l1d_soc.dcache_dut.u_l1d.u_ports.u_dcache.g_bank[0].u_bank.u_maint walked sets 0..63
+[0] L1D B1 S1 MAINT set=61 way=0 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=62 way=1 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=63 way=0 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D MAINT tb_l1d_soc.dcache_dut.u_l1d.u_ports.u_dcache.g_bank[0].u_bank.u_maint: RUN -> FINAL (clean)
+[0] L1D MAINT tb_l1d_soc.dcache_dut.u_l1d.u_ports.u_dcache.g_bank[0].u_bank.u_maint: FINAL -> IDLE (clean)
+[0] L1D MAINT tb_l1d_soc.dcache_dut.u_l1d.u_ports.u_dcache.g_bank[0].u_bank.u_maint done
+[0] L1D B1 S0 GRANT clean token  set=61 way=1
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=62 way=2
+[0] L1D B2 S0 GRANT clean token  set=63 way=1
+[0] L1D B1 S1 MAINT set=61 way=1 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=62 way=2 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=63 way=1 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B1 S0 GRANT clean token  set=61 way=2
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=62 way=3
+[0] L1D B2 S0 GRANT clean token  set=63 way=2
+[0] L1D B1 S1 MAINT set=61 way=2 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=62 way=3 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=63 way=2 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B1 S0 GRANT clean token  set=61 way=3
+[0] L1D B2 S2 MAINT                                done
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=63 way=0
+[0] L1D B2 S0 GRANT clean token  set=63 way=3
+[0] L1D B1 S1 MAINT set=61 way=3 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=63 way=0 state=0 dirty=0                               
+[0] L1D B2 S1 MAINT set=63 way=3 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B1 S0 GRANT clean token  set=62 way=0
+[0] L1D B2 S2 MAINT                                done
+[0] L1D MAINT tb_l1d_soc.dcache_dut.u_l1d.u_ports.u_dcache.g_bank[2].u_bank.u_maint walked sets 0..63
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=63 way=1
+[0] L1D MAINT tb_l1d_soc.dcache_dut.u_l1d.u_ports.u_dcache.g_bank[2].u_bank.u_maint: RUN -> FINAL (clean)
+[0] L1D B1 S1 MAINT set=62 way=0 state=0 dirty=0                               
+[0] L1D MAINT tb_l1d_soc.dcache_dut.u_l1d.u_ports.u_dcache.g_bank[2].u_bank.u_maint: FINAL -> IDLE (clean)
+[0] L1D MAINT tb_l1d_soc.dcache_dut.u_l1d.u_ports.u_dcache.g_bank[2].u_bank.u_maint done
+[0] L1D B3 S1 MAINT set=63 way=1 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B1 S0 GRANT clean token  set=62 way=1
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=63 way=2
+[0] L1D B1 S1 MAINT set=62 way=1 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=63 way=2 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B1 S0 GRANT clean token  set=62 way=2
+[0] L1D B3 S2 MAINT                                done
+[0] L1D B3 S0 GRANT clean token  set=63 way=3
+[0] L1D B1 S1 MAINT set=62 way=2 state=0 dirty=0                               
+[0] L1D B3 S1 MAINT set=63 way=3 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B1 S0 GRANT clean token  set=62 way=3
+[0] L1D B3 S2 MAINT                                done
+[0] L1D MAINT tb_l1d_soc.dcache_dut.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_maint walked sets 0..63
+[0] L1D MAINT tb_l1d_soc.dcache_dut.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_maint: RUN -> FINAL (clean)
+[0] L1D B1 S1 MAINT set=62 way=3 state=0 dirty=0                               
+[0] L1D MAINT tb_l1d_soc.dcache_dut.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_maint: FINAL -> IDLE (clean)
+[0] L1D MAINT tb_l1d_soc.dcache_dut.u_l1d.u_ports.u_dcache.g_bank[3].u_bank.u_maint done
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B1 S0 GRANT clean token  set=63 way=0
+[0] L1D B1 S1 MAINT set=63 way=0 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B1 S0 GRANT clean token  set=63 way=1
+[0] L1D B1 S1 MAINT set=63 way=1 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B1 S0 GRANT clean token  set=63 way=2
+[0] L1D B1 S1 MAINT set=63 way=2 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B1 S0 GRANT clean token  set=63 way=3
+[0] L1D B1 S1 MAINT set=63 way=3 state=0 dirty=0                               
+[0] L1D MAINT tb_l1d_soc.dcache_dut.u_l1d.u_ports.u_dcache.g_bank[1].u_bank.u_maint walked sets 0..63
+[0] L1D B1 S2 MAINT                                done
+[0] L1D MAINT tb_l1d_soc.dcache_dut.u_l1d.u_ports.u_dcache.g_bank[1].u_bank.u_maint: RUN -> FINAL (clean)
+[0] L1D TOP  MAINT all banks done
+[0] L1D MAINT tb_l1d_soc.dcache_dut.u_l1d.u_ports.u_dcache.g_bank[1].u_bank.u_maint: FINAL -> IDLE (clean)
+[0] L1D MAINT tb_l1d_soc.dcache_dut.u_l1d.u_ports.u_dcache.g_bank[1].u_bank.u_maint done
+[0] L1D SOC  clean_complete
+issued 200, answered 200; AR 64 (one-beat 10), AW 58 (one-beat 15), W beats 187; stop cycles 0
+TEST PASSED
+tb/tests/tb_l1d_soc.v:415: $finish called at 24110000 (1ps)

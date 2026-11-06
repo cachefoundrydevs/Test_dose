@@ -1,0 +1,12 @@
+=== LR / SC across ports (one global reservation) ===
+  ok: LR on P0, SC on P2 to the same line: success
+  ok: CC-9: LR A (bank 1, P0), LR B (bank 2, P1), SC A (P2) fails
+  ok: the failed SC ended the reservation: SC B fails too
+  ok: LR on P1 to bank 2, SC on P2: success
+  ok: LR on P0, store on P1 to the line, SC on P2: fail
+random part: 6014 requests in all (3444 loads, 2202 stores, 354 NC in the random part), 6014 answered
+memory matches the reference after clean
+memory matches the reference after flush
+events: cycles with 2+ banks seating 247, seated from a waiting line 3492, cycles with 2+ ports answering 138, stop cycles 60361
+TEST PASSED: tb_ports (6814 requests, seed 1)
+tb/tests/tb_ports.v:522: $finish called at 609940000 (1ps)

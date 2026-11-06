@@ -1,0 +1,400 @@
+[0] L1D QUEUE bank 0 seats port 0 idx=2 LD addr=0000000000001930 (        fresh)
+[0] L1D B0 S0 GRANT LSU  seat=0 idx=0 LD   C  addr=0000000000001920  (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[0].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: EMPTY -> READY  idx=1 LD C  addr=0000000000001928 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[0].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: INFL -> EMPTY  idx=5 LD C  addr=0000000000001910 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[0].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: READY -> INFL  idx=6 LD C  addr=0000000000001918 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[0].u_bank.u_fifo_s0.u_fifo.u_lsu seat 0: READY -> INFL  idx=0 LD C  addr=0000000000001920 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[0].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: EMPTY -> READY  idx=2 LD C  addr=0000000000001930 wait_id=0
+[0] L1D B0 S1 LSU  seat=3 idx=6 LD   C  addr=0000000000001918 set=1 tag=00000000000006 ->           HIT way=0 state=1                                                                                  
+[0] L1D MERGE bank 0 -> output  idx=6     LD (visible next cycle)
+[0] L1D B0 S3 RESP from pipeline  seat=3 idx=6     LD data=133e59648faaf510 (resp_free=170)
+[0] L1D B0 S2 LSU  idx=6 LD   addr=0000000000001918 -> HIT way=0 data=133e59648faaf510
+[0] L1D B0 S1 LSU  seat=0 idx=0 LD   C  addr=0000000000001920 set=1 tag=00000000000006 ->           HIT way=0 state=1                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[0].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: INFL -> EMPTY  idx=6 LD C  addr=0000000000001918 wait_id=0
+[0] L1D B0 S0 GRANT LSU  seat=1 idx=1 LD   C  addr=0000000000001928  (resp_free=170)
+[0] L1D B0 S2 LSU  idx=0 LD   addr=0000000000001920 -> HIT way=0 data=cb16315c6782adc8
+[0] L1D B0 S3 RESP from pipeline  seat=0 idx=0     LD data=cb16315c6782adc8 (resp_free=170)
+[0] L1D MERGE bank 0 -> output  idx=0     LD (visible next cycle)
+[0] L1D QUEUE bank 0 seats port 0 idx=3 LD addr=0000000000001938 (from its line)
+[0] L1D TOP  DONE  port 0 idx=6 LD C  addr=0000000000001918 latency=45 cycles
+[0] L1D TOP  DONE  port 0 idx=0 LD C  addr=0000000000001920 latency=45 cycles
+[0] L1D QUEUE bank 1 seats port 0 idx=4 LD addr=0000000000001940 (        fresh)
+[0] L1D B1 G  FAST ISSUE seat=0 idx=4 LD   C  addr=0000000000001940  (resp_free=170)
+[0] L1D B0 S0 GRANT LSU  seat=2 idx=2 LD   C  addr=0000000000001930  (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[0].u_bank.u_fifo_s0.u_fifo.u_lsu seat 0: INFL -> EMPTY  idx=0 LD C  addr=0000000000001920 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[0].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: READY -> INFL  idx=1 LD C  addr=0000000000001928 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[0].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: EMPTY -> READY  idx=3 LD C  addr=0000000000001938 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[0].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: READY -> INFL  idx=2 LD C  addr=0000000000001930 wait_id=0
+[0] L1D B0 S1 LSU  seat=1 idx=1 LD   C  addr=0000000000001928 set=1 tag=00000000000006 ->           HIT way=0 state=1                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 0: EMPTY -> INFL  idx=4 LD C  addr=0000000000001940 wait_id=0
+[0] L1D B1 G  FAST ISSUE seat=1 idx=0 LD   C  addr=0000000000001948  (resp_free=170)
+[0] L1D QUEUE bank 1 seats port 0 idx=0 LD addr=0000000000001948 (        fresh)
+[0] L1D QUEUE bank 1 seats port 0 idx=5 LD addr=0000000000001950 (        fresh)
+[0] L1D MERGE bank 0 -> output  idx=1     LD (visible next cycle)
+[0] L1D B1 S1 LSU  seat=0 idx=4 LD   C  addr=0000000000001940 set=1 tag=00000000000006 ->          MISS way=0 state=2                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: EMPTY -> INFL  idx=0 LD C  addr=0000000000001948 wait_id=0
+[0] L1D B0 S3 RESP from pipeline  seat=1 idx=1     LD data=a3cee9345f7a85a0 (resp_free=170)
+[0] L1D B0 S2 LSU  idx=1 LD   addr=0000000000001928 -> HIT way=0 data=a3cee9345f7a85a0
+[0] L1D B0 S1 LSU  seat=2 idx=2 LD   C  addr=0000000000001930 set=1 tag=00000000000006 ->           HIT way=0 state=1                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[0].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: INFL -> EMPTY  idx=1 LD C  addr=0000000000001928 wait_id=0
+[0] L1D B0 S0 GRANT LSU  seat=3 idx=3 LD   C  addr=0000000000001938  (resp_free=170)
+[0] L1D B0 S2 LSU  idx=2 LD   addr=0000000000001930 -> HIT way=0 data=9ba6c1ec37527d98
+[0] L1D B0 S3 RESP from pipeline  seat=2 idx=2     LD data=9ba6c1ec37527d98 (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: EMPTY -> READY  idx=5 LD C  addr=0000000000001950 wait_id=0
+[0] L1D B1 S1 LSU  seat=1 idx=0 LD   C  addr=0000000000001948 set=1 tag=00000000000006 ->          MISS way=0 state=2                                                                                  
+[0] L1D B1 S2 LSU  idx=4 LD   addr=0000000000001940 -> MISS: MSHR entry 0 allocated, shared fetch of line 0000000000001940
+[0] L1D MERGE bank 0 -> output  idx=2     LD (visible next cycle)
+[0] L1D QUEUE bank 1 seats port 0 idx=6 LD addr=0000000000001958 (        fresh)
+[0] L1D TOP  DONE  port 0 idx=1 LD C  addr=0000000000001928 latency=15 cycles
+[0] L1D TOP  DONE  port 0 idx=2 LD C  addr=0000000000001930 latency=8 cycles
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_mshr.g_entry[0].u_entry: IDLE -> AR  line=0000000000001940 fetch primary idx=4 LD err=0
+[0] L1D B1 S2 LSU  idx=0 LD   addr=0000000000001948 -> MISS, line already in MSHR 0: seat waits (WMSHR)
+[0] L1D B1 S0 GRANT LSU  seat=2 idx=5 LD   C  addr=0000000000001950  (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 0: INFL -> OWNED  idx=4 LD C  addr=0000000000001940 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: EMPTY -> READY  idx=6 LD C  addr=0000000000001958 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[0].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: INFL -> EMPTY  idx=2 LD C  addr=0000000000001930 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[0].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: READY -> INFL  idx=3 LD C  addr=0000000000001938 wait_id=0
+[0] L1D L2P  REQ RD line bank 1 sub 0 tid 0 us 0 addr 0000000000001940
+[0] L1D B0 S1 LSU  seat=3 idx=3 LD   C  addr=0000000000001938 set=1 tag=00000000000006 ->           HIT way=0 state=1                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: INFL -> WMSHR  idx=0 LD C  addr=0000000000001948 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: READY -> INFL  idx=5 LD C  addr=0000000000001950 wait_id=0
+[0] L1D B1 S0 GRANT LSU  seat=3 idx=6 LD   C  addr=0000000000001958  (resp_free=170)
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_mshr.g_entry[0].u_entry: AR -> DATA  line=0000000000001940 fetch primary idx=4 LD err=0
+[0] L1D MERGE bank 0 -> output  idx=3     LD (visible next cycle)
+[0] L1D B1 S1 LSU  seat=2 idx=5 LD   C  addr=0000000000001950 set=1 tag=00000000000006 ->          MISS way=0 state=2                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: READY -> INFL  idx=6 LD C  addr=0000000000001958 wait_id=0
+[0] L1D B0 S3 RESP from pipeline  seat=3 idx=3     LD data=739eb9c5ef0a5573 (resp_free=170)
+[0] L1D B0 S2 LSU  idx=3 LD   addr=0000000000001938 -> HIT way=0 data=739eb9c5ef0a5573
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[0].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: INFL -> EMPTY  idx=3 LD C  addr=0000000000001938 wait_id=0
+[0] L1D B1 S1 LSU  seat=3 idx=6 LD   C  addr=0000000000001958 set=1 tag=00000000000006 ->          MISS way=0 state=2                                                                                  
+[0] L1D B1 S2 LSU  idx=5 LD   addr=0000000000001950 -> MISS, line already in MSHR 0: seat waits (WMSHR)
+[0] L1D TOP  DONE  port 0 idx=3 LD C  addr=0000000000001938 latency=10 cycles
+[0] L1D B1 S2 LSU  idx=6 LD   addr=0000000000001958 -> MISS, line already in MSHR 0: seat waits (WMSHR)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: INFL -> WMSHR  idx=5 LD C  addr=0000000000001950 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: INFL -> WMSHR  idx=6 LD C  addr=0000000000001958 wait_id=0
+[0] L1D L2P  RESP tid 0 RD bank 1 sub 0 us 0 err 0
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_mshr.g_entry[0].u_entry R beat 0 of 4 last=0 err=0 data=032e4994bfdae5002b7691bcc7e20d28
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_mshr.g_entry[0].u_entry R beat 1 of 4 last=0 err=0 data=d3fe19244f6ab5d0fb06214c97b2ddf8
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_mshr.g_entry[0].u_entry R beat 2 of 4 last=0 err=0 data=63cea9f41f3a45608bd6f11c27426d88
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_mshr.g_entry[0].u_entry R beat 3 of 4 last=1 err=0 data=335e7984afca15305b6681acf7123d58
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_mshr.g_entry[0].u_entry: DATA -> MERGE  line=0000000000001940 fetch primary idx=4 LD err=0
+[0] L1D B1 S3 RESP from     MSHR  seat=0 idx=4     LD data=2b7691bcc7e20d28 (resp_free=170)
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_mshr.g_entry[0].u_entry: MERGE -> RESP  line=0000000000001940 fetch primary idx=4 LD err=0
+[0] L1D MERGE bank 1 -> output  idx=4     LD (visible next cycle)
+[0] L1D TOP  DONE  port 0 idx=4 LD C  addr=0000000000001940 latency=38 cycles
+[0] L1D QUEUE bank 1 seats port 0 idx=1 LD addr=0000000000001960 (from its line)
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_mshr.g_entry[0].u_entry: RESP -> TOKEN  line=0000000000001940 fetch primary idx=4 LD err=0
+[0] L1D B1 S0 GRANT refill token  mshr=0 line=0000000000001940
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 0: OWNED -> EMPTY  idx=4 LD C  addr=0000000000001940 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 0: EMPTY -> READY  idx=1 LD C  addr=0000000000001960 wait_id=0
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_mshr.g_entry[0].u_entry: TOKEN -> INSTALL  line=0000000000001940 fetch primary idx=4 LD err=0
+[0] L1D B1 S1 REFILL mshr=0 line=0000000000001940 set=1 victim way=0 state=2 victim_line=0000000000001140 swap=0 vc_slot=1 (vc_room=1) install state=2                                                                            
+[0] L1D TAG  tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_r.u_tags write set=1 ways=01 tag=00000000000006
+[0] L1D DATA tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_r.u_data line write set/way=1/0 data=335e7984afca15305b6681acf7123d5863cea9f41f3a45608bd6f11c27426d88d3fe19244f6ab5d0fb06214c97b2ddf8032e4994bfdae5002b7691bcc7e20d28
+[0] L1D B1 S2 REFILL mshr=0 line=0000000000001940 INSTALLED (line + tag written), entry freed
+[0] L1D B1 S2 victim line 0000000000001140 (dirty=0 shared=0) -> victim-cache slot 1
+[0] L1D VC   tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_vc insert slot 1 line=0000000000001140 dirty=0 as  VALID (old state VALID)
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_mshr.g_entry[0].u_entry: INSTALL -> IDLE  line=0000000000001940 fetch primary idx=4 LD err=0
+[0] L1D B1 S0 GRANT LSU  seat=1 idx=0 LD   C  addr=0000000000001948  (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: WMSHR -> READY  idx=0 LD C  addr=0000000000001948 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: WMSHR -> READY  idx=5 LD C  addr=0000000000001950 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: WMSHR -> READY  idx=6 LD C  addr=0000000000001958 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: READY -> INFL  idx=0 LD C  addr=0000000000001948 wait_id=0
+[0] L1D B1 S0 GRANT LSU  seat=2 idx=5 LD   C  addr=0000000000001950  (resp_free=170)
+[0] L1D B1 S1 LSU  seat=1 idx=0 LD   C  addr=0000000000001948 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: READY -> INFL  idx=5 LD C  addr=0000000000001950 wait_id=0
+[0] L1D B1 S1 LSU  seat=2 idx=5 LD   C  addr=0000000000001950 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D B1 S2 LSU  idx=0 LD   addr=0000000000001948 -> HIT way=0 data=032e4994bfdae500
+[0] L1D B1 S3 RESP from pipeline  seat=1 idx=0     LD data=032e4994bfdae500 (resp_free=170)
+[0] L1D MERGE bank 1 -> output  idx=0     LD (visible next cycle)
+[0] L1D TOP  DONE  port 0 idx=0 LD C  addr=0000000000001948 latency=45 cycles
+[0] L1D QUEUE bank 1 seats port 0 idx=2 LD addr=0000000000001968 (from its line)
+[0] L1D MERGE bank 1 -> output  idx=5     LD (visible next cycle)
+[0] L1D B1 S3 RESP from pipeline  seat=2 idx=5     LD data=fb06214c97b2ddf8 (resp_free=170)
+[0] L1D B1 S2 LSU  idx=5 LD   addr=0000000000001950 -> HIT way=0 data=fb06214c97b2ddf8
+[0] L1D B1 S0 GRANT LSU  seat=3 idx=6 LD   C  addr=0000000000001958  (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: INFL -> EMPTY  idx=0 LD C  addr=0000000000001948 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: EMPTY -> READY  idx=2 LD C  addr=0000000000001968 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: INFL -> EMPTY  idx=5 LD C  addr=0000000000001950 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: READY -> INFL  idx=6 LD C  addr=0000000000001958 wait_id=0
+[0] L1D B1 S0 GRANT LSU  seat=0 idx=1 LD   C  addr=0000000000001960  (resp_free=170)
+[0] L1D QUEUE bank 1 seats port 0 idx=0 LD addr=0000000000001970 (        fresh)
+[0] L1D TOP  DONE  port 0 idx=5 LD C  addr=0000000000001950 latency=45 cycles
+[0] L1D B1 S1 LSU  seat=3 idx=6 LD   C  addr=0000000000001958 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 0: READY -> INFL  idx=1 LD C  addr=0000000000001960 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: EMPTY -> READY  idx=0 LD C  addr=0000000000001970 wait_id=0
+[0] L1D B1 S1 LSU  seat=0 idx=1 LD   C  addr=0000000000001960 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D B1 S2 LSU  idx=6 LD   addr=0000000000001958 -> HIT way=0 data=d3fe19244f6ab5d0
+[0] L1D B1 S3 RESP from pipeline  seat=3 idx=6     LD data=d3fe19244f6ab5d0 (resp_free=170)
+[0] L1D MERGE bank 1 -> output  idx=6     LD (visible next cycle)
+[0] L1D TOP  DONE  port 0 idx=6 LD C  addr=0000000000001958 latency=47 cycles
+[0] L1D QUEUE bank 1 seats port 0 idx=3 LD addr=0000000000001978 (from its line)
+[0] L1D MERGE bank 1 -> output  idx=1     LD (visible next cycle)
+[0] L1D B1 S3 RESP from pipeline  seat=0 idx=1     LD data=8bd6f11c27426d88 (resp_free=170)
+[0] L1D B1 S2 LSU  idx=1 LD   addr=0000000000001960 -> HIT way=0 data=8bd6f11c27426d88
+[0] L1D B1 S0 GRANT LSU  seat=1 idx=2 LD   C  addr=0000000000001968  (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: INFL -> EMPTY  idx=6 LD C  addr=0000000000001958 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 0: INFL -> EMPTY  idx=1 LD C  addr=0000000000001960 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: READY -> INFL  idx=2 LD C  addr=0000000000001968 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: EMPTY -> READY  idx=3 LD C  addr=0000000000001978 wait_id=0
+[0] L1D B1 S0 GRANT LSU  seat=2 idx=0 LD   C  addr=0000000000001970  (resp_free=170)
+[0] L1D B2 G  FAST ISSUE seat=0 idx=4 LD   C  addr=0000000000001980  (resp_free=170)
+[0] L1D QUEUE bank 2 seats port 0 idx=4 LD addr=0000000000001980 (        fresh)
+[0] L1D TOP  DONE  port 0 idx=1 LD C  addr=0000000000001960 latency=47 cycles
+[0] L1D QUEUE bank 2 seats port 0 idx=1 LD addr=0000000000001988 (        fresh)
+[0] L1D B2 G  FAST ISSUE seat=1 idx=1 LD   C  addr=0000000000001988  (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 0: EMPTY -> INFL  idx=4 LD C  addr=0000000000001980 wait_id=0
+[0] L1D B1 S1 LSU  seat=1 idx=2 LD   C  addr=0000000000001968 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: READY -> INFL  idx=0 LD C  addr=0000000000001970 wait_id=0
+[0] L1D B1 S1 LSU  seat=2 idx=0 LD   C  addr=0000000000001970 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D B1 S2 LSU  idx=2 LD   addr=0000000000001968 -> HIT way=0 data=63cea9f41f3a4560
+[0] L1D B1 S3 RESP from pipeline  seat=1 idx=2     LD data=63cea9f41f3a4560 (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: EMPTY -> INFL  idx=1 LD C  addr=0000000000001988 wait_id=0
+[0] L1D B2 S1 LSU  seat=0 idx=4 LD   C  addr=0000000000001980 set=1 tag=00000000000006 ->          MISS way=0 state=2                                                                                  
+[0] L1D MERGE bank 1 -> output  idx=2     LD (visible next cycle)
+[0] L1D QUEUE bank 2 seats port 0 idx=5 LD addr=0000000000001990 (        fresh)
+[0] L1D TOP  DONE  port 0 idx=2 LD C  addr=0000000000001968 latency=15 cycles
+[0] L1D QUEUE bank 2 seats port 0 idx=6 LD addr=0000000000001998 (        fresh)
+[0] L1D MERGE bank 1 -> output  idx=0     LD (visible next cycle)
+[0] L1D B2 S2 LSU  idx=4 LD   addr=0000000000001980 -> MISS: MSHR entry 0 allocated, shared fetch of line 0000000000001980
+[0] L1D B2 S1 LSU  seat=1 idx=1 LD   C  addr=0000000000001988 set=1 tag=00000000000006 ->          MISS way=0 state=2                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: EMPTY -> READY  idx=5 LD C  addr=0000000000001990 wait_id=0
+[0] L1D B1 S3 RESP from pipeline  seat=2 idx=0     LD data=5b6681acf7123d58 (resp_free=170)
+[0] L1D B1 S2 LSU  idx=0 LD   addr=0000000000001970 -> HIT way=0 data=5b6681acf7123d58
+[0] L1D B1 S0 GRANT LSU  seat=3 idx=3 LD   C  addr=0000000000001978  (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: INFL -> EMPTY  idx=2 LD C  addr=0000000000001968 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: INFL -> EMPTY  idx=0 LD C  addr=0000000000001970 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: READY -> INFL  idx=3 LD C  addr=0000000000001978 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 0: INFL -> OWNED  idx=4 LD C  addr=0000000000001980 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: EMPTY -> READY  idx=6 LD C  addr=0000000000001998 wait_id=0
+[0] L1D B2 S0 GRANT LSU  seat=2 idx=5 LD   C  addr=0000000000001990  (resp_free=170)
+[0] L1D B2 S2 LSU  idx=1 LD   addr=0000000000001988 -> MISS, line already in MSHR 0: seat waits (WMSHR)
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_mshr.g_entry[0].u_entry: IDLE -> AR  line=0000000000001980 fetch primary idx=4 LD err=0
+[0] L1D TOP  DONE  port 0 idx=0 LD C  addr=0000000000001970 latency=8 cycles
+[0] L1D L2P  REQ RD line bank 2 sub 0 tid 0 us 0 addr 0000000000001980
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_mshr.g_entry[0].u_entry: AR -> DATA  line=0000000000001980 fetch primary idx=4 LD err=0
+[0] L1D B2 S0 GRANT LSU  seat=3 idx=6 LD   C  addr=0000000000001998  (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: INFL -> WMSHR  idx=1 LD C  addr=0000000000001988 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: READY -> INFL  idx=5 LD C  addr=0000000000001990 wait_id=0
+[0] L1D B1 S1 LSU  seat=3 idx=3 LD   C  addr=0000000000001978 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D B1 S2 LSU  idx=3 LD   addr=0000000000001978 -> HIT way=0 data=335e7984afca1530
+[0] L1D B1 S3 RESP from pipeline  seat=3 idx=3     LD data=335e7984afca1530 (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: READY -> INFL  idx=6 LD C  addr=0000000000001998 wait_id=0
+[0] L1D B2 S1 LSU  seat=2 idx=5 LD   C  addr=0000000000001990 set=1 tag=00000000000006 ->          MISS way=0 state=2                                                                                  
+[0] L1D MERGE bank 1 -> output  idx=3     LD (visible next cycle)
+[0] L1D TOP  DONE  port 0 idx=3 LD C  addr=0000000000001978 latency=10 cycles
+[0] L1D B2 S2 LSU  idx=5 LD   addr=0000000000001990 -> MISS, line already in MSHR 0: seat waits (WMSHR)
+[0] L1D B2 S1 LSU  seat=3 idx=6 LD   C  addr=0000000000001998 set=1 tag=00000000000006 ->          MISS way=0 state=2                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[1].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: INFL -> EMPTY  idx=3 LD C  addr=0000000000001978 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: INFL -> WMSHR  idx=5 LD C  addr=0000000000001990 wait_id=0
+[0] L1D B2 S2 LSU  idx=6 LD   addr=0000000000001998 -> MISS, line already in MSHR 0: seat waits (WMSHR)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: INFL -> WMSHR  idx=6 LD C  addr=0000000000001998 wait_id=0
+[0] L1D L2P  RESP tid 0 RD bank 2 sub 0 us 0 err 0
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_mshr.g_entry[0].u_entry R beat 0 of 4 last=0 err=0 data=c2ef08557e9ba4c1ea37507d86a3cce9
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_mshr.g_entry[0].u_entry R beat 1 of 4 last=0 err=0 data=92bfd8e50e2b7491bac7e00d56739cb9
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_mshr.g_entry[0].u_entry R beat 2 of 4 last=0 err=0 data=224f68b5defb04214a97b0dde6032c49
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_mshr.g_entry[0].u_entry R beat 3 of 4 last=1 err=0 data=f21f38456e8bd4f11a27406db6d3fc19
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_mshr.g_entry[0].u_entry: DATA -> MERGE  line=0000000000001980 fetch primary idx=4 LD err=0
+[0] L1D MERGE bank 2 -> output  idx=4     LD (visible next cycle)
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_mshr.g_entry[0].u_entry: MERGE -> RESP  line=0000000000001980 fetch primary idx=4 LD err=0
+[0] L1D B2 S3 RESP from     MSHR  seat=0 idx=4     LD data=ea37507d86a3cce9 (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 0: OWNED -> EMPTY  idx=4 LD C  addr=0000000000001980 wait_id=0
+[0] L1D B2 S0 GRANT refill token  mshr=0 line=0000000000001980
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_mshr.g_entry[0].u_entry: RESP -> TOKEN  line=0000000000001980 fetch primary idx=4 LD err=0
+[0] L1D QUEUE bank 2 seats port 0 idx=2 LD addr=00000000000019a0 (from its line)
+[0] L1D TOP  DONE  port 0 idx=4 LD C  addr=0000000000001980 latency=32 cycles
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_mshr.g_entry[0].u_entry: TOKEN -> INSTALL  line=0000000000001980 fetch primary idx=4 LD err=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 0: EMPTY -> READY  idx=2 LD C  addr=00000000000019a0 wait_id=0
+[0] L1D B2 S1 REFILL mshr=0 line=0000000000001980 set=1 victim way=0 state=2 victim_line=0000000000001180 swap=0 vc_slot=1 (vc_room=1) install state=2                                                                            
+[0] L1D VC   tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_vc insert slot 1 line=0000000000001180 dirty=0 as  VALID (old state VALID)
+[0] L1D B2 S2 REFILL mshr=0 line=0000000000001980 INSTALLED (line + tag written), entry freed
+[0] L1D B2 S2 victim line 0000000000001180 (dirty=0 shared=0) -> victim-cache slot 1
+[0] L1D DATA tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_r.u_data line write set/way=1/0 data=f21f38456e8bd4f11a27406db6d3fc19224f68b5defb04214a97b0dde6032c4992bfd8e50e2b7491bac7e00d56739cb9c2ef08557e9ba4c1ea37507d86a3cce9
+[0] L1D TAG  tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_r.u_tags write set=1 ways=01 tag=00000000000006
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: WMSHR -> READY  idx=1 LD C  addr=0000000000001988 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: WMSHR -> READY  idx=5 LD C  addr=0000000000001990 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: WMSHR -> READY  idx=6 LD C  addr=0000000000001998 wait_id=0
+[0] L1D B2 S0 GRANT LSU  seat=1 idx=1 LD   C  addr=0000000000001988  (resp_free=170)
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_mshr.g_entry[0].u_entry: INSTALL -> IDLE  line=0000000000001980 fetch primary idx=4 LD err=0
+[0] L1D B2 S0 GRANT LSU  seat=2 idx=5 LD   C  addr=0000000000001990  (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: READY -> INFL  idx=1 LD C  addr=0000000000001988 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: READY -> INFL  idx=5 LD C  addr=0000000000001990 wait_id=0
+[0] L1D B2 S1 LSU  seat=1 idx=1 LD   C  addr=0000000000001988 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D MERGE bank 2 -> output  idx=1     LD (visible next cycle)
+[0] L1D B2 S3 RESP from pipeline  seat=1 idx=1     LD data=c2ef08557e9ba4c1 (resp_free=170)
+[0] L1D B2 S2 LSU  idx=1 LD   addr=0000000000001988 -> HIT way=0 data=c2ef08557e9ba4c1
+[0] L1D B2 S1 LSU  seat=2 idx=5 LD   C  addr=0000000000001990 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: INFL -> EMPTY  idx=1 LD C  addr=0000000000001988 wait_id=0
+[0] L1D B2 S0 GRANT LSU  seat=3 idx=6 LD   C  addr=0000000000001998  (resp_free=170)
+[0] L1D B2 S2 LSU  idx=5 LD   addr=0000000000001990 -> HIT way=0 data=bac7e00d56739cb9
+[0] L1D B2 S3 RESP from pipeline  seat=2 idx=5     LD data=bac7e00d56739cb9 (resp_free=170)
+[0] L1D MERGE bank 2 -> output  idx=5     LD (visible next cycle)
+[0] L1D QUEUE bank 2 seats port 0 idx=0 LD addr=00000000000019a8 (from its line)
+[0] L1D TOP  DONE  port 0 idx=1 LD C  addr=0000000000001988 latency=39 cycles
+[0] L1D TOP  DONE  port 0 idx=5 LD C  addr=0000000000001990 latency=39 cycles
+[0] L1D QUEUE bank 2 seats port 0 idx=1 LD addr=00000000000019b0 (        fresh)
+[0] L1D B2 S0 GRANT LSU  seat=0 idx=2 LD   C  addr=00000000000019a0  (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: EMPTY -> READY  idx=0 LD C  addr=00000000000019a8 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: INFL -> EMPTY  idx=5 LD C  addr=0000000000001990 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: READY -> INFL  idx=6 LD C  addr=0000000000001998 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 0: READY -> INFL  idx=2 LD C  addr=00000000000019a0 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: EMPTY -> READY  idx=1 LD C  addr=00000000000019b0 wait_id=0
+[0] L1D B2 S1 LSU  seat=3 idx=6 LD   C  addr=0000000000001998 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D MERGE bank 2 -> output  idx=6     LD (visible next cycle)
+[0] L1D B2 S3 RESP from pipeline  seat=3 idx=6     LD data=92bfd8e50e2b7491 (resp_free=170)
+[0] L1D B2 S2 LSU  idx=6 LD   addr=0000000000001998 -> HIT way=0 data=92bfd8e50e2b7491
+[0] L1D B2 S1 LSU  seat=0 idx=2 LD   C  addr=00000000000019a0 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: INFL -> EMPTY  idx=6 LD C  addr=0000000000001998 wait_id=0
+[0] L1D B2 S0 GRANT LSU  seat=1 idx=0 LD   C  addr=00000000000019a8  (resp_free=170)
+[0] L1D B2 S2 LSU  idx=2 LD   addr=00000000000019a0 -> HIT way=0 data=4a97b0dde6032c49
+[0] L1D B2 S3 RESP from pipeline  seat=0 idx=2     LD data=4a97b0dde6032c49 (resp_free=170)
+[0] L1D MERGE bank 2 -> output  idx=2     LD (visible next cycle)
+[0] L1D QUEUE bank 2 seats port 0 idx=3 LD addr=00000000000019b8 (from its line)
+[0] L1D TOP  DONE  port 0 idx=6 LD C  addr=0000000000001998 latency=41 cycles
+[0] L1D TOP  DONE  port 0 idx=2 LD C  addr=00000000000019a0 latency=41 cycles
+[0] L1D QUEUE bank 3 seats port 0 idx=4 LD addr=00000000000019c0 (        fresh)
+[0] L1D B3 G  FAST ISSUE seat=0 idx=4 LD   C  addr=00000000000019c0  (resp_free=170)
+[0] L1D B2 S0 GRANT LSU  seat=2 idx=1 LD   C  addr=00000000000019b0  (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 0: INFL -> EMPTY  idx=2 LD C  addr=00000000000019a0 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: READY -> INFL  idx=0 LD C  addr=00000000000019a8 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: EMPTY -> READY  idx=3 LD C  addr=00000000000019b8 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: READY -> INFL  idx=1 LD C  addr=00000000000019b0 wait_id=0
+[0] L1D B2 S1 LSU  seat=1 idx=0 LD   C  addr=00000000000019a8 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 0: EMPTY -> INFL  idx=4 LD C  addr=00000000000019c0 wait_id=0
+[0] L1D B3 G  FAST ISSUE seat=1 idx=2 LD   C  addr=00000000000019c8  (resp_free=170)
+[0] L1D QUEUE bank 3 seats port 0 idx=2 LD addr=00000000000019c8 (        fresh)
+[0] L1D QUEUE bank 3 seats port 0 idx=5 LD addr=00000000000019d0 (        fresh)
+[0] L1D MERGE bank 2 -> output  idx=0     LD (visible next cycle)
+[0] L1D B3 S1 LSU  seat=0 idx=4 LD   C  addr=00000000000019c0 set=1 tag=00000000000006 ->          MISS way=0 state=2                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: EMPTY -> INFL  idx=2 LD C  addr=00000000000019c8 wait_id=0
+[0] L1D B2 S3 RESP from pipeline  seat=1 idx=0     LD data=224f68b5defb0421 (resp_free=170)
+[0] L1D B2 S2 LSU  idx=0 LD   addr=00000000000019a8 -> HIT way=0 data=224f68b5defb0421
+[0] L1D B2 S1 LSU  seat=2 idx=1 LD   C  addr=00000000000019b0 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: INFL -> EMPTY  idx=0 LD C  addr=00000000000019a8 wait_id=0
+[0] L1D B2 S0 GRANT LSU  seat=3 idx=3 LD   C  addr=00000000000019b8  (resp_free=170)
+[0] L1D B2 S2 LSU  idx=1 LD   addr=00000000000019b0 -> HIT way=0 data=1a27406db6d3fc19
+[0] L1D B2 S3 RESP from pipeline  seat=2 idx=1     LD data=1a27406db6d3fc19 (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: EMPTY -> READY  idx=5 LD C  addr=00000000000019d0 wait_id=0
+[0] L1D B3 S1 LSU  seat=1 idx=2 LD   C  addr=00000000000019c8 set=1 tag=00000000000006 ->          MISS way=0 state=2                                                                                  
+[0] L1D B3 S2 LSU  idx=4 LD   addr=00000000000019c0 -> MISS: MSHR entry 0 allocated, shared fetch of line 00000000000019c0
+[0] L1D MERGE bank 2 -> output  idx=1     LD (visible next cycle)
+[0] L1D QUEUE bank 3 seats port 0 idx=6 LD addr=00000000000019d8 (        fresh)
+[0] L1D TOP  DONE  port 0 idx=0 LD C  addr=00000000000019a8 latency=15 cycles
+[0] L1D TOP  DONE  port 0 idx=1 LD C  addr=00000000000019b0 latency=8 cycles
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_mshr.g_entry[0].u_entry: IDLE -> AR  line=00000000000019c0 fetch primary idx=4 LD err=0
+[0] L1D B3 S2 LSU  idx=2 LD   addr=00000000000019c8 -> MISS, line already in MSHR 0: seat waits (WMSHR)
+[0] L1D B3 S0 GRANT LSU  seat=2 idx=5 LD   C  addr=00000000000019d0  (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 0: INFL -> OWNED  idx=4 LD C  addr=00000000000019c0 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: EMPTY -> READY  idx=6 LD C  addr=00000000000019d8 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: INFL -> EMPTY  idx=1 LD C  addr=00000000000019b0 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: READY -> INFL  idx=3 LD C  addr=00000000000019b8 wait_id=0
+[0] L1D L2P  REQ RD line bank 3 sub 0 tid 0 us 0 addr 00000000000019c0
+[0] L1D B2 S1 LSU  seat=3 idx=3 LD   C  addr=00000000000019b8 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: INFL -> WMSHR  idx=2 LD C  addr=00000000000019c8 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: READY -> INFL  idx=5 LD C  addr=00000000000019d0 wait_id=0
+[0] L1D B3 S0 GRANT LSU  seat=3 idx=6 LD   C  addr=00000000000019d8  (resp_free=170)
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_mshr.g_entry[0].u_entry: AR -> DATA  line=00000000000019c0 fetch primary idx=4 LD err=0
+[0] L1D MERGE bank 2 -> output  idx=3     LD (visible next cycle)
+[0] L1D B3 S1 LSU  seat=2 idx=5 LD   C  addr=00000000000019d0 set=1 tag=00000000000006 ->          MISS way=0 state=2                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: READY -> INFL  idx=6 LD C  addr=00000000000019d8 wait_id=0
+[0] L1D B2 S3 RESP from pipeline  seat=3 idx=3     LD data=f21f38456e8bd4f1 (resp_free=170)
+[0] L1D B2 S2 LSU  idx=3 LD   addr=00000000000019b8 -> HIT way=0 data=f21f38456e8bd4f1
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[2].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: INFL -> EMPTY  idx=3 LD C  addr=00000000000019b8 wait_id=0
+[0] L1D B3 S1 LSU  seat=3 idx=6 LD   C  addr=00000000000019d8 set=1 tag=00000000000006 ->          MISS way=0 state=2                                                                                  
+[0] L1D B3 S2 LSU  idx=5 LD   addr=00000000000019d0 -> MISS, line already in MSHR 0: seat waits (WMSHR)
+[0] L1D TOP  DONE  port 0 idx=3 LD C  addr=00000000000019b8 latency=10 cycles
+[0] L1D B3 S2 LSU  idx=6 LD   addr=00000000000019d8 -> MISS, line already in MSHR 0: seat waits (WMSHR)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: INFL -> WMSHR  idx=5 LD C  addr=00000000000019d0 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: INFL -> WMSHR  idx=6 LD C  addr=00000000000019d8 wait_id=0
+[0] L1D L2P  RESP tid 0 RD bank 3 sub 0 us 0 err 0
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_mshr.g_entry[0].u_entry R beat 0 of 4 last=0 err=0 data=f9c05ef320b08341aaf7103d46638ca9
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_mshr.g_entry[0].u_entry R beat 1 of 4 last=0 err=0 data=527f98a5ceeb34517a87a0cd16335c79
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_mshr.g_entry[0].u_entry R beat 2 of 4 last=0 err=0 data=e20f28759ebbc4e10a57709da6c3ec09
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_mshr.g_entry[0].u_entry R beat 3 of 4 last=1 err=0 data=b2dff8052e4b94b1dae7002d7693bcd9
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_mshr.g_entry[0].u_entry: DATA -> MERGE  line=00000000000019c0 fetch primary idx=4 LD err=0
+[0] L1D B3 S3 RESP from     MSHR  seat=0 idx=4     LD data=aaf7103d46638ca9 (resp_free=170)
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_mshr.g_entry[0].u_entry: MERGE -> RESP  line=00000000000019c0 fetch primary idx=4 LD err=0
+[0] L1D MERGE bank 3 -> output  idx=4     LD (visible next cycle)
+[0] L1D TOP  DONE  port 0 idx=4 LD C  addr=00000000000019c0 latency=32 cycles
+[0] L1D QUEUE bank 3 seats port 0 idx=0 LD addr=00000000000019e0 (from its line)
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_mshr.g_entry[0].u_entry: RESP -> TOKEN  line=00000000000019c0 fetch primary idx=4 LD err=0
+[0] L1D B3 S0 GRANT refill token  mshr=0 line=00000000000019c0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 0: OWNED -> EMPTY  idx=4 LD C  addr=00000000000019c0 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 0: EMPTY -> READY  idx=0 LD C  addr=00000000000019e0 wait_id=0
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_mshr.g_entry[0].u_entry: TOKEN -> INSTALL  line=00000000000019c0 fetch primary idx=4 LD err=0
+[0] L1D B3 S1 REFILL mshr=0 line=00000000000019c0 set=1 victim way=0 state=2 victim_line=00000000000011c0 swap=0 vc_slot=1 (vc_room=1) install state=2                                                                            
+[0] L1D TAG  tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_r.u_tags write set=1 ways=01 tag=00000000000006
+[0] L1D DATA tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_r.u_data line write set/way=1/0 data=b2dff8052e4b94b1dae7002d7693bcd9e20f28759ebbc4e10a57709da6c3ec09527f98a5ceeb34517a87a0cd16335c79f9c05ef320b08341aaf7103d46638ca9
+[0] L1D B3 S2 REFILL mshr=0 line=00000000000019c0 INSTALLED (line + tag written), entry freed
+[0] L1D B3 S2 victim line 00000000000011c0 (dirty=0 shared=0) -> victim-cache slot 1
+[0] L1D VC   tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_vc insert slot 1 line=00000000000011c0 dirty=0 as  VALID (old state VALID)
+[0] L1D MSHR tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_mshr.g_entry[0].u_entry: INSTALL -> IDLE  line=00000000000019c0 fetch primary idx=4 LD err=0
+[0] L1D B3 S0 GRANT LSU  seat=1 idx=2 LD   C  addr=00000000000019c8  (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: WMSHR -> READY  idx=2 LD C  addr=00000000000019c8 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: WMSHR -> READY  idx=5 LD C  addr=00000000000019d0 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: WMSHR -> READY  idx=6 LD C  addr=00000000000019d8 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: READY -> INFL  idx=2 LD C  addr=00000000000019c8 wait_id=0
+[0] L1D B3 S0 GRANT LSU  seat=2 idx=5 LD   C  addr=00000000000019d0  (resp_free=170)
+[0] L1D B3 S1 LSU  seat=1 idx=2 LD   C  addr=00000000000019c8 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: READY -> INFL  idx=5 LD C  addr=00000000000019d0 wait_id=0
+[0] L1D B3 S1 LSU  seat=2 idx=5 LD   C  addr=00000000000019d0 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D B3 S2 LSU  idx=2 LD   addr=00000000000019c8 -> HIT way=0 data=f9c05ef320b08341
+[0] L1D B3 S3 RESP from pipeline  seat=1 idx=2     LD data=f9c05ef320b08341 (resp_free=170)
+[0] L1D MERGE bank 3 -> output  idx=2     LD (visible next cycle)
+[0] L1D TOP  DONE  port 0 idx=2 LD C  addr=00000000000019c8 latency=39 cycles
+[0] L1D QUEUE bank 3 seats port 0 idx=1 LD addr=00000000000019e8 (from its line)
+[0] L1D MERGE bank 3 -> output  idx=5     LD (visible next cycle)
+[0] L1D B3 S3 RESP from pipeline  seat=2 idx=5     LD data=7a87a0cd16335c79 (resp_free=170)
+[0] L1D B3 S2 LSU  idx=5 LD   addr=00000000000019d0 -> HIT way=0 data=7a87a0cd16335c79
+[0] L1D B3 S0 GRANT LSU  seat=3 idx=6 LD   C  addr=00000000000019d8  (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: INFL -> EMPTY  idx=2 LD C  addr=00000000000019c8 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: EMPTY -> READY  idx=1 LD C  addr=00000000000019e8 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: INFL -> EMPTY  idx=5 LD C  addr=00000000000019d0 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: READY -> INFL  idx=6 LD C  addr=00000000000019d8 wait_id=0
+[0] L1D B3 S0 GRANT LSU  seat=0 idx=0 LD   C  addr=00000000000019e0  (resp_free=170)
+[0] L1D QUEUE bank 3 seats port 0 idx=2 LD addr=00000000000019f0 (        fresh)
+[0] L1D TOP  DONE  port 0 idx=5 LD C  addr=00000000000019d0 latency=39 cycles
+[0] L1D B3 S1 LSU  seat=3 idx=6 LD   C  addr=00000000000019d8 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 0: READY -> INFL  idx=0 LD C  addr=00000000000019e0 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: EMPTY -> READY  idx=2 LD C  addr=00000000000019f0 wait_id=0
+[0] L1D B3 S1 LSU  seat=0 idx=0 LD   C  addr=00000000000019e0 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D B3 S2 LSU  idx=6 LD   addr=00000000000019d8 -> HIT way=0 data=527f98a5ceeb3451
+[0] L1D B3 S3 RESP from pipeline  seat=3 idx=6     LD data=527f98a5ceeb3451 (resp_free=170)
+[0] L1D MERGE bank 3 -> output  idx=6     LD (visible next cycle)
+[0] L1D QUEUE bank 3 seats port 0 idx=3 LD addr=00000000000019f8 (from its line)
+[0] L1D B3 S3 RESP from pipeline  seat=0 idx=0     LD data=0a57709da6c3ec09 (resp_free=170)
+[0] L1D B3 S2 LSU  idx=0 LD   addr=00000000000019e0 -> HIT way=0 data=0a57709da6c3ec09
+[0] L1D B3 S0 GRANT LSU  seat=1 idx=1 LD   C  addr=00000000000019e8  (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: INFL -> EMPTY  idx=6 LD C  addr=00000000000019d8 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 0: INFL -> EMPTY  idx=0 LD C  addr=00000000000019e0 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: READY -> INFL  idx=1 LD C  addr=00000000000019e8 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: EMPTY -> READY  idx=3 LD C  addr=00000000000019f8 wait_id=0
+[0] L1D MERGE bank 3 -> output  idx=0     LD (visible next cycle)
+[0] L1D TOP  DONE  port 0 idx=6 LD C  addr=00000000000019d8 latency=42 cycles
+[0] L1D TOP  DONE  port 0 idx=0 LD C  addr=00000000000019e0 latency=42 cycles
+[0] L1D B3 S1 LSU  seat=1 idx=1 LD   C  addr=00000000000019e8 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D B3 S0 GRANT LSU  seat=2 idx=2 LD   C  addr=00000000000019f0  (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: READY -> INFL  idx=2 LD C  addr=00000000000019f0 wait_id=0
+[0] L1D B3 S2 LSU  idx=1 LD   addr=00000000000019e8 -> HIT way=0 data=e20f28759ebbc4e1
+[0] L1D B3 S3 RESP from pipeline  seat=1 idx=1     LD data=e20f28759ebbc4e1 (resp_free=170)
+[0] L1D MERGE bank 3 -> output  idx=1     LD (visible next cycle)
+[0] L1D TOP  DONE  port 0 idx=1 LD C  addr=00000000000019e8 latency=15 cycles
+[0] L1D B3 S1 LSU  seat=2 idx=2 LD   C  addr=00000000000019f0 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D B3 S0 GRANT LSU  seat=3 idx=3 LD   C  addr=00000000000019f8  (resp_free=170)
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 1: INFL -> EMPTY  idx=1 LD C  addr=00000000000019e8 wait_id=0
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: READY -> INFL  idx=3 LD C  addr=00000000000019f8 wait_id=0
+[0] L1D B3 S2 LSU  idx=2 LD   addr=00000000000019f0 -> HIT way=0 data=dae7002d7693bcd9
+[0] L1D B3 S3 RESP from pipeline  seat=2 idx=2     LD data=dae7002d7693bcd9 (resp_free=170)
+[0] L1D MERGE bank 3 -> output  idx=2     LD (visible next cycle)
+[0] L1D TOP  DONE  port 0 idx=2 LD C  addr=00000000000019f0 latency=9 cycles
+[0] L1D B3 S1 LSU  seat=3 idx=3 LD   C  addr=00000000000019f8 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: INFL -> EMPTY  idx=2 LD C  addr=00000000000019f0 wait_id=0
+[0] L1D B3 S2 LSU  idx=3 LD   addr=00000000000019f8 -> HIT way=0 data=b2dff8052e4b94b1
+[0] L1D B3 S3 RESP from pipeline  seat=3 idx=3     LD data=b2dff8052e4b94b1 (resp_free=170)
+[0] L1D MERGE bank 3 -> output  idx=3     LD (visible next cycle)
+[0] L1D TOP  DONE  port 0 idx=3 LD C  addr=00000000000019f8 latency=10 cycles
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: INFL -> EMPTY  idx=3 LD C  addr=00000000000019f8 wait_id=0
+events: snoop tag hits 65 (M handed over 32), snoop on VC slot 13, snoop waits install 1 / writeback 1, snoop vs MSHR still fetching 40
+        S installs 34, upgrades 14, cycles with a snoop buffered while a lock holds snoops 0, refill victim moved off the locked line 0
+TEST PASSED: tb_l1d_coh (749 requests, 220 snoops, mode A, seed 1)
+tb/tests/tb_l1d_coh.v:678: $finish called at 62380000 (1ps)

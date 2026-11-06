@@ -1,0 +1,4 @@
+cycles: snoop answer after the snoop handshake: hit E 6, hit M with data 6, absent 6
+cycles: load miss 31, store miss 31, store on S (upgrade) 31
+TEST PASSED: tb_l1d_snoop
+tb/tests/tb_l1d_snoop.v:168: $finish called at 10610000 (1ps)

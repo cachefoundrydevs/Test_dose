@@ -1,0 +1,592 @@
+lint warnings: 426
+LINT: PASS
+--- tb_smoke ---
+TEST PASSED: tb_smoke
+tb/tests/tb_smoke.sv:105: $finish called at 545000 (1ps)
+PASS tb_smoke
+--- tb_l1d_random ---
+random phase: 4000 requests (2066 loads, 1625 stores, 309 non-cacheable), 4000 answered
+clean finished after 1065 cycles
+memory matches the reference after clean
+flush finished after 1054 cycles
+memory matches the reference after flush
+events: hits 3431, line fetches 2161, victim-cache load hits 569, swaps 994, writebacks 1525
+        wait-for-MSHR 2067, MSHR full 0, wait-for-writeback 17, refill held 0, NC accesses 359
+        v2: lines installed S 0, S-to-M upgrades 0
+TEST PASSED: tb_l1d_random (6520 requests, seed 1)
+tb/tests/tb_l1d_random.v:360: $finish called at 486120000 (1ps)
+PASS tb_l1d_random
+--- tb_l1d_random_TINY ---
+random phase: 4000 requests (1976 loads, 1691 stores, 333 non-cacheable), 4000 answered
+clean finished after 114 cycles
+memory matches the reference after clean
+flush finished after 102 cycles
+memory matches the reference after flush
+events: hits 2498, line fetches 2361, victim-cache load hits 249, swaps 279, writebacks 1514
+        wait-for-MSHR 559, MSHR full 1061, wait-for-writeback 32, refill held 3, NC accesses 388
+        v2: lines installed S 0, S-to-M upgrades 0
+TEST PASSED: tb_l1d_random (5496 requests, seed 1)
+tb/tests/tb_l1d_random.v:360: $finish called at 502290000 (1ps)
+PASS tb_l1d_random_TINY
+--- tb_l1d_random_TINY_SEED_5 ---
+random phase: 4000 requests (2022 loads, 1693 stores, 285 non-cacheable), 4000 answered
+clean finished after 103 cycles
+memory matches the reference after clean
+flush finished after 77 cycles
+memory matches the reference after flush
+events: hits 2589, line fetches 2329, victim-cache load hits 248, swaps 291, writebacks 1503
+        wait-for-MSHR 597, MSHR full 1043, wait-for-writeback 26, refill held 5, NC accesses 330
+        v2: lines installed S 0, S-to-M upgrades 0
+TEST PASSED: tb_l1d_random (5496 requests, seed 5)
+tb/tests/tb_l1d_random.v:360: $finish called at 490320000 (1ps)
+PASS tb_l1d_random_TINY_SEED_5
+--- tb_latency ---
+    c0+4  R   fast issue cancelled (seat blocked), back to READY
+    c0+4  OUT response idx 0 (store ack)
+    c0+5  S1  tag miss
+    c0+6  S2  seat 1 -> action 0 (1=WMSHR 2=WANY 3=WVC 4=WNC 5=OWNED) id 0              
+    c0+7  G   grant LSU seat 1
+    c0+9  S1  tag hit way 0 (                      load)
+    c0+10  S2  response built (  data array)
+    c0+10  S2  answer pushed to the merger (pipeline), seat 1 freed
+    c0+11  OUT response idx 1 (load data)
+  RESULT 17: store hit: latency 4 cycles (expected 4) OK
+  RESULT e stored bytes (cancelled once, retried): latency 8 cycles (expected 8) OK
+  RESULT 17: load returns the store's data 000045185a5a0000 OK
+
+TEST PASSED
+tb/tests/tb_latency.v:476: $finish called at 16140000 (1ps)
+PASS tb_latency
+--- tb_l1d_soc ---
+issued 3000, answered 3000; AR 208 (one-beat 147), AW 200 (one-beat 144), W beats 368; stop cycles 0
+TEST PASSED
+tb/tests/tb_l1d_soc.v:415: $finish called at 74820000 (1ps)
+PASS tb_l1d_soc
+--- tb_l1d_soc_L1D_DEBUG_NOPS_200 ---
+[0] L1D B1 S0 GRANT clean token  set=63 way=2
+[0] L1D B1 S1 MAINT set=63 way=2 state=0 dirty=0                               
+[0] L1D B1 S2 MAINT                                done
+[0] L1D B1 S0 GRANT clean token  set=63 way=3
+[0] L1D B1 S1 MAINT set=63 way=3 state=0 dirty=0                               
+[0] L1D MAINT tb_l1d_soc.dcache_dut.u_l1d.u_ports.u_dcache.g_bank[1].u_bank.u_maint walked sets 0..63
+[0] L1D B1 S2 MAINT                                done
+[0] L1D MAINT tb_l1d_soc.dcache_dut.u_l1d.u_ports.u_dcache.g_bank[1].u_bank.u_maint: RUN -> FINAL (clean)
+[0] L1D TOP  MAINT all banks done
+[0] L1D MAINT tb_l1d_soc.dcache_dut.u_l1d.u_ports.u_dcache.g_bank[1].u_bank.u_maint: FINAL -> IDLE (clean)
+[0] L1D MAINT tb_l1d_soc.dcache_dut.u_l1d.u_ports.u_dcache.g_bank[1].u_bank.u_maint done
+[0] L1D SOC  clean_complete
+issued 200, answered 200; AR 64 (one-beat 10), AW 58 (one-beat 15), W beats 187; stop cycles 0
+TEST PASSED
+tb/tests/tb_l1d_soc.v:415: $finish called at 24110000 (1ps)
+PASS tb_l1d_soc_L1D_DEBUG_NOPS_200
+--- tb_l1d_random_TINY_L1D_DEBUG_NOPS_300 ---
+[0] L1D MERGE bank 3 -> output  idx=2     LD (visible next cycle)
+[0] L1D SEAT tb_l1d_random.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: INFL -> EMPTY  idx=2 LD C  addr=00000000000019f0 wait_id=0
+[0] L1D SEAT tb_l1d_random.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: READY -> INFL  idx=3 LD C  addr=00000000000019f8 wait_id=0
+[0] L1D B3 S1 LSU  seat=3 idx=3 LD   C  addr=00000000000019f8 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D TOP  DONE  port 0 idx=2 LD C  addr=00000000000019f0 latency=10 cycles
+[0] L1D MERGE bank 3 -> output  idx=3     LD (visible next cycle)
+[0] L1D B3 S3 RESP from pipeline  seat=3 idx=3     LD data=b2dff8052e4b94b1 (resp_free=170)
+[0] L1D B3 S2 LSU  idx=3 LD   addr=00000000000019f8 -> HIT way=0 data=b2dff8052e4b94b1
+[0] L1D SEAT tb_l1d_random.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: INFL -> EMPTY  idx=3 LD C  addr=00000000000019f8 wait_id=0
+[0] L1D TOP  DONE  port 0 idx=3 LD C  addr=00000000000019f8 latency=11 cycles
+events: hits 1123, line fetches 550, victim-cache load hits 57, swaps 59, writebacks 305
+        wait-for-MSHR 366, MSHR full 217, wait-for-writeback 6, refill held 1, NC accesses 66
+        v2: lines installed S 0, S-to-M upgrades 0
+TEST PASSED: tb_l1d_random (1796 requests, seed 1)
+tb/tests/tb_l1d_random.v:360: $finish called at 140560000 (1ps)
+PASS tb_l1d_random_TINY_L1D_DEBUG_NOPS_300
+--- tb_l1d_random_SHARED_30 ---
+random phase: 4000 requests (2037 loads, 1651 stores, 312 non-cacheable), 4000 answered
+clean finished after 1031 cycles
+memory matches the reference after clean
+flush finished after 1053 cycles
+memory matches the reference after flush
+events: hits 3274, line fetches 2335, victim-cache load hits 542, swaps 953, writebacks 1543
+        wait-for-MSHR 2053, MSHR full 0, wait-for-writeback 17, refill held 0, NC accesses 369
+        v2: lines installed S 615, S-to-M upgrades 173
+TEST PASSED: tb_l1d_random (6520 requests, seed 1)
+tb/tests/tb_l1d_random.v:360: $finish called at 517930000 (1ps)
+PASS tb_l1d_random_SHARED_30
+--- tb_l1d_random_TINY_SHARED_40_SEED_7 ---
+random phase: 4000 requests (2009 loads, 1659 stores, 332 non-cacheable), 4000 answered
+clean finished after 92 cycles
+memory matches the reference after clean
+flush finished after 85 cycles
+memory matches the reference after flush
+events: hits 2338, line fetches 2526, victim-cache load hits 253, swaps 290, writebacks 1494
+        wait-for-MSHR 576, MSHR full 1105, wait-for-writeback 30, refill held 4, NC accesses 379
+        v2: lines installed S 622, S-to-M upgrades 173
+TEST PASSED: tb_l1d_random (5496 requests, seed 7)
+tb/tests/tb_l1d_random.v:360: $finish called at 530760000 (1ps)
+PASS tb_l1d_random_TINY_SHARED_40_SEED_7
+--- tb_l1d_atomic ---
+  T11 ADD: old 8000000000000005 new 800000000000000c OK
+  T11 XOR: old 8000000000000005 new 8000000000000002 OK
+  T11 AND: old 8000000000000005 new 0000000000000005 OK
+  T11 OR: old 8000000000000005 new 8000000000000007 OK
+  T11 MIN (old is negative): old 8000000000000005 new 8000000000000005 OK
+  T11 MAX: old 8000000000000005 new 0000000000000007 OK
+  T11 MINU: old 8000000000000005 new 0000000000000007 OK
+  T11 MAXU: old 8000000000000005 new 8000000000000005 OK
+  T12 MIN.W (signed: -16 < 5): old 00000000fffffff0 word fffffff011111111 OK
+  T12 MAXU.W (unsigned: 0xFFFFFFF0 > 5): old 00000000fffffff0 word fffffff011111111 OK
+  T12 ADD.W (wraps at 32 bits): old 00000000fffffff0 word 0000001011111111 OK
+  T12 MAX.W (signed: 5 > -16): old 00000000fffffff0 word 0000000511111111 OK
+cycles (this test's count, hit): load 5, store 5, LR 5, SC success 5, SC fail 5, AMO 5
+TEST PASSED: tb_l1d_atomic
+tb/tests/tb_l1d_atomic.v:159: $finish called at 10020000 (1ps)
+PASS tb_l1d_atomic
+--- tb_l1d_snoop ---
+cycles: snoop answer after the snoop handshake: hit E 6, hit M with data 6, absent 6
+cycles: load miss 31, store miss 31, store on S (upgrade) 31
+TEST PASSED: tb_l1d_snoop
+tb/tests/tb_l1d_snoop.v:168: $finish called at 10610000 (1ps)
+PASS tb_l1d_snoop
+--- tb_l1d_coh ---
+random phase: 4000 requests (1858 loads, 1584 stores, 207 NC, 106 LR, SC 23 ok / 83 fail, 139 AMO), 4000 answered
+snoops: 2587 sent (1321 invalidate), answers: 1080 present, 373 dirty, 1507 not present; 5 cancelled; mode B writes 0
+flush finished after 1052 cycles
+memory matches the reference after flush
+events: snoop tag hits 649 (M handed over 323), snoop on VC slot 431, snoop waits install 20 / writeback 12, snoop vs MSHR still fetching 432
+        S installs 583, upgrades 272, cycles with a snoop buffered while a lock holds snoops 0, refill victim moved off the locked line 0
+TEST PASSED: tb_l1d_coh (4960 requests, 2587 snoops, mode A, seed 1)
+tb/tests/tb_l1d_coh.v:678: $finish called at 458630000 (1ps)
+PASS tb_l1d_coh
+--- tb_l1d_coh_MODEB ---
+random phase: 4001 requests (1877 loads, 1515 stores, 214 NC, 113 LR, SC 36 ok / 77 fail, 169 AMO), 4001 answered
+snoops: 2538 sent (1291 invalidate), answers: 1049 present, 356 dirty, 1488 not present; 6 cancelled; mode B writes 611
+flush finished after 1031 cycles
+memory matches the reference after flush
+events: snoop tag hits 643 (M handed over 310), snoop on VC slot 407, snoop waits install 20 / writeback 4, snoop vs MSHR still fetching 469
+        S installs 638, upgrades 309, cycles with a snoop buffered while a lock holds snoops 0, refill victim moved off the locked line 0
+TEST PASSED: tb_l1d_coh (4961 requests, 2538 snoops, mode B, seed 1)
+tb/tests/tb_l1d_coh.v:678: $finish called at 458460000 (1ps)
+PASS tb_l1d_coh_MODEB
+--- tb_l1d_coh_TINY ---
+random phase: 4001 requests (1908 loads, 1508 stores, 245 NC, 101 LR, SC 15 ok / 86 fail, 138 AMO), 4001 answered
+snoops: 2724 sent (1344 invalidate), answers: 974 present, 372 dirty, 1749 not present; 8 cancelled; mode B writes 0
+flush finished after 84 cycles
+memory matches the reference after flush
+events: snoop tag hits 740 (M handed over 362), snoop on VC slot 235, snoop waits install 20 / writeback 13, snoop vs MSHR still fetching 426
+        S installs 352, upgrades 165, cycles with a snoop buffered while a lock holds snoops 0, refill victim moved off the locked line 0
+TEST PASSED: tb_l1d_coh (4449 requests, 2725 snoops, mode A, seed 1)
+tb/tests/tb_l1d_coh.v:678: $finish called at 465060000 (1ps)
+PASS tb_l1d_coh_TINY
+--- tb_l1d_coh_TINY_MODEB_SEED_3 ---
+random phase: 4001 requests (1849 loads, 1556 stores, 231 NC, 104 LR, SC 20 ok / 84 fail, 157 AMO), 4001 answered
+snoops: 2813 sent (1398 invalidate), answers: 910 present, 346 dirty, 1903 not present; 7 cancelled; mode B writes 590
+flush finished after 106 cycles
+memory matches the reference after flush
+events: snoop tag hits 692 (M handed over 337), snoop on VC slot 218, snoop waits install 33 / writeback 15, snoop vs MSHR still fetching 514
+        S installs 405, upgrades 188, cycles with a snoop buffered while a lock holds snoops 0, refill victim moved off the locked line 0
+TEST PASSED: tb_l1d_coh (4449 requests, 2813 snoops, mode B, seed 3)
+tb/tests/tb_l1d_coh.v:678: $finish called at 465790000 (1ps)
+PASS tb_l1d_coh_TINY_MODEB_SEED_3
+--- tb_l1d_coh_TINY_MODEB_SNP_20_SEED_11 ---
+random phase: 4000 requests (1870 loads, 1596 stores, 209 NC, 93 LR, SC 18 ok / 75 fail, 139 AMO), 4000 answered
+snoops: 5938 sent (2955 invalidate), answers: 1890 present, 675 dirty, 4047 not present; 12 cancelled; mode B writes 1273
+flush finished after 97 cycles
+memory matches the reference after flush
+events: snoop tag hits 1438 (M handed over 641), snoop on VC slot 453, snoop waits install 51 / writeback 32, snoop vs MSHR still fetching 972
+        S installs 400, upgrades 226, cycles with a snoop buffered while a lock holds snoops 0, refill victim moved off the locked line 0
+TEST PASSED: tb_l1d_coh (4448 requests, 5938 snoops, mode B, seed 11)
+tb/tests/tb_l1d_coh.v:678: $finish called at 498890000 (1ps)
+PASS tb_l1d_coh_TINY_MODEB_SNP_20_SEED_11
+--- tb_l1d_coh_TINY_L1D_DEBUG_NOPS_300 ---
+[0] L1D B3 S2 LSU  idx=2 LD   addr=00000000000019f0 -> HIT way=0 data=dae7002d7693bcd9
+[0] L1D B3 S3 RESP from pipeline  seat=2 idx=2     LD data=dae7002d7693bcd9 (resp_free=170)
+[0] L1D MERGE bank 3 -> output  idx=2     LD (visible next cycle)
+[0] L1D TOP  DONE  port 0 idx=2 LD C  addr=00000000000019f0 latency=9 cycles
+[0] L1D B3 S1 LSU  seat=3 idx=3 LD   C  addr=00000000000019f8 set=1 tag=00000000000006 ->           HIT way=0 state=2                                                                                  
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 2: INFL -> EMPTY  idx=2 LD C  addr=00000000000019f0 wait_id=0
+[0] L1D B3 S2 LSU  idx=3 LD   addr=00000000000019f8 -> HIT way=0 data=b2dff8052e4b94b1
+[0] L1D B3 S3 RESP from pipeline  seat=3 idx=3     LD data=b2dff8052e4b94b1 (resp_free=170)
+[0] L1D MERGE bank 3 -> output  idx=3     LD (visible next cycle)
+[0] L1D TOP  DONE  port 0 idx=3 LD C  addr=00000000000019f8 latency=10 cycles
+[0] L1D SEAT tb_l1d_coh.dut.u_ports.u_dcache.g_bank[3].u_bank.u_fifo_s0.u_fifo.u_lsu seat 3: INFL -> EMPTY  idx=3 LD C  addr=00000000000019f8 wait_id=0
+events: snoop tag hits 65 (M handed over 32), snoop on VC slot 13, snoop waits install 1 / writeback 1, snoop vs MSHR still fetching 40
+        S installs 34, upgrades 14, cycles with a snoop buffered while a lock holds snoops 0, refill victim moved off the locked line 0
+TEST PASSED: tb_l1d_coh (749 requests, 220 snoops, mode A, seed 1)
+tb/tests/tb_l1d_coh.v:678: $finish called at 62380000 (1ps)
+PASS tb_l1d_coh_TINY_L1D_DEBUG_NOPS_300
+--- tb_inflight_tracker ---
+checks=200012  vectors with a blocked seat=193445  rule A=614097  rule B=185887  rule C=128358  A cancelled by AMO write=15579
+TEST PASSED
+tb/tests/tb_inflight_tracker.v:169: $finish called at 200012000 (1ps)
+PASS tb_inflight_tracker
+--- tb_inflight_tracker_SMALL_SEED_3 ---
+checks=200012  vectors with a blocked seat=142176  rule A=160317  rule B=94194  rule C=56768  A cancelled by AMO write=4168
+TEST PASSED
+tb/tests/tb_inflight_tracker.v:169: $finish called at 200012000 (1ps)
+PASS tb_inflight_tracker_SMALL_SEED_3
+--- tb_l1d_random_TINY_SEED_11_NOPS_6000 ---
+random phase: 6000 requests (3020 loads, 2502 stores, 478 non-cacheable), 6000 answered
+clean finished after 83 cycles
+memory matches the reference after clean
+flush finished after 136 cycles
+memory matches the reference after flush
+events: hits 3264, line fetches 3378, victim-cache load hits 322, swaps 392, writebacks 2168
+        wait-for-MSHR 674, MSHR full 1528, wait-for-writeback 38, refill held 0, NC accesses 532
+        v2: lines installed S 0, S-to-M upgrades 0
+TEST PASSED: tb_l1d_random (7496 requests, seed 11)
+tb/tests/tb_l1d_random.v:360: $finish called at 699520000 (1ps)
+PASS tb_l1d_random_TINY_SEED_11_NOPS_6000
+--- tb_l1d_random_TINY_SEED_23_SHARED_40_NOPS_6000 ---
+random phase: 6000 requests (3082 loads, 2447 stores, 471 non-cacheable), 6000 answered
+clean finished after 74 cycles
+memory matches the reference after clean
+flush finished after 95 cycles
+memory matches the reference after flush
+events: hits 3021, line fetches 3621, victim-cache load hits 337, swaps 401, writebacks 2120
+        wait-for-MSHR 695, MSHR full 1685, wait-for-writeback 31, refill held 6, NC accesses 517
+        v2: lines installed S 908, S-to-M upgrades 253
+TEST PASSED: tb_l1d_random (7496 requests, seed 23)
+tb/tests/tb_l1d_random.v:360: $finish called at 745330000 (1ps)
+PASS tb_l1d_random_TINY_SEED_23_SHARED_40_NOPS_6000
+--- tb_l1d_coh_TINY_SEED_21 ---
+random phase: 4000 requests (1837 loads, 1571 stores, 220 NC, 115 LR, SC 37 ok / 78 fail, 142 AMO), 4000 answered
+snoops: 2783 sent (1376 invalidate), answers: 930 present, 372 dirty, 1853 not present; 5 cancelled; mode B writes 0
+flush finished after 126 cycles
+memory matches the reference after flush
+events: snoop tag hits 714 (M handed over 364), snoop on VC slot 216, snoop waits install 30 / writeback 14, snoop vs MSHR still fetching 443
+        S installs 366, upgrades 190, cycles with a snoop buffered while a lock holds snoops 0, refill victim moved off the locked line 0
+TEST PASSED: tb_l1d_coh (4448 requests, 2783 snoops, mode A, seed 21)
+tb/tests/tb_l1d_coh.v:678: $finish called at 471990000 (1ps)
+PASS tb_l1d_coh_TINY_SEED_21
+--- tb_l1d_coh_TINY_MODEB_SEED_33_SNP_30 ---
+random phase: 4001 requests (1851 loads, 1585 stores, 229 NC, 88 LR, SC 22 ok / 66 fail, 160 AMO), 4001 answered
+snoops: 7795 sent (3869 invalidate), answers: 2309 present, 824 dirty, 5485 not present; 29 cancelled; mode B writes 1712
+flush finished after 69 cycles
+memory matches the reference after flush
+events: snoop tag hits 1810 (M handed over 805), snoop on VC slot 499, snoop waits install 79 / writeback 17, snoop vs MSHR still fetching 1442
+        S installs 442, upgrades 274, cycles with a snoop buffered while a lock holds snoops 0, refill victim moved off the locked line 0
+TEST PASSED: tb_l1d_coh (4449 requests, 7796 snoops, mode B, seed 33)
+tb/tests/tb_l1d_coh.v:678: $finish called at 506900000 (1ps)
+PASS tb_l1d_coh_TINY_MODEB_SEED_33_SNP_30
+--- tb_l1d_coh_SEED_45_SNP_25 ---
+random phase: 4001 requests (1890 loads, 1537 stores, 235 NC, 96 LR, SC 27 ok / 69 fail, 147 AMO), 4001 answered
+snoops: 6596 sent (3297 invalidate), answers: 2498 present, 840 dirty, 4097 not present; 11 cancelled; mode B writes 0
+flush finished after 1068 cycles
+memory matches the reference after flush
+events: snoop tag hits 1511 (M handed over 695), snoop on VC slot 987, snoop waits install 56 / writeback 10, snoop vs MSHR still fetching 1331
+        S installs 711, upgrades 356, cycles with a snoop buffered while a lock holds snoops 0, refill victim moved off the locked line 0
+TEST PASSED: tb_l1d_coh (4961 requests, 6596 snoops, mode A, seed 45)
+tb/tests/tb_l1d_coh.v:678: $finish called at 501020000 (1ps)
+PASS tb_l1d_coh_SEED_45_SNP_25
+--- tb_ports ---
+  CC-2 latencies: P0 4, P1 5, P2 6, P3 7
+  ok: CC-2: four hits to one bank in one cycle: 4, 5, 6, 7 cycles
+  ok: CC-2: in port order P0, P1, P2, P3 (same cycle)
+=== LR / SC across ports (one global reservation) ===
+  ok: LR on P0, SC on P2 to the same line: success
+  ok: CC-9: LR A (bank 1, P0), LR B (bank 2, P1), SC A (P2) fails
+  ok: the failed SC ended the reservation: SC B fails too
+  ok: LR on P1 to bank 2, SC on P2: success
+  ok: LR on P0, store on P1 to the line, SC on P2: fail
+random part: 6030 requests in all (3473 loads, 2164 stores, 363 NC in the random part), 6030 answered
+memory matches the reference after clean
+memory matches the reference after flush
+events: cycles with 2+ banks seating 479, seated from a waiting line 2488, cycles with 2+ ports answering 274, stop cycles 47856
+TEST PASSED: tb_ports (6830 requests, seed 1)
+tb/tests/tb_ports.v:522: $finish called at 515880000 (1ps)
+PASS tb_ports
+--- tb_ports_TINY ---
+=== LR / SC across ports (one global reservation) ===
+  ok: LR on P0, SC on P2 to the same line: success
+  ok: CC-9: LR A (bank 1, P0), LR B (bank 2, P1), SC A (P2) fails
+  ok: the failed SC ended the reservation: SC B fails too
+  ok: LR on P1 to bank 2, SC on P2: success
+  ok: LR on P0, store on P1 to the line, SC on P2: fail
+random part: 6014 requests in all (3444 loads, 2202 stores, 354 NC in the random part), 6014 answered
+memory matches the reference after clean
+memory matches the reference after flush
+events: cycles with 2+ banks seating 247, seated from a waiting line 3492, cycles with 2+ ports answering 138, stop cycles 60361
+TEST PASSED: tb_ports (6814 requests, seed 1)
+tb/tests/tb_ports.v:522: $finish called at 609940000 (1ps)
+PASS tb_ports_TINY
+--- tb_ports_TINY_SEED_9_NOPS_8000 ---
+=== LR / SC across ports (one global reservation) ===
+  ok: LR on P0, SC on P2 to the same line: success
+  ok: CC-9: LR A (bank 1, P0), LR B (bank 2, P1), SC A (P2) fails
+  ok: the failed SC ended the reservation: SC B fails too
+  ok: LR on P1 to bank 2, SC on P2: success
+  ok: LR on P0, store on P1 to the line, SC on P2: fail
+random part: 8014 requests in all (4603 loads, 2907 stores, 490 NC in the random part), 8014 answered
+memory matches the reference after clean
+memory matches the reference after flush
+events: cycles with 2+ banks seating 325, seated from a waiting line 4411, cycles with 2+ ports answering 203, stop cycles 78890
+TEST PASSED: tb_ports (8814 requests, seed 9)
+tb/tests/tb_ports.v:522: $finish called at 794770000 (1ps)
+PASS tb_ports_TINY_SEED_9_NOPS_8000
+--- tb_ports_SEED_4_NOPS_10000 ---
+  CC-2 latencies: P0 4, P1 5, P2 6, P3 7
+  ok: CC-2: four hits to one bank in one cycle: 4, 5, 6, 7 cycles
+  ok: CC-2: in port order P0, P1, P2, P3 (same cycle)
+=== LR / SC across ports (one global reservation) ===
+  ok: LR on P0, SC on P2 to the same line: success
+  ok: CC-9: LR A (bank 1, P0), LR B (bank 2, P1), SC A (P2) fails
+  ok: the failed SC ended the reservation: SC B fails too
+  ok: LR on P1 to bank 2, SC on P2: success
+  ok: LR on P0, store on P1 to the line, SC on P2: fail
+random part: 10030 requests in all (5751 loads, 3640 stores, 609 NC in the random part), 10030 answered
+memory matches the reference after clean
+memory matches the reference after flush
+events: cycles with 2+ banks seating 726, seated from a waiting line 4023, cycles with 2+ ports answering 424, stop cycles 76875
+TEST PASSED: tb_ports (10830 requests, seed 4)
+tb/tests/tb_ports.v:522: $finish called at 805750000 (1ps)
+PASS tb_ports_SEED_4_NOPS_10000
+--- tb_ports_order_NOPS_1500 ---
+SLOW 12555000: port 1 idx 0 kind 1 @000000000001c15e took 563 cycles (sent at cycle 692)
+SLOW 15455000: port 2 idx 2 kind 0 @00000000000800c8 took 507 cycles (sent at cycle 1038)
+SLOW 15565000: port 2 idx 4 kind 0 @0000000000080052 took 796 cycles (sent at cycle 760)
+SLOW 15625000: port 0 idx 6 kind 1 @00000000000800c8 took 409 cycles (sent at cycle 1153)
+SLOW 15705000: port 2 idx 0 kind 1 @0000000000080060 took 556 cycles (sent at cycle 1014)
+SLOW 15995000: port 2 idx 7 kind 0 @000000000001404e took 463 cycles (sent at cycle 1136)
+SLOW 16115000: port 2 idx 5 kind 0 @0000000000014058 took 439 cycles (sent at cycle 1172)
+random part done: 1514 requests
+memory matches the reference after clean
+memory matches the reference after flush
+coverage: read-after-write across ports 621, write-after-read 639, write-after-write 466, seated from a line 1043
+stats: 2514 requests (LD 1375, ST 1139, LR 0, SC 0, AMO 0), 2514 answered; max latency per port: P0 999 P1 1127 P2 1030 P3 933
+latency histogram (cycles 4 | 5 | 6-7 | 8-11 | 12-23 | 24-63 | 64-255 | more): 477 148 156 448 551 195 352 187
+TEST PASSED: tb_ports_order (2514 requests, seed 1)
+tb/common/tb_ports_common.vh:687: $finish called at 89800000 (1ps)
+PASS tb_ports_order_NOPS_1500
+--- tb_ports_order_TINY_ONEBANK_STALL_NOPS_1500_SEED_2 ---
+=== D1 (CC-4): a store waits in its port line, a younger load of the same bytes on another port ===
+  ok: D1 the younger load (P1) returns the store data of P2
+=== D2 (CC-5): a load waits, a younger store to the same bytes on another port ===
+  ok: D2 the older load (P3) returns the OLD data, not the younger store's
+  ok: D2 a later load sees the store
+=== D3: byte stores of different sizes to one word from three ports, in consecutive cycles ===
+  ok: D3 the bytes are merged in send order (CCCCDDDD AAAA BB 44)
+random part done: 1514 requests
+memory matches the reference after clean
+memory matches the reference after flush
+coverage: read-after-write across ports 814, write-after-read 698, write-after-write 608, seated from a line 1918
+stats: 2514 requests (LD 1385, ST 1129, LR 0, SC 0, AMO 0), 2514 answered; max latency per port: P0 277 P1 204 P2 228 P3 302
+latency histogram (cycles 4 | 5 | 6-7 | 8-11 | 12-23 | 24-63 | 64-255 | more): 79 21 26 64 601 925 796 2
+TEST PASSED: tb_ports_order (2514 requests, seed 2)
+tb/common/tb_ports_common.vh:687: $finish called at 133890000 (1ps)
+PASS tb_ports_order_TINY_ONEBANK_STALL_NOPS_1500_SEED_2
+--- tb_ports_amo_NOPS_600_NLR_70 ---
+=== part 1: random AMOs and plain accesses ===
+AMOs sent per operation (SWAP ADD XOR AND OR MIN MAX MINU MAXU): 8 7 6 4 7 2 7 10 8
+=== part 2: counter race ===
+counter race: 300 adds sent, reference counter = 18446617964315796967
+=== part 3: LR / SC rounds ===
+SC results: 40 succeeded, 50 failed; must-succeed 30, must-fail 50, either 10
+memory matches the reference after clean
+memory matches the reference after flush
+stats: 2578 requests (LD 1822, ST 227, LR 80, SC 90, AMO 359), 2578 answered; max latency per port: P0 160 P1 205 P2 201 P3 198
+latency histogram (cycles 4 | 5 | 6-7 | 8-11 | 12-23 | 24-63 | 64-255 | more): 261 32 16 190 850 1196 33 0
+TEST PASSED: tb_ports_amo (2578 requests, seed 1)
+tb/common/tb_ports_common.vh:687: $finish called at 81080000 (1ps)
+PASS tb_ports_amo_NOPS_600_NLR_70
+--- tb_ports_amo_TINY_ALLPORTS_NOPS_600_NLR_70_SEED_3 ---
+=== part 1: random AMOs and plain accesses ===
+AMOs sent per operation (SWAP ADD XOR AND OR MIN MAX MINU MAXU): 26 26 24 26 15 18 26 24 20
+=== part 2: counter race ===
+counter race: 300 adds sent, reference counter = 9781164245573035297
+=== part 3: LR / SC rounds ===
+SC results: 40 succeeded, 50 failed; must-succeed 30, must-fail 50, either 10
+memory matches the reference after clean
+memory matches the reference after flush
+stats: 1876 requests (LD 1025, ST 176, LR 80, SC 90, AMO 505), 1876 answered; max latency per port: P0 126 P1 141 P2 146 P3 136
+latency histogram (cycles 4 | 5 | 6-7 | 8-11 | 12-23 | 24-63 | 64-255 | more): 298 30 19 149 606 756 18 0
+TEST PASSED: tb_ports_amo (1876 requests, seed 3)
+tb/common/tb_ports_common.vh:687: $finish called at 60330000 (1ps)
+PASS tb_ports_amo_TINY_ALLPORTS_NOPS_600_NLR_70_SEED_3
+--- tb_ports_coh_TINY_NOPS_1200_SEED_2 ---
+SLOW 42855000: port 2 idx 7 kind 1 @0000000000000048 took 402 cycles (sent at cycle 3883)
+SLOW 56305000: port 3 idx 3 kind 0 @0000000000000de8 took 416 cycles (sent at cycle 5214)
+SLOW 56645000: port 0 idx 4 kind 0 @00000000000001e8 took 435 cycles (sent at cycle 5229)
+SLOW 56985000: port 1 idx 4 kind 1 @00000000000015dc took 429 cycles (sent at cycle 5269)
+SLOW 72355000: port 1 idx 0 kind 0 @000000000000154b took 446 cycles (sent at cycle 6789)
+SLOW 89435000: port 1 idx 0 kind 1 @0000000000001062 took 434 cycles (sent at cycle 8509)
+SLOW 93725000: port 3 idx 1 kind 0 @0000000000001867 took 406 cycles (sent at cycle 8966)
+random phase: 1200 requests, 0 outside writes (mode B), 0 clean / flush under load (0 started with requests outstanding)
+memory matches the reference after flush
+memory matches the reference after final flush
+snoops: 753 sent (388 invalidate), 753 answered (290 present, 125 dirty, 463 absent), 0 cancelled
+stats: 1648 requests (LD 1068, ST 550, LR 0, SC 0, AMO 30), 1648 answered; max latency per port: P0 521 P1 455 P2 423 P3 667
+latency histogram (cycles 4 | 5 | 6-7 | 8-11 | 12-23 | 24-63 | 64-255 | more): 97 31 22 24 54 624 663 133
+TEST PASSED: tb_ports_coh (1648 requests, seed 2)
+tb/common/tb_ports_common.vh:687: $finish called at 131150000 (1ps)
+PASS tb_ports_coh_TINY_NOPS_1200_SEED_2
+--- tb_ports_coh_TINY_MODEB_MAINT_NOPS_1200_SEED_4 ---
+SLOW 56405000: port 3 idx 2 kind 0 @0000000000000048 took 443 cycles (sent at cycle 5197)
+SLOW 56905000: port 2 idx 1 kind 4 @0000000000001500 took 408 cycles (sent at cycle 5282)
+SLOW 75685000: port 3 idx 0 kind 1 @000000000000100c took 483 cycles (sent at cycle 7085)
+SLOW 77865000: port 3 idx 3 kind 0 @0000000000000880 took 436 cycles (sent at cycle 7350)
+SLOW 78795000: port 1 idx 1 kind 0 @00000000000005a7 took 423 cycles (sent at cycle 7456)
+SLOW 80215000: port 0 idx 3 kind 0 @0000000000000190 took 609 cycles (sent at cycle 7412)
+SLOW 86525000: port 0 idx 4 kind 1 @0000000000000520 took 495 cycles (sent at cycle 8157)
+random phase: 1200 requests, 46 outside writes (mode B), 2 clean / flush under load (2 started with requests outstanding)
+memory matches the reference after flush
+memory matches the reference after final flush
+snoops: 216 sent (111 invalidate), 216 answered (65 present, 25 dirty, 151 absent), 0 cancelled
+stats: 1648 requests (LD 1075, ST 554, LR 0, SC 0, AMO 19), 1648 answered; max latency per port: P0 609 P1 622 P2 495 P3 516
+latency histogram (cycles 4 | 5 | 6-7 | 8-11 | 12-23 | 24-63 | 64-255 | more): 96 36 21 24 83 645 631 112
+TEST PASSED: tb_ports_coh (1648 requests, seed 4)
+tb/common/tb_ports_common.vh:687: $finish called at 123020000 (1ps)
+PASS tb_ports_coh_TINY_MODEB_MAINT_NOPS_1200_SEED_4
+--- tb_ports_stall ---
+  completed in the window: P0 795, P1 0, P2 795, P3 795
+  ok: S2a the other ports go on working while P1 stalls (>= 100 each)
+  ok: all stops are 0 when idle, after S2a
+=== S2b: P1 stalls for 800 cycles, the others use P1's bank (information) ===
+INFO S2b: completed in the window while P1 stalls: P0 5, P1 0, P2 4, P3 4  -> the stalled port blocks the bank for the other ports
+  ok: all stops are 0 when idle, after S2b
+=== S3: four ports, one bank, highest rate, 3000 cycles ===
+  completed: P0 751, P1 751, P2 751, P3 750; largest latency per port: 7 7 7 7 (bound 64)
+  ok: S3 no answer takes longer than LAT_BOUND cycles
+  ok: S3 every port completes at least 60 % of the busiest port's count
+  ok: all stops are 0 when idle, after S3
+stats: 5510 requests (LD 5510, ST 0, LR 0, SC 0, AMO 0), 5510 answered; max latency per port: P0 7 P1 7 P2 7 P3 7
+latency histogram (cycles 4 | 5 | 6-7 | 8-11 | 12-23 | 24-63 | 64-255 | more): 2403 1 3010 3 0 3 1 89
+TEST PASSED: tb_ports_stall (5510 requests, seed 1)
+tb/common/tb_ports_common.vh:687: $finish called at 57920000 (1ps)
+PASS tb_ports_stall
+--- tb_ports_stall_TINY ---
+  completed in the window: P0 398, P1 0, P2 398, P3 398
+  ok: S2a the other ports go on working while P1 stalls (>= 100 each)
+  ok: all stops are 0 when idle, after S2a
+=== S2b: P1 stalls for 800 cycles, the others use P1's bank (information) ===
+INFO S2b: completed in the window while P1 stalls: P0 3, P1 0, P2 2, P3 2  -> the stalled port blocks the bank for the other ports
+  ok: all stops are 0 when idle, after S2b
+=== S3: four ports, one bank, highest rate, 3000 cycles ===
+  completed: P0 452, P1 451, P2 451, P3 451; largest latency per port: 13 13 13 13 (bound 96)
+  ok: S3 no answer takes longer than LAT_BOUND cycles
+  ok: S3 every port completes at least 60 % of the busiest port's count
+  ok: all stops are 0 when idle, after S3
+stats: 3098 requests (LD 3098, ST 0, LR 0, SC 0, AMO 0), 3098 answered; max latency per port: P0 13 P1 13 P2 13 P3 13
+latency histogram (cycles 4 | 5 | 6-7 | 8-11 | 12-23 | 24-63 | 64-255 | more): 9 1 8 1806 1198 3 1 72
+TEST PASSED: tb_ports_stall (3098 requests, seed 1)
+tb/common/tb_ports_common.vh:687: $finish called at 58130000 (1ps)
+PASS tb_ports_stall_TINY
+--- tb_ports_vpu ---
+SLOW 19715000: port 1 idx 4 kind 0 @00000000000041ef took 823 cycles (sent at cycle 1148)
+SLOW 19755000: port 1 idx 7 kind 1 @00000000000041cc took 613 cycles (sent at cycle 1362)
+SLOW 20255000: VPU idx 6 store @0000000000020040 took 539 cycles
+SLOW 21155000: port 1 idx 1 kind 0 @000000000002c0b8 took 575 cycles (sent at cycle 1540)
+SLOW 21345000: port 0 idx 6 kind 1 @00000000000180b0 took 556 cycles (sent at cycle 1578)
+SLOW 21735000: port 0 idx 4 kind 1 @000000000000016f took 837 cycles (sent at cycle 1336)
+SLOW 21815000: port 2 idx 6 kind 1 @0000000000000168 took 444 cycles (sent at cycle 1737)
+memory matches the reference after flush
+memory matches the reference after final flush
+coverage: vector store upgrades (CC-14) 1, vector store misses (CC-15) 175, vector loads from the victim cache 63, bank door waits 3835
+stats: 3156 requests (LD 1214, ST 1029, LR 0, SC 0, AMO 64), 3156 answered; max latency per port: P0 1421 P1 2170 P2 1494 P3 0
+latency histogram (cycles 4 | 5 | 6-7 | 8-11 | 12-23 | 24-63 | 64-255 | more): 361 131 96 111 295 202 657 454
+VPU: 478 vector loads, 371 vector stores, 849 answered; latency max 1814, mean 135, 125 answers in exactly 4 cycles
+TEST PASSED: tb_ports_vpu (3156 requests, seed 1)
+tb/common/tb_ports_common.vh:687: $finish called at 224000000 (1ps)
+PASS tb_ports_vpu
+--- tb_ports_vpu_TINY_SEED_3_NOPS_4000 ---
+SLOW 67875000: VPU idx 4  load @0000000000001400 took 432 cycles
+SLOW 68995000: port 2 idx 2 kind 0 @0000000000001530 took 403 cycles (sent at cycle 6496)
+SLOW 70175000: port 0 idx 0 kind 0 @0000000000001556 took 429 cycles (sent at cycle 6588)
+SLOW 80815000: VPU idx 4 store @00000000000004c0 took 813 cycles
+SLOW 81295000: port 0 idx 3 kind 1 @00000000000011c6 took 413 cycles (sent at cycle 7716)
+SLOW 102205000: port 2 idx 0 kind 1 @0000000000001420 took 623 cycles (sent at cycle 9597)
+SLOW 104315000: port 2 idx 3 kind 0 @0000000000001128 took 484 cycles (sent at cycle 9947)
+memory matches the reference after flush
+memory matches the reference after final flush
+coverage: vector store upgrades (CC-14) 1, vector store misses (CC-15) 253, vector loads from the victim cache 41, bank door waits 1222
+stats: 4090 requests (LD 1626, ST 1378, LR 0, SC 0, AMO 83), 4090 answered; max latency per port: P0 531 P1 654 P2 623 P3 0
+latency histogram (cycles 4 | 5 | 6-7 | 8-11 | 12-23 | 24-63 | 64-255 | more): 314 89 60 94 235 513 1491 291
+VPU: 523 vector loads, 480 vector stores, 1003 answered; latency max 813, mean 118, 98 answers in exactly 4 cycles
+TEST PASSED: tb_ports_vpu (4090 requests, seed 3)
+tb/common/tb_ports_common.vh:687: $finish called at 344460000 (1ps)
+PASS tb_ports_vpu_TINY_SEED_3_NOPS_4000
+--- tb_ports_vpu_TINY_SNOOP_SEED_5_NOPS_2500 ---
+SLOW 104035000: port 0 idx 3 kind 0 @0000000000000c18 took 446 cycles (sent at cycle 9957)
+SLOW 111785000: port 1 idx 5 kind 0 @0000000000001968 took 462 cycles (sent at cycle 10716)
+SLOW 125495000: VPU idx 4 store @0000000000000500 took 431 cycles
+SLOW 126565000: port 0 idx 2 kind 0 @000000000000082c took 567 cycles (sent at cycle 12089)
+SLOW 130375000: port 0 idx 4 kind 0 @000000000000055b took 437 cycles (sent at cycle 12600)
+SLOW 153745000: port 1 idx 1 kind 0 @0000000000001000 took 412 cycles (sent at cycle 14962)
+SLOW 156665000: port 0 idx 0 kind 1 @0000000000000068 took 456 cycles (sent at cycle 15210)
+memory matches the reference after flush
+memory matches the reference after final flush
+coverage: vector store upgrades (CC-14) 11, vector store misses (CC-15) 164, vector loads from the victim cache 28, bank door waits 490
+stats: 2590 requests (LD 1040, ST 878, LR 0, SC 0, AMO 62), 2590 answered; max latency per port: P0 605 P1 550 P2 560 P3 0
+latency histogram (cycles 4 | 5 | 6-7 | 8-11 | 12-23 | 24-63 | 64-255 | more): 193 70 32 48 122 330 983 202
+VPU: 332 vector loads, 278 vector stores, 610 answered; latency max 513, mean 126, 53 answers in exactly 4 cycles
+TEST PASSED: tb_ports_vpu (2590 requests, seed 5)
+tb/common/tb_ports_common.vh:687: $finish called at 231690000 (1ps)
+PASS tb_ports_vpu_TINY_SNOOP_SEED_5_NOPS_2500
+--- tb_ports_vpu_TINY_TBP_SHARED_30_SEED_7 ---
+SLOW 135575000: VPU idx 0 store @0000000000001400 took 405 cycles
+SLOW 135675000: port 1 idx 2 kind 0 @0000000000001808 took 409 cycles (sent at cycle 13158)
+SLOW 136425000: port 0 idx 0 kind 0 @0000000000001128 took 473 cycles (sent at cycle 13169)
+SLOW 147335000: port 2 idx 2 kind 0 @00000000000014ac took 456 cycles (sent at cycle 14277)
+SLOW 157665000: port 1 idx 7 kind 0 @00000000000004e0 took 405 cycles (sent at cycle 15361)
+SLOW 158285000: VPU idx 3 store @00000000000018c0 took 457 cycles
+SLOW 158575000: port 0 idx 0 kind 1 @0000000000000590 took 412 cycles (sent at cycle 15445)
+memory matches the reference after flush
+memory matches the reference after final flush
+coverage: vector store upgrades (CC-14) 22, vector store misses (CC-15) 193, vector loads from the victim cache 43, bank door waits 536
+stats: 3090 requests (LD 1266, ST 1026, LR 0, SC 0, AMO 58), 3090 answered; max latency per port: P0 515 P1 587 P2 523 P3 0
+latency histogram (cycles 4 | 5 | 6-7 | 8-11 | 12-23 | 24-63 | 64-255 | more): 222 82 42 47 157 399 1175 226
+VPU: 394 vector loads, 346 vector stores, 740 answered; latency max 580, mean 122, 69 answers in exactly 4 cycles
+TEST PASSED: tb_ports_vpu (3090 requests, seed 7)
+tb/common/tb_ports_common.vh:687: $finish called at 267660000 (1ps)
+PASS tb_ports_vpu_TINY_TBP_SHARED_30_SEED_7
+=== Summary: 41 passed, 0 failed ===
+  RESULT load miss: latency 27 cycles (expected 27) OK
+  RESULT load hit: latency 4 cycles (expected 4) OK
+  RESULT store hit: latency 4 cycles (expected 4) OK
+  RESULT store miss: latency 27 cycles (expected 27) OK
+  RESULT load A: latency 4 cycles (expected 4) OK
+  RESULT load B (same line): latency 4 cycles (expected 4) OK
+  RESULT load: latency 4 cycles (expected 4) OK
+  RESULT store behind load: latency 8 cycles (expected 8) OK
+  RESULT primary miss: latency 27 cycles (expected 27) OK
+  RESULT secondary miss (waits for install): latency 34 cycles (expected 34) OK
+  RESULT victim-cache load hit: latency 4 cycles (expected 4) OK
+  RESULT victim-cache store hit: latency 12 cycles (expected 12) OK
+  RESULT NC load: latency 21 cycles (expected 21) OK
+  RESULT NC store: latency 17 cycles (expected 17) OK
+  load 0: issued c0+0, answered c0+4, latency 4
+  load 1: issued c0+1, answered c0+5, latency 4
+  load 2: issued c0+2, answered c0+6, latency 4
+  load 3: issued c0+3, answered c0+7, latency 4
+  load 4: issued c0+4, answered c0+8, latency 4
+  load 5: issued c0+5, answered c0+9, latency 4
+  load 6: issued c0+6, answered c0+10, latency 4
+  load 7: issued c0+7, answered c0+11, latency 4
+  RESULT 12: load 0: latency 4 cycles (expected 4) OK
+  RESULT 12: load 3: latency 4 cycles (expected 4) OK
+  RESULT 12: load 4: latency 4 cycles (expected 4) OK
+  RESULT 12: load 7: latency 4 cycles (expected 4) OK
+  load 0 (bank 0): issued c0+0, answered c0+4, latency 4
+  load 1 (bank 1): issued c0+1, answered c0+5, latency 4
+  load 2 (bank 2): issued c0+2, answered c0+6, latency 4
+  load 3 (bank 3): issued c0+3, answered c0+7, latency 4
+  load 4 (bank 0): issued c0+4, answered c0+8, latency 4
+  load 5 (bank 1): issued c0+5, answered c0+9, latency 4
+  load 6 (bank 2): issued c0+6, answered c0+10, latency 4
+  load 7 (bank 3): issued c0+7, answered c0+11, latency 4
+  RESULT 13: load: latency 4 cycles (expected 4) OK
+  RESULT 13: load: latency 4 cycles (expected 4) OK
+  RESULT 13: load: latency 4 cycles (expected 4) OK
+  RESULT 13: load: latency 4 cycles (expected 4) OK
+  RESULT 13: load: latency 4 cycles (expected 4) OK
+  RESULT 13: load: latency 4 cycles (expected 4) OK
+  RESULT 13: load: latency 4 cycles (expected 4) OK
+  RESULT 13: load: latency 4 cycles (expected 4) OK
+  load 0: issued c0+0, answered c0+20, latency 20
+  load 1: issued c0+1, answered c0+21, latency 20
+  load 2: issued c0+2, answered c0+22, latency 20
+  load 3: issued c0+3, answered c0+23, latency 20
+  load 4: issued c0+4, answered c0+24, latency 20
+  load 5: issued c0+5, answered c0+25, latency 20
+  RESULT 15: miss: latency 27 cycles (expected 27) OK
+  RESULT 15: hit behind refill token: latency 8 cycles (expected 8) OK
+  RESULT 16: store hit: latency 4 cycles (expected 4) OK
+  RESULT : load hit, other line, during the write: latency 4 cycles (expected 4) OK
+  RESULT 17: store hit: latency 4 cycles (expected 4) OK
+  RESULT e stored bytes (cancelled once, retried): latency 8 cycles (expected 8) OK
+  RESULT 17: load returns the store's data 000045185a5a0000 OK

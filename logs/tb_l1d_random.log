@@ -1,0 +1,10 @@
+random phase: 4000 requests (2066 loads, 1625 stores, 309 non-cacheable), 4000 answered
+clean finished after 1065 cycles
+memory matches the reference after clean
+flush finished after 1054 cycles
+memory matches the reference after flush
+events: hits 3431, line fetches 2161, victim-cache load hits 569, swaps 994, writebacks 1525
+        wait-for-MSHR 2067, MSHR full 0, wait-for-writeback 17, refill held 0, NC accesses 359
+        v2: lines installed S 0, S-to-M upgrades 0
+TEST PASSED: tb_l1d_random (6520 requests, seed 1)
+tb/tests/tb_l1d_random.v:360: $finish called at 486120000 (1ps)

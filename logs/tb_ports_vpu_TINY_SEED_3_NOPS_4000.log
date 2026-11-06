@@ -1,0 +1,37 @@
+  ok: D1 vector load hit answered in 4 cycles
+  ok: D2 vector store hit acknowledged in 4 cycles
+  ok: D3 scalar loads see the vector store data
+  ok: D4 a vector load sees eight scalar stores from three ports
+  ok: D5 vector store miss fetched its line (CC-15)
+  ok: D6 vector store on an S line took the upgrade path (CC-14)
+  D7 vector loads answered from the victim cache so far: 1
+  D8 cycles a vector store waited at the bank door for a data place: 56
+  ok: D8 vector stores beyond the data places all completed
+SLOW 11545000: port 2 idx 1 kind 1 @00000000000001d4 took 465 cycles (sent at cycle 689)
+SLOW 11625000: port 2 idx 6 kind 0 @00000000000001d7 took 463 cycles (sent at cycle 699)
+SLOW 11835000: port 0 idx 3 kind 1 @0000000000000854 took 447 cycles (sent at cycle 736)
+SLOW 21965000: port 1 idx 3 kind 1 @0000000000000cec took 418 cycles (sent at cycle 1778)
+SLOW 31315000: VPU idx 0 store @0000000000001940 took 458 cycles
+SLOW 41925000: VPU idx 2  load @0000000000001800 took 441 cycles
+SLOW 45775000: port 1 idx 4 kind 1 @000000000000143a took 439 cycles (sent at cycle 4138)
+SLOW 46435000: port 2 idx 3 kind 0 @00000000000800a3 took 572 cycles (sent at cycle 4071)
+SLOW 58605000: port 0 idx 5 kind 0 @00000000000800a4 took 401 cycles (sent at cycle 5459)
+SLOW 61395000: port 0 idx 3 kind 0 @0000000000000ccc took 467 cycles (sent at cycle 5672)
+SLOW 64965000: VPU idx 0  load @0000000000001180 took 423 cycles
+SLOW 65635000: port 0 idx 0 kind 0 @00000000000008e3 took 425 cycles (sent at cycle 6138)
+SLOW 66355000: port 0 idx 5 kind 1 @00000000000019fc took 410 cycles (sent at cycle 6225)
+SLOW 67875000: VPU idx 4  load @0000000000001400 took 432 cycles
+SLOW 68995000: port 2 idx 2 kind 0 @0000000000001530 took 403 cycles (sent at cycle 6496)
+SLOW 70175000: port 0 idx 0 kind 0 @0000000000001556 took 429 cycles (sent at cycle 6588)
+SLOW 80815000: VPU idx 4 store @00000000000004c0 took 813 cycles
+SLOW 81295000: port 0 idx 3 kind 1 @00000000000011c6 took 413 cycles (sent at cycle 7716)
+SLOW 102205000: port 2 idx 0 kind 1 @0000000000001420 took 623 cycles (sent at cycle 9597)
+SLOW 104315000: port 2 idx 3 kind 0 @0000000000001128 took 484 cycles (sent at cycle 9947)
+memory matches the reference after flush
+memory matches the reference after final flush
+coverage: vector store upgrades (CC-14) 1, vector store misses (CC-15) 253, vector loads from the victim cache 41, bank door waits 1222
+stats: 4090 requests (LD 1626, ST 1378, LR 0, SC 0, AMO 83), 4090 answered; max latency per port: P0 531 P1 654 P2 623 P3 0
+latency histogram (cycles 4 | 5 | 6-7 | 8-11 | 12-23 | 24-63 | 64-255 | more): 314 89 60 94 235 513 1491 291
+VPU: 523 vector loads, 480 vector stores, 1003 answered; latency max 813, mean 118, 98 answers in exactly 4 cycles
+TEST PASSED: tb_ports_vpu (4090 requests, seed 3)
+tb/common/tb_ports_common.vh:687: $finish called at 344460000 (1ps)

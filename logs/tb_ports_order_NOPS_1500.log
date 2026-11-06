@@ -1,0 +1,35 @@
+=== D1 (CC-4): a store waits in its port line, a younger load of the same bytes on another port ===
+  ok: D1 the younger load (P1) returns the store data of P2
+=== D2 (CC-5): a load waits, a younger store to the same bytes on another port ===
+  ok: D2 the older load (P3) returns the OLD data, not the younger store's
+  ok: D2 a later load sees the store
+=== D3: byte stores of different sizes to one word from three ports, in consecutive cycles ===
+  ok: D3 the bytes are merged in send order (CCCCDDDD AAAA BB 44)
+SLOW 6485000: port 3 idx 7 kind 1 @000000000002c1d8 took 439 cycles (sent at cycle 209)
+SLOW 7105000: port 0 idx 1 kind 1 @0000000000020044 took 546 cycles (sent at cycle 164)
+SLOW 7635000: port 3 idx 1 kind 0 @000000000000c01c took 424 cycles (sent at cycle 339)
+SLOW 8015000: port 2 idx 6 kind 1 @00000000000240de took 628 cycles (sent at cycle 173)
+SLOW 9075000: port 0 idx 3 kind 0 @00000000000380cf took 473 cycles (sent at cycle 434)
+SLOW 10085000: port 1 idx 5 kind 0 @00000000000301cc took 838 cycles (sent at cycle 170)
+SLOW 10135000: port 3 idx 4 kind 0 @0000000000080047 took 562 cycles (sent at cycle 451)
+SLOW 10145000: port 3 idx 5 kind 0 @00000000000301d4 took 620 cycles (sent at cycle 394)
+SLOW 10355000: port 2 idx 2 kind 1 @0000000000080076 took 564 cycles (sent at cycle 471)
+SLOW 10545000: port 2 idx 3 kind 0 @0000000000000015 took 588 cycles (sent at cycle 466)
+SLOW 10925000: port 0 idx 0 kind 1 @0000000000038104 took 434 cycles (sent at cycle 658)
+SLOW 10995000: port 3 idx 3 kind 0 @0000000000080060 took 415 cycles (sent at cycle 684)
+SLOW 11215000: port 1 idx 7 kind 0 @0000000000038068 took 620 cycles (sent at cycle 501)
+SLOW 12555000: port 1 idx 0 kind 1 @000000000001c15e took 563 cycles (sent at cycle 692)
+SLOW 15455000: port 2 idx 2 kind 0 @00000000000800c8 took 507 cycles (sent at cycle 1038)
+SLOW 15565000: port 2 idx 4 kind 0 @0000000000080052 took 796 cycles (sent at cycle 760)
+SLOW 15625000: port 0 idx 6 kind 1 @00000000000800c8 took 409 cycles (sent at cycle 1153)
+SLOW 15705000: port 2 idx 0 kind 1 @0000000000080060 took 556 cycles (sent at cycle 1014)
+SLOW 15995000: port 2 idx 7 kind 0 @000000000001404e took 463 cycles (sent at cycle 1136)
+SLOW 16115000: port 2 idx 5 kind 0 @0000000000014058 took 439 cycles (sent at cycle 1172)
+random part done: 1514 requests
+memory matches the reference after clean
+memory matches the reference after flush
+coverage: read-after-write across ports 621, write-after-read 639, write-after-write 466, seated from a line 1043
+stats: 2514 requests (LD 1375, ST 1139, LR 0, SC 0, AMO 0), 2514 answered; max latency per port: P0 999 P1 1127 P2 1030 P3 933
+latency histogram (cycles 4 | 5 | 6-7 | 8-11 | 12-23 | 24-63 | 64-255 | more): 477 148 156 448 551 195 352 187
+TEST PASSED: tb_ports_order (2514 requests, seed 1)
+tb/common/tb_ports_common.vh:687: $finish called at 89800000 (1ps)

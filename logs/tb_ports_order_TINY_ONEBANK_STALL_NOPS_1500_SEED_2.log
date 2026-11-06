@@ -1,0 +1,15 @@
+=== D1 (CC-4): a store waits in its port line, a younger load of the same bytes on another port ===
+  ok: D1 the younger load (P1) returns the store data of P2
+=== D2 (CC-5): a load waits, a younger store to the same bytes on another port ===
+  ok: D2 the older load (P3) returns the OLD data, not the younger store's
+  ok: D2 a later load sees the store
+=== D3: byte stores of different sizes to one word from three ports, in consecutive cycles ===
+  ok: D3 the bytes are merged in send order (CCCCDDDD AAAA BB 44)
+random part done: 1514 requests
+memory matches the reference after clean
+memory matches the reference after flush
+coverage: read-after-write across ports 814, write-after-read 698, write-after-write 608, seated from a line 1918
+stats: 2514 requests (LD 1385, ST 1129, LR 0, SC 0, AMO 0), 2514 answered; max latency per port: P0 277 P1 204 P2 228 P3 302
+latency histogram (cycles 4 | 5 | 6-7 | 8-11 | 12-23 | 24-63 | 64-255 | more): 79 21 26 64 601 925 796 2
+TEST PASSED: tb_ports_order (2514 requests, seed 2)
+tb/common/tb_ports_common.vh:687: $finish called at 133890000 (1ps)

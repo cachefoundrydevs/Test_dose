@@ -1,0 +1,28 @@
+SLOW 13605000: port 0 idx 3 kind 0 @0000000000001528 took 447 cycles (sent at cycle 913)
+SLOW 15455000: port 1 idx 4 kind 0 @0000000000080090 took 622 cycles (sent at cycle 923)
+SLOW 15685000: port 1 idx 2 kind 1 @0000000000001550 took 504 cycles (sent at cycle 1064)
+SLOW 24355000: port 3 idx 2 kind 1 @0000000000000570 took 464 cycles (sent at cycle 1971)
+SLOW 24725000: port 2 idx 2 kind 1 @0000000000001478 took 438 cycles (sent at cycle 2034)
+SLOW 28755000: port 1 idx 4 kind 0 @00000000000014c0 took 419 cycles (sent at cycle 2456)
+SLOW 29325000: port 3 idx 2 kind 1 @00000000000004f0 took 476 cycles (sent at cycle 2456)
+SLOW 30995000: port 3 idx 5 kind 0 @0000000000000008 took 516 cycles (sent at cycle 2583)
+SLOW 49775000: port 0 idx 0 kind 1 @0000000000000c04 took 441 cycles (sent at cycle 4536)
+SLOW 49855000: port 1 idx 0 kind 0 @0000000000000c20 took 434 cycles (sent at cycle 4551)
+SLOW 51515000: port 2 idx 2 kind 1 @0000000000000850 took 421 cycles (sent at cycle 4730)
+SLOW 52375000: port 1 idx 7 kind 0 @000000000000149a took 530 cycles (sent at cycle 4707)
+SLOW 52475000: port 0 idx 4 kind 0 @00000000000014b0 took 515 cycles (sent at cycle 4732)
+SLOW 56405000: port 3 idx 2 kind 0 @0000000000000048 took 443 cycles (sent at cycle 5197)
+SLOW 56905000: port 2 idx 1 kind 4 @0000000000001500 took 408 cycles (sent at cycle 5282)
+SLOW 75685000: port 3 idx 0 kind 1 @000000000000100c took 483 cycles (sent at cycle 7085)
+SLOW 77865000: port 3 idx 3 kind 0 @0000000000000880 took 436 cycles (sent at cycle 7350)
+SLOW 78795000: port 1 idx 1 kind 0 @00000000000005a7 took 423 cycles (sent at cycle 7456)
+SLOW 80215000: port 0 idx 3 kind 0 @0000000000000190 took 609 cycles (sent at cycle 7412)
+SLOW 86525000: port 0 idx 4 kind 1 @0000000000000520 took 495 cycles (sent at cycle 8157)
+random phase: 1200 requests, 46 outside writes (mode B), 2 clean / flush under load (2 started with requests outstanding)
+memory matches the reference after flush
+memory matches the reference after final flush
+snoops: 216 sent (111 invalidate), 216 answered (65 present, 25 dirty, 151 absent), 0 cancelled
+stats: 1648 requests (LD 1075, ST 554, LR 0, SC 0, AMO 19), 1648 answered; max latency per port: P0 609 P1 622 P2 495 P3 516
+latency histogram (cycles 4 | 5 | 6-7 | 8-11 | 12-23 | 24-63 | 64-255 | more): 96 36 21 24 83 645 631 112
+TEST PASSED: tb_ports_coh (1648 requests, seed 4)
+tb/common/tb_ports_common.vh:687: $finish called at 123020000 (1ps)

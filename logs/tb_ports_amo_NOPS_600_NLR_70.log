@@ -1,0 +1,12 @@
+=== part 1: random AMOs and plain accesses ===
+AMOs sent per operation (SWAP ADD XOR AND OR MIN MAX MINU MAXU): 8 7 6 4 7 2 7 10 8
+=== part 2: counter race ===
+counter race: 300 adds sent, reference counter = 18446617964315796967
+=== part 3: LR / SC rounds ===
+SC results: 40 succeeded, 50 failed; must-succeed 30, must-fail 50, either 10
+memory matches the reference after clean
+memory matches the reference after flush
+stats: 2578 requests (LD 1822, ST 227, LR 80, SC 90, AMO 359), 2578 answered; max latency per port: P0 160 P1 205 P2 201 P3 198
+latency histogram (cycles 4 | 5 | 6-7 | 8-11 | 12-23 | 24-63 | 64-255 | more): 261 32 16 190 850 1196 33 0
+TEST PASSED: tb_ports_amo (2578 requests, seed 1)
+tb/common/tb_ports_common.vh:687: $finish called at 81080000 (1ps)

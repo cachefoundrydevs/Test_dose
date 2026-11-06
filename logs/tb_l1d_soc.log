@@ -1,0 +1,3 @@
+issued 3000, answered 3000; AR 208 (one-beat 147), AW 200 (one-beat 144), W beats 368; stop cycles 0
+TEST PASSED
+tb/tests/tb_l1d_soc.v:415: $finish called at 74820000 (1ps)

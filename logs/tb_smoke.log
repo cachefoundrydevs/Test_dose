@@ -1,0 +1,2 @@
+TEST PASSED: tb_smoke
+tb/tests/tb_smoke.sv:105: $finish called at 545000 (1ps)
