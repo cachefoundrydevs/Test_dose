@@ -33,7 +33,8 @@ jobs:
           d = json.load(open("inventory/source_inventory.json"))
           print("matrix=" + json.dumps({"module": sorted(x["module"] for x in d["files"] if "module" in x)}))
           PY
-          echo '36 design modules; testbenches excluded. Post-synthesis estimates only; SRAM timing is assumed. No post-route pass is established.' >> "$GITHUB_STEP_SUMMARY"
+          N=$(grep -c '"module"' inventory/source_inventory.json)
+          echo "$N design modules (one per RTL file, including the stage modules l1d_bank_fifo_s0, _r, _s1, _s2, _s3 and l1d_vec_store_buf); testbenches excluded. Post-synthesis estimates only; SRAM timing is assumed. No post-route pass is established." >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
         with:
           name: module-timing-plan
