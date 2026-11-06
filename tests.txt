@@ -27,3 +27,11 @@ tb_ports
 tb_ports -d TINY
 tb_ports -d TINY -d "SEED=9" -d "NOPS=8000"
 tb_ports -d "SEED=4" -d "NOPS=10000"
+tb_ports_order -d NOPS=1500
+tb_ports_order -d TINY -d ONEBANK -d STALL -d NOPS=1500 -d SEED=2
+tb_ports_amo -d NOPS=600 -d NLR=70
+tb_ports_amo -d TINY -d ALLPORTS -d NOPS=600 -d NLR=70 -d SEED=3
+tb_ports_coh -d TINY -d NOPS=1200 -d SEED=2
+tb_ports_coh -d TINY -d MODEB -d MAINT -d NOPS=1200 -d SEED=4
+tb_ports_stall
+tb_ports_stall -d TINY
