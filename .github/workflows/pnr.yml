@@ -1,0 +1,66 @@
+name: pnr
+on:
+  push:
+    paths:
+      - 'flow/**'
+      - '.github/workflows/pnr.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  pnr:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 355
+    strategy:
+      fail-fast: false
+      matrix:
+        corner: [BC, TC]
+        period: [250, 350]
+    name: l1d_bank ${{ matrix.corner }} ${{ matrix.period }} ps
+    container:
+      image: openroad/orfs:latest
+      options: --user root
+    env:
+      TOP: l1d_bank
+      CORNER: ${{ matrix.corner }}
+      PERIOD: ${{ matrix.period }}
+      OUT: ${{ github.workspace }}/pnr_out
+    steps:
+      - uses: actions/checkout@v4
+      - name: synthesis and place and route
+        timeout-minutes: 340
+        run: bash flow/run_pnr.sh
+      - name: show summary
+        if: always()
+        run: cat "$OUT/keep/summary.json" || true
+      - name: trim logs
+        if: always()
+        run: |
+          cd "$OUT/keep"
+          for f in synth.log pnr.log; do [ -f $f ] && tail -n 400 $f > $f.t && mv $f.t $f; done
+          rm -rf logs/*.odb logs/*.def 2>/dev/null || true
+          find . -type f -size +2M -delete
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pnr-${{ matrix.corner }}-${{ matrix.period }}
+          path: ${{ env.OUT }}/keep
+          retention-days: 30
+  collect:
+    needs: pnr
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: pnr-*
+          path: artifacts
+      - name: table and publish
+        run: |
+          python3 flow/summarize.py all --dir artifacts --out RESULTS.md
+          mkdir -p /tmp/res; cp RESULTS.md /tmp/res/; cp -r artifacts /tmp/res/runs
+          git rev-parse HEAD > /tmp/res/commit.txt
+          git config user.name ci; git config user.email ci@example.invalid
+          git checkout --orphan pnr-results; git rm -rq --cached . ; git clean -fdq
+          cp -r /tmp/res/* .; git add -A; git commit -qm "pnr results"; git push -f origin pnr-results
