@@ -2,6 +2,14 @@
 
 Written 2026-11-06. This is the work plan. Nothing in it is done yet. When the user says "fix", start at section 6 and go in order.
 
+## 0. Status update (2026-11-06, later the same day)
+Done since this plan was written (code only; the timing fix of section 6 is still NOT started):
+- **Bank split by stage** (commit `4474c9c`): `l1d_bank` is now a thin wrapper around `l1d_bank_fifo_s0`, `l1d_bank_r`, `l1d_bank_s1`, `l1d_bank_s2`, `l1d_bank_s3`, so each stage can be timed alone. Same behaviour; 37 of 37 tests passed.
+- **VPU port** (commit `8437ff2`): with `HAS_VPU = 1` (default) port 3 is a 512-bit vector load / store port (`vpu_req_*`, `vpu_resp_*`, whole line, no byte mask). The request packet is 146 bits (new `line` bit); the 512-bit store line goes beside it into a 2-place per-bank buffer (`l1d_vec_store_buf`); the VPU response merger is 586 bits wide. New test `tb_ports_vpu` (4 runs). 41 of 41 tests passed, lint 0 errors, `tb_latency` still 4 / 4.
+- **Per-module timing** (commit `9b2cc40`): the ASAP7 per-module job now covers all 42 RTL modules including the six new ones. Started, not read yet.
+- Known cost of the VPU choice: only 2 vector data places per bank (a vector store can wait at the bank door), and a vector miss is fetched then retried; mean vector latency under load in the tests was about 120 cycles, a hit is 4.
+- GR-1 is still not met; nothing new is timed after place and route.
+
 ## 1. What must be true at the end
 
 | Rule | Text | Source |
