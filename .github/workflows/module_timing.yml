@@ -1,0 +1,109 @@
+name: Test_dose per-module ASAP7 timing
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'timing/asap7/**'
+      - '.github/workflows/module_timing.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  PERIOD: '250'
+  DATA_CLKQ_PS: '180'
+  TAG_CLKQ_PS: '150'
+jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Inventory every design module
+        id: plan
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p inventory
+          python3 timing/asap7/inventory.py --periods 250 --snapshot inventory/source_inventory.json > inventory/groups.json
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          d = json.load(open("inventory/source_inventory.json"))
+          print("matrix=" + json.dumps({"module": sorted(x["module"] for x in d["files"] if "module" in x)}))
+          PY
+          echo '36 design modules; testbenches excluded. Post-synthesis estimates only; SRAM timing is assumed. No post-route pass is established.' >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: module-timing-plan
+          path: inventory
+  timing:
+    needs: plan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    container:
+      image: openroad/orfs:latest
+      options: --user root
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    name: ${{ matrix.module }} at 250 ps
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Synthesis and static timing estimate
+        shell: bash
+        env:
+          MODULES: ${{ matrix.module }}
+          OUT: ${{ github.workspace }}/timing_output
+        run: |
+          set -euo pipefail
+          mkdir -p "$OUT"
+          bash timing/asap7/run_timing.sh 2>&1 | tee "$OUT/run.log"
+      - name: Job summary
+        if: always()
+        shell: bash
+        run: |
+          if [ -f timing_output/results/REPORT.md ]; then cat timing_output/results/REPORT.md >> "$GITHUB_STEP_SUMMARY"; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: module-timing-${{ matrix.module }}-p250
+          path: |
+            timing_output/results
+            timing_output/inputs
+            timing_output/macros
+            timing_output/run.log
+          retention-days: 14
+          if-no-files-found: warn
+  summary:
+    needs: [plan, timing]
+    if: ${{ always() && needs.plan.result == 'success' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: module-timing-*
+          path: artifacts
+      - name: Check complete module coverage and combine results
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 timing/asap7/report.py --artifacts artifacts --expected artifacts/module-timing-plan/source_inventory.json --periods 250 --output timing_summary
+      - name: Show summary
+        if: always()
+        shell: bash
+        run: |
+          if [ -f timing_summary/REPORT.md ]; then cat timing_summary/REPORT.md >> "$GITHUB_STEP_SUMMARY"; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-dose-timing-summary
+          path: timing_summary
+          retention-days: 14
