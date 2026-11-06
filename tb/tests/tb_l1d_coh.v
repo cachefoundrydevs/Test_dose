@@ -687,19 +687,19 @@ module tb_l1d_coh;
     generate
         for (gb = 0; gb < NB; gb = gb + 1) begin : g_cov
             always @(posedge clk) if (!rst) begin
-                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.s2_snp && dut.u_ports.u_dcache.g_bank[gb].u_bank.s2_snp_hit)    ev_snp_hit  = ev_snp_hit + 1;
-                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.s2_snp && dut.u_ports.u_dcache.g_bank[gb].u_bank.s2_hand)       ev_snp_hand = ev_snp_hand + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.u_s2.s2_snp && dut.u_ports.u_dcache.g_bank[gb].u_bank.s2_snp_hit)    ev_snp_hit  = ev_snp_hit + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.u_s2.s2_snp && dut.u_ports.u_dcache.g_bank[gb].u_bank.s2_hand)       ev_snp_hand = ev_snp_hand + 1;
                 if (dut.u_ports.u_dcache.g_bank[gb].u_bank.vc_snp)                                        ev_snp_vc   = ev_snp_vc + 1;
                 if (dut.u_ports.u_dcache.g_bank[gb].u_bank.snp_act_valid && dut.u_ports.u_dcache.g_bank[gb].u_bank.snp_act_code == 2'd1) ev_snp_wmshr = ev_snp_wmshr + 1;
                 if (dut.u_ports.u_dcache.g_bank[gb].u_bank.snp_act_valid && dut.u_ports.u_dcache.g_bank[gb].u_bank.snp_act_code == 2'd2) ev_snp_wvc   = ev_snp_wvc + 1;
-                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.s2_snp && !dut.u_ports.u_dcache.g_bank[gb].u_bank.s2_snp_hit && dut.u_ports.u_dcache.g_bank[gb].u_bank.mshr_hit &&
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.u_s2.s2_snp && !dut.u_ports.u_dcache.g_bank[gb].u_bank.s2_snp_hit && dut.u_ports.u_dcache.g_bank[gb].u_bank.mshr_hit &&
                     !dut.u_ports.u_dcache.g_bank[gb].u_bank.mshr_hasd)                                    ev_snp_mshr_np = ev_snp_mshr_np + 1;
-                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.s1_lsu_th && dut.u_ports.u_dcache.g_bank[gb].u_bank.m_upg)       ev_upg      = ev_upg + 1;
-                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.lock_snp && !dut.u_ports.u_dcache.g_bank[gb].u_bank.u_fifo.u_snp.buffer_empty)  ev_lock_snp = ev_lock_snp + 1;
-                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.lock_valid && dut.u_ports.u_dcache.g_bank[gb].u_bank.sel_valid == 1'b0 &&
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.u_s1.s1_lsu_th && dut.u_ports.u_dcache.g_bank[gb].u_bank.u_s1.m_upg)       ev_upg      = ev_upg + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.lock_snp && !dut.u_ports.u_dcache.g_bank[gb].u_bank.u_fifo_s0.u_fifo.u_snp.buffer_empty)  ev_lock_snp = ev_lock_snp + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.lock_valid && dut.u_ports.u_dcache.g_bank[gb].u_bank.u_fifo_s0.sel_valid == 1'b0 &&
                     !dut.u_ports.u_dcache.g_bank[gb].u_bank.buf_empty)                                    ev_lock_lsu = ev_lock_lsu + 1;
-                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.s1_refill && dut.u_ports.u_dcache.g_bank[gb].u_bank.v_locked)  ev_vict_lock = ev_vict_lock + 1;
-                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.m_ev == 4'd4 && dut.u_ports.u_dcache.g_bank[gb].u_bank.q1_state == 2'd1) ev_ins_s = ev_ins_s + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.u_s1.s1_refill && dut.u_ports.u_dcache.g_bank[gb].u_bank.u_s1.v_locked)  ev_vict_lock = ev_vict_lock + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.u_s1.m_ev == 4'd4 && dut.u_ports.u_dcache.g_bank[gb].u_bank.q1_state == 2'd1) ev_ins_s = ev_ins_s + 1;
             end
         end
     endgenerate

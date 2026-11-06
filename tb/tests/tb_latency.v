@@ -158,24 +158,24 @@ module tb_latency;
     integer c0 = 0;
     integer i;
     always @(posedge clk) if (!rst && trace) begin
-        if (dut.u_ports.u_dcache.g_bank[0].u_bank.gnt_lsu)
-            $display("    c0+%0d  G   grant LSU seat %0d", cyc - c0, dut.u_ports.u_dcache.g_bank[0].u_bank.sel_seat);
-        if (dut.u_ports.u_dcache.g_bank[0].u_bank.gnt_fast)
-            $display("    c0+%0d  G   FAST ISSUE seat %0d (request at the pins, tag + data read of all ways)", cyc - c0, dut.u_ports.u_dcache.g_bank[0].u_bank.new_seat);
-        if (dut.u_ports.u_dcache.g_bank[0].u_bank.r_kill)
+        if (dut.u_ports.u_dcache.g_bank[0].u_bank.u_fifo_s0.gnt_lsu)
+            $display("    c0+%0d  G   grant LSU seat %0d", cyc - c0, dut.u_ports.u_dcache.g_bank[0].u_bank.u_fifo_s0.sel_seat);
+        if (dut.u_ports.u_dcache.g_bank[0].u_bank.u_fifo_s0.gnt_fast)
+            $display("    c0+%0d  G   FAST ISSUE seat %0d (request at the pins, tag + data read of all ways)", cyc - c0, dut.u_ports.u_dcache.g_bank[0].u_bank.u_fifo_s0.new_seat);
+        if (dut.u_ports.u_dcache.g_bank[0].u_bank.u_r.r_kill)
             $display("    c0+%0d  R   fast issue cancelled (seat blocked), back to READY", cyc - c0);
         if (dut.u_ports.u_dcache.g_bank[0].u_bank.gnt_refill)
             $display("    c0+%0d  S0  grant REFILL/SWAP token (MSHR entry %0d)", cyc - c0, dut.u_ports.u_dcache.g_bank[0].u_bank.tok_id);
-        if (dut.u_ports.u_dcache.g_bank[0].u_bank.s1_hit)
-            $display("    c0+%0d  S1  tag hit way %0d (%s)", cyc - c0, dut.u_ports.u_dcache.g_bank[0].u_bank.hit_way,
-                     dut.u_ports.u_dcache.g_bank[0].u_bank.s1_store ? "store: bytes written in S2" : "load");
-        if (dut.u_ports.u_dcache.g_bank[0].u_bank.s1_lsu && !dut.u_ports.u_dcache.g_bank[0].u_bank.s1_hit)
+        if (dut.u_ports.u_dcache.g_bank[0].u_bank.u_s1.s1_hit)
+            $display("    c0+%0d  S1  tag hit way %0d (%s)", cyc - c0, dut.u_ports.u_dcache.g_bank[0].u_bank.u_s1.hit_way,
+                     dut.u_ports.u_dcache.g_bank[0].u_bank.u_s1.s1_store ? "store: bytes written in S2" : "load");
+        if (dut.u_ports.u_dcache.g_bank[0].u_bank.u_s1.s1_lsu && !dut.u_ports.u_dcache.g_bank[0].u_bank.u_s1.s1_hit)
             $display("    c0+%0d  S1  tag miss", cyc - c0);
-        if (dut.u_ports.u_dcache.g_bank[0].u_bank.s1_refill)
+        if (dut.u_ports.u_dcache.g_bank[0].u_bank.u_s1.s1_refill)
             $display("    c0+%0d  S1  refill: victim way %0d valid=%0d held=%0d", cyc - c0,
-                     dut.u_ports.u_dcache.g_bank[0].u_bank.victim_way, dut.u_ports.u_dcache.g_bank[0].u_bank.v_valid, dut.u_ports.u_dcache.g_bank[0].u_bank.r_held);
+                     dut.u_ports.u_dcache.g_bank[0].u_bank.u_s1.victim_way, dut.u_ports.u_dcache.g_bank[0].u_bank.u_s1.v_valid, dut.u_ports.u_dcache.g_bank[0].u_bank.r_held);
         if (dut.u_ports.u_dcache.g_bank[0].u_bank.s3_load)
-            $display("    c0+%0d  S2  response built (%s)", cyc - c0, dut.u_ports.u_dcache.g_bank[0].u_bank.s3_from_vc ? "victim cache" : "data array");
+            $display("    c0+%0d  S2  response built (%s)", cyc - c0, dut.u_ports.u_dcache.g_bank[0].u_bank.u_s2.s3_from_vc ? "victim cache" : "data array");
         if (dut.u_ports.u_dcache.g_bank[0].u_bank.act_valid)
             $display("    c0+%0d  S2  seat %0d -> action %0d (1=WMSHR 2=WANY 3=WVC 4=WNC 5=OWNED) id %0d%s", cyc - c0,
                      dut.u_ports.u_dcache.g_bank[0].u_bank.s2_seat, dut.u_ports.u_dcache.g_bank[0].u_bank.act_code, dut.u_ports.u_dcache.g_bank[0].u_bank.act_id,
@@ -185,7 +185,7 @@ module tb_latency;
         if (dut.u_ports.u_dcache.g_bank[0].u_bank.lsu_response_valid)
             $display("    c0+%0d  S2  answer pushed to the merger (%s), seat %0d freed", cyc - c0,
                      dut.u_ports.u_dcache.g_bank[0].u_bank.s3_load ? "pipeline" :
-                     (dut.u_ports.u_dcache.g_bank[0].u_bank.m_take ? "MSHR" : "NC"), dut.u_ports.u_dcache.g_bank[0].u_bank.done_seat);
+                     (dut.u_ports.u_dcache.g_bank[0].u_bank.u_s3.m_take ? "MSHR" : "NC"), dut.u_ports.u_dcache.g_bank[0].u_bank.done_seat);
         if (arvalid)
             $display("    c0+%0d  AXI AR handshake id %0h", cyc - c0, arid);
         if (rvalid)

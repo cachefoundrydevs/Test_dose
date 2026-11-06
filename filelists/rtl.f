@@ -13,6 +13,7 @@ rtl/bank/fifo/l1d_snoop_buf.v
 rtl/bank/fifo/l1d_fifo_stage.v
 rtl/bank/s0/l1d_inflight_tracker.v
 rtl/bank/s0/l1d_prio_select.v
+rtl/bank/s0/l1d_bank_fifo_s0.v
 rtl/bank/s1/l1d_plru.v
 rtl/bank/s1/l1d_meta_flops.v
 rtl/bank/s1/l1d_s1_lookup.v
@@ -20,8 +21,12 @@ rtl/bank/s1/l1d_mesi_next.v
 rtl/bank/s1/l1d_reservation_unit.v
 rtl/bank/s2/l1d_resp_gen.v
 rtl/bank/s2/l1d_amo_alu.v
+rtl/bank/s1/l1d_bank_s1.v
+rtl/bank/s2/l1d_bank_s2.v
+rtl/bank/s3/l1d_bank_s3.v
 rtl/bank/arrays/l1d_tag_array.v
 rtl/bank/arrays/l1d_data_array.v
+rtl/bank/arrays/l1d_bank_r.v
 rtl/bank/miss/l1d_mshr_entry.v
 rtl/bank/miss/l1d_mshr.v
 rtl/bank/miss/l1d_mshr_nc.v

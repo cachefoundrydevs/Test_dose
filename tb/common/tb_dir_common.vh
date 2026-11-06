@@ -273,18 +273,18 @@
             s  = (a / SET_STRIDE) % SETS;
             tg = a / TAG_STRIDE;
             case (b)
-                0: begin sts = dut.u_ports.u_dcache.g_bank[0].u_bank.u_meta.states[s];
-                         t0 = dut.u_ports.u_dcache.g_bank[0].u_bank.u_tags.g_way[0].u_ram.mem[s];
-                         t1 = dut.u_ports.u_dcache.g_bank[0].u_bank.u_tags.g_way[1].u_ram.mem[s]; end
-                1: begin sts = dut.u_ports.u_dcache.g_bank[1].u_bank.u_meta.states[s];
-                         t0 = dut.u_ports.u_dcache.g_bank[1].u_bank.u_tags.g_way[0].u_ram.mem[s];
-                         t1 = dut.u_ports.u_dcache.g_bank[1].u_bank.u_tags.g_way[1].u_ram.mem[s]; end
-                2: begin sts = dut.u_ports.u_dcache.g_bank[2].u_bank.u_meta.states[s];
-                         t0 = dut.u_ports.u_dcache.g_bank[2].u_bank.u_tags.g_way[0].u_ram.mem[s];
-                         t1 = dut.u_ports.u_dcache.g_bank[2].u_bank.u_tags.g_way[1].u_ram.mem[s]; end
-                default: begin sts = dut.u_ports.u_dcache.g_bank[3].u_bank.u_meta.states[s];
-                         t0 = dut.u_ports.u_dcache.g_bank[3].u_bank.u_tags.g_way[0].u_ram.mem[s];
-                         t1 = dut.u_ports.u_dcache.g_bank[3].u_bank.u_tags.g_way[1].u_ram.mem[s]; end
+                0: begin sts = dut.u_ports.u_dcache.g_bank[0].u_bank.u_s1.u_meta.states[s];
+                         t0 = dut.u_ports.u_dcache.g_bank[0].u_bank.u_r.u_tags.g_way[0].u_ram.mem[s];
+                         t1 = dut.u_ports.u_dcache.g_bank[0].u_bank.u_r.u_tags.g_way[1].u_ram.mem[s]; end
+                1: begin sts = dut.u_ports.u_dcache.g_bank[1].u_bank.u_s1.u_meta.states[s];
+                         t0 = dut.u_ports.u_dcache.g_bank[1].u_bank.u_r.u_tags.g_way[0].u_ram.mem[s];
+                         t1 = dut.u_ports.u_dcache.g_bank[1].u_bank.u_r.u_tags.g_way[1].u_ram.mem[s]; end
+                2: begin sts = dut.u_ports.u_dcache.g_bank[2].u_bank.u_s1.u_meta.states[s];
+                         t0 = dut.u_ports.u_dcache.g_bank[2].u_bank.u_r.u_tags.g_way[0].u_ram.mem[s];
+                         t1 = dut.u_ports.u_dcache.g_bank[2].u_bank.u_r.u_tags.g_way[1].u_ram.mem[s]; end
+                default: begin sts = dut.u_ports.u_dcache.g_bank[3].u_bank.u_s1.u_meta.states[s];
+                         t0 = dut.u_ports.u_dcache.g_bank[3].u_bank.u_r.u_tags.g_way[0].u_ram.mem[s];
+                         t1 = dut.u_ports.u_dcache.g_bank[3].u_bank.u_r.u_tags.g_way[1].u_ram.mem[s]; end
             endcase
             st = ST_I;
             if (sts[1:0] != ST_I && t0 == tg) st = sts[1:0];

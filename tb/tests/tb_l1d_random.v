@@ -370,9 +370,9 @@ module tb_l1d_random;
     generate
         for (gb = 0; gb < NB; gb = gb + 1) begin : g_cov
             always @(posedge clk) if (!rst) begin
-                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.s2_lsu && dut.u_ports.u_dcache.g_bank[gb].u_bank.s2_hit)        ev_hit     = ev_hit + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.u_s2.s2_lsu && dut.u_ports.u_dcache.g_bank[gb].u_bank.s2_hit)        ev_hit     = ev_hit + 1;
                 if (dut.u_ports.u_dcache.g_bank[gb].u_bank.m_alloc && !dut.u_ports.u_dcache.g_bank[gb].u_bank.m_swap)      ev_miss    = ev_miss + 1;
-                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.s3_load && dut.u_ports.u_dcache.g_bank[gb].u_bank.s3_from_vc)   ev_vc_load = ev_vc_load + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.s3_load && dut.u_ports.u_dcache.g_bank[gb].u_bank.u_s2.s3_from_vc)   ev_vc_load = ev_vc_load + 1;
                 if (dut.u_ports.u_dcache.g_bank[gb].u_bank.vc_swap)                                       ev_swap    = ev_swap + 1;
                 if (dut.u_ports.u_dcache.g_bank[gb].u_bank.vc_wr_valid && dut.u_ports.u_dcache.g_bank[gb].u_bank.vc_wr_ready) ev_wb   = ev_wb + 1;
                 if (dut.u_ports.u_dcache.g_bank[gb].u_bank.act_valid && dut.u_ports.u_dcache.g_bank[gb].u_bank.act_code == 3'd1) ev_wmshr = ev_wmshr + 1;
@@ -380,8 +380,8 @@ module tb_l1d_random;
                 if (dut.u_ports.u_dcache.g_bank[gb].u_bank.act_valid && dut.u_ports.u_dcache.g_bank[gb].u_bank.act_code == 3'd3) ev_wvc   = ev_wvc + 1;
                 if (dut.u_ports.u_dcache.g_bank[gb].u_bank.r_held)                                        ev_held    = ev_held + 1;
                 if (dut.u_ports.u_dcache.g_bank[gb].u_bank.n_alloc)                                       ev_nc      = ev_nc + 1;
-                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.s1_lsu_th && dut.u_ports.u_dcache.g_bank[gb].u_bank.m_upg)       ev_upg     = ev_upg + 1;
-                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.m_ev == 4'd4 && dut.u_ports.u_dcache.g_bank[gb].u_bank.q1_state == 2'd1) ev_ins_s = ev_ins_s + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.u_s1.s1_lsu_th && dut.u_ports.u_dcache.g_bank[gb].u_bank.u_s1.m_upg)       ev_upg     = ev_upg + 1;
+                if (dut.u_ports.u_dcache.g_bank[gb].u_bank.u_s1.m_ev == 4'd4 && dut.u_ports.u_dcache.g_bank[gb].u_bank.q1_state == 2'd1) ev_ins_s = ev_ins_s + 1;
             end
         end
     endgenerate
