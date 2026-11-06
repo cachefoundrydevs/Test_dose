@@ -21,7 +21,8 @@ module l1d_bank_fifo_s0 #(
     mshr_freed, vc_freed, nc_freed,
     any_gnt, g_set, gnt_refill, gnt_maint,
     r_valid, r_kind, r_seat, r_req, r_fast, r_mid, r_line, r_mway, r_mop, r_sinv, r_sid,
-    seat_blk, buf_empty, miss_ok
+    seat_blk, buf_empty, miss_ok,
+    vec_slot_available, vec_write_slot, vec_write_valid
 );
     `include "l1d_encodings.vh"
     `include "l1d_fields.vh"
@@ -95,6 +96,9 @@ module l1d_bank_fifo_s0 #(
     output wire [LSU_BUF_DEPTH-1:0]    seat_blk;
     output wire                        buf_empty;
     output wire                        miss_ok;
+    input  wire                        vec_slot_available;
+    input  wire [VEC_SLOT_W-1:0]       vec_write_slot;
+    output wire                        vec_write_valid;
     wire r_lsu  = r_valid  && (r_kind  == K_LSU);
     wire s1_lsu = s1_valid && (s1_kind == K_LSU);
     wire s2_lsu = s2_valid && (s2_kind == K_LSU);
@@ -120,6 +124,16 @@ module l1d_bank_fifo_s0 #(
     wire s2_amor_any = s2_lsu && s2_req[REQ_AMO_BIT] && s2_req[REQ_SEQ_BIT] && !s2_req[REQ_RDWR_BIT];
     wire amor_busy   = r_amor_any || s1_amor_any || s2_amor_any;
     wire snp_credit  = (snoop_response_fifo_free != {SNPR_CNT_W{1'b0}});
+    localparam [REQ_W-1:0] SLOT_MASK = {{(REQ_W-VEC_SLOT_W){1'b0}}, {VEC_SLOT_W{1'b1}}} << REQ_DATA_LSB;
+    wire             seat_ready;
+    wire             in_line_store = lsu_request_packet[REQ_LINE_BIT] && lsu_request_packet[REQ_RDWR_BIT];
+    wire             in_no_place   = in_line_store && !vec_slot_available;
+    wire             in_valid      = lsu_request_valid && !in_no_place;
+    wire [REQ_W-1:0] in_packet     = in_line_store ?
+                                     ((lsu_request_packet & ~SLOT_MASK) | ({{(REQ_W-VEC_SLOT_W){1'b0}}, vec_write_slot} << REQ_DATA_LSB)) :
+                                     lsu_request_packet;
+    assign lsu_request_ready = seat_ready && !in_no_place;
+    assign vec_write_valid   = in_valid && seat_ready && in_line_store;
     wire                 sel_valid;
     wire [SEAT_W-1:0]    sel_seat;
     wire [REQ_W-1:0]     sel_req;
@@ -135,9 +149,9 @@ module l1d_bank_fifo_s0 #(
     l1d_fifo_stage #(`L1D_PARAMS_PASS) u_fifo (
         .clk                      (clk),
         .rst                      (rst),
-        .lsu_new_request_valid    (lsu_request_valid),
-        .lsu_new_request_packet   (lsu_request_packet),
-        .lsu_new_request_ready    (lsu_request_ready),
+        .lsu_new_request_valid    (in_valid),
+        .lsu_new_request_packet   (in_packet),
+        .lsu_new_request_ready    (seat_ready),
         .lsu_offer_valid          (sel_valid),
         .lsu_offer_seat           (sel_seat),
         .lsu_offer_request_packet (sel_req),
@@ -188,7 +202,7 @@ module l1d_bank_fifo_s0 #(
                        (s1_lsu && (s1_req[REQ_RDWR_BIT] == OP_WRITE)) ||
                        (s2_lsu && s2_hit && (s2_req[REQ_RDWR_BIT] == OP_WRITE)) ||
                        s3_amo_v;
-    wire fast_valid  = lsu_request_valid && lsu_request_ready;
+    wire fast_valid  = in_valid && lsu_request_ready;
     l1d_prio_select #(.REFILL_SKIP(REFILL_SKIP + 1), .SNP_STARVE(SNP_STARVE)) u_prio (
         .clk                  (clk),
         .rst                  (rst),
@@ -224,7 +238,7 @@ module l1d_bank_fifo_s0 #(
             r_valid  <= any_gnt;
             r_kind   <= gnt_snoop ? K_SNOOP : (gnt_refill ? K_REFILL : (gnt_maint ? K_MAINT : K_LSU));
             r_seat   <= gnt_fast ? new_seat : sel_seat;
-            r_req    <= gnt_fast ? lsu_request_packet : sel_req;
+            r_req    <= gnt_fast ? in_packet : sel_req;
             r_fast   <= gnt_fast;
             r_mid    <= tok_id;
             r_line   <= g_line;

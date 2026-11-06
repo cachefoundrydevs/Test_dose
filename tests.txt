@@ -35,3 +35,7 @@ tb_ports_coh -d TINY -d NOPS=1200 -d SEED=2
 tb_ports_coh -d TINY -d MODEB -d MAINT -d NOPS=1200 -d SEED=4
 tb_ports_stall
 tb_ports_stall -d TINY
+tb_ports_vpu
+tb_ports_vpu -d TINY -d "SEED=3" -d "NOPS=4000"
+tb_ports_vpu -d TINY -d SNOOP -d "SEED=5" -d "NOPS=2500"
+tb_ports_vpu -d TINY -d "TBP_SHARED=30" -d "SEED=7"

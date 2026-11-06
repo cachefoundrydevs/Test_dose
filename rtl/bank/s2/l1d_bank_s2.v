@@ -14,7 +14,8 @@ module l1d_bank_s2 #(
     mshr_hit, mshr_hid, mshr_hasd, mshr_can, mshr_aid,
     vc_hit, vc_slot, vc_state, vc_data, vc_dirty,
     nc_can,
-    s2_refill, s2_maint, s2_st_wr, s2_uniq, s2_amo1, s2_alloc_is_write,
+    s2_refill, s2_maint, s2_st_wr, s2_uniq, s2_amo1, s2_alloc_is_write, s2_alloc_no_response,
+    s2_line_answer, vec_release_valid, vec_release_slot,
     line_q, st_merged,
     act_valid, act_code, act_id,
     s3_load, s2_pkt,
@@ -73,6 +74,10 @@ module l1d_bank_s2 #(
     output wire                        s2_uniq;
     output wire                        s2_amo1;
     output wire                        s2_alloc_is_write;
+    output wire                        s2_alloc_no_response;
+    output wire [LINE_W-1:0]           s2_line_answer;
+    output wire                        vec_release_valid;
+    output wire [VEC_SLOT_W-1:0]       vec_release_slot;
     output reg  [LINE_W-1:0]           line_q;
     output reg  [LINE_W-1:0]           st_merged;
     output reg                         act_valid;
@@ -106,6 +111,7 @@ module l1d_bank_s2 #(
     output reg  [OFFSET_W-1:0]         s3_off;
     output reg  [WRITE_DATA_WIDTH-1:0] s3_new;
     wire               s2_lsu = s2_valid && (s2_kind == K_LSU);
+    wire               s2_line_op = s2_req[REQ_LINE_BIT];
     wire               s2_cache  = s2_req[REQ_CACHE_BIT];
     wire               s2_store  = (s2_req[REQ_RDWR_BIT] == OP_WRITE);
     wire               s2_amo    = s2_req[REQ_AMO_BIT];
@@ -123,7 +129,8 @@ module l1d_bank_s2 #(
     wire [IDX_BITS-1:0]         s2_idx   = s2_req[REQ_IDX_LSB +: IDX_BITS];
     wire [PORT_W-1:0]           s2_port  = s2_req[REQ_PORT_LSB +: PORT_W];
     wire [WRITE_DATA_WIDTH-1:0] s2_wdata = s2_req[REQ_DATA_LSB +: WRITE_DATA_WIDTH];
-    assign             s2_alloc_is_write = s2_req[REQ_RDWR_BIT] && !s2_amo1;
+    assign             s2_alloc_is_write    = s2_req[REQ_RDWR_BIT] && !s2_amo1 && !s2_line_op;
+    assign             s2_alloc_no_response = s2_amo1 || s2_line_op;
     assign s2_refill = s2_valid && (s2_kind == K_REFILL) && !s2_held;
     assign s2_maint  = s2_valid && (s2_kind == K_MAINT);
     wire s2_snp    = s2_valid && (s2_kind == K_SNOOP);
@@ -232,7 +239,7 @@ module l1d_bank_s2 #(
                 act_valid = 1'b1;
                 if (mshr_can) begin
                     m_alloc  = 1'b1;
-                    if (s2_amo1) begin
+                    if (s2_amo1 || s2_line_op) begin
                         act_code = ACT_WMSHR;
                         act_id   = mshr_aid;
                     end else begin
@@ -249,6 +256,9 @@ module l1d_bank_s2 #(
                                            (s2_store && !s2_amo1) ? {WRITE_DATA_WIDTH{1'b0}} :
                                            (s3_from_vc ? vcl_data : hit_data);
     assign s2_pkt = {s2_port, (s2_req[REQ_RDWR_BIT] && !s2_amo1), s2_size, s2_mstid, s2_idx, s2_rdata};
+    assign s2_line_answer    = s3_from_vc ? vc_data : line_q;
+    assign vec_release_valid = s2_lsu && s3_load && s2_line_op && s2_store;
+    assign vec_release_slot  = s2_req[REQ_DATA_LSB +: VEC_SLOT_W];
     wire s2_done_lsu = s2_lsu && (s3_load || (act_valid && act_code == ACT_OWNED));
     assign ev_lr   = s2_done_lsu && s2_cache && s2_is_lr;
     assign ev_sc   = s2_done_lsu && s2_is_sc;

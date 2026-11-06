@@ -5,12 +5,14 @@
 module l1d_bank_queue #(
     `L1D_PARAMS,
     parameter BANK_ID          = 0,
-    parameter PORT_QUEUE_DEPTH = `L1D_PORT_QUEUE_DEPTH
+    parameter PORT_QUEUE_DEPTH = `L1D_PORT_QUEUE_DEPTH,
+    parameter LINE_PORT_ON     = 0
 ) (
     clk, rst,
     port_request_valid, port_request_packet,
     bank_request_valid, bank_request_packet, bank_request_ready,
-    port_queue_nearly_full_next
+    port_queue_nearly_full_next,
+    port_line_data, bank_request_line_data
 );
     `include "l1d_encodings.vh"
     `include "l1d_fields.vh"
@@ -26,6 +28,8 @@ module l1d_bank_queue #(
     output wire [REQ_W-1:0]              bank_request_packet;
     input  wire                          bank_request_ready;
     output wire [LSU_PORTS-1:0]          port_queue_nearly_full_next;
+    input  wire [LINE_W-1:0]             port_line_data;
+    output wire [LINE_W-1:0]             bank_request_line_data;
     wire [LSU_PORTS-1:0]          line_push;
     wire [LSU_PORTS-1:0]          line_pop;
     wire [LSU_PORTS-1:0]          line_empty;
@@ -104,6 +108,26 @@ module l1d_bank_queue #(
             wire [QCNT_W:0] free_next = {1'b0, line_free_cnt[move_port*QCNT_W +: QCNT_W]}
                                         + {{QCNT_W{1'b0}}, line_pop[move_port]} - {{QCNT_W{1'b0}}, line_push[move_port]};
             assign port_queue_nearly_full_next[move_port] = (free_next < STOP_MARGIN);
+        end
+    endgenerate
+    generate
+        if (LINE_PORT_ON != 0) begin : g_line_data
+            wire [LINE_W-1:0] line_data_head;
+            l1d_fifo #(.WIDTH(LINE_W), .DEPTH(PORT_QUEUE_DEPTH), .CNT_W(QCNT_W)) u_line_data (
+                .clk        (clk),
+                .rst        (rst),
+                .push       (line_push[LSU_PORTS-1]),
+                .push_data  (port_line_data),
+                .pop        (line_pop[LSU_PORTS-1]),
+                .front_data (line_data_head),
+                .empty      (),
+                .full       (),
+                .used_slots (),
+                .free_slots ()
+            );
+            assign bank_request_line_data = all_lines_empty ? port_line_data : line_data_head;
+        end else begin : g_no_line_data
+            assign bank_request_line_data = {LINE_W{1'b0}};
         end
     endgenerate
     reg     [ORDER_DEPTH-1:0] place_write_en;

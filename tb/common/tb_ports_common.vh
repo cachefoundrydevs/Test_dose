@@ -39,6 +39,27 @@
     wire [PORTS*2-1:0]          rsp_size, rsp_mid;
     wire [PORTS*IDX_BITS-1:0]   rsp_idx;
     wire [PORTS*WDW-1:0]        rsp_data;
+`ifdef TBP_VPU
+    localparam HAS_VPU_TB = 1;
+`else
+    localparam HAS_VPU_TB = 0;
+`endif
+`ifdef TBP_SHARED
+    localparam MEM_SHARED_PCT = `TBP_SHARED;
+`else
+    localparam MEM_SHARED_PCT = 0;
+`endif
+    localparam VPU_PORT = PORTS - 1;
+    reg                         vreq_valid = 0, vreq_is_write = 0;
+    reg  [IDX_BITS-1:0]         vreq_idx = 0;
+    reg  [ADDR_W-1:0]           vreq_addr = 0;
+    reg  [LINE*8-1:0]           vreq_data = 0;
+    reg                         vread_enable = 1'b1;
+    wire                        vpu_stop, vrsp_valid, vrsp_is_write_ack;
+    wire [1:0]                  vrsp_mid;
+    wire [IDX_BITS-1:0]         vrsp_idx;
+    wire [LINE*8-1:0]           vrsp_data;
+    reg  [1:0]                  mem_sh_mode = 2'd0;
     wire                snp_valid, snp_ready, snp_inv;
     wire [ADDR_W-1:0]   snp_addr;
     wire                snpr_valid, snpr_ready, snpr_present, snpr_dirty;
@@ -58,7 +79,7 @@
     wire [16*ADDR_W-1:0]    pend_a;
     l1d_top_axi_ports #(
         .SETS(SETS), .WAYS(WAYS), .LSU_BUF_DEPTH(LSU_BUF), .MSHR_ENTRIES(MSHR),
-        .MSHR_NC_ENTRIES(NCE), .VC_SLOTS(VCS), .RESP_FIFO_DEPTH(RFIFO), .AXI_ID_W(AXI_IDW)
+        .MSHR_NC_ENTRIES(NCE), .VC_SLOTS(VCS), .RESP_FIFO_DEPTH(RFIFO), .AXI_ID_W(AXI_IDW), .HAS_VPU(HAS_VPU_TB)
     ) dut (
         .clk(clk), .rst(rst),
         .flush_request(flush), .clean_request(clean), .flush_complete(flush_complete), .clean_complete(clean_complete),
@@ -70,6 +91,10 @@
         .lsu_response_read_enable(read_enable), .lsu_response_valid(rsp_valid), .lsu_response_is_write_ack(rsp_is_write_ack),
         .lsu_response_size(rsp_size), .lsu_response_master_id(rsp_mid), .lsu_response_rob_index(rsp_idx),
         .lsu_response_data(rsp_data),
+        .vpu_req_valid(vreq_valid), .vpu_req_is_write(vreq_is_write), .vpu_req_cacheable(1'b1), .vpu_req_master_id(2'd0),
+        .vpu_req_rob_index(vreq_idx), .vpu_req_addr(vreq_addr), .vpu_req_wdata(vreq_data), .vpu_req_stop(vpu_stop),
+        .vpu_resp_read_enable(vread_enable), .vpu_resp_valid(vrsp_valid), .vpu_resp_is_write_ack(vrsp_is_write_ack),
+        .vpu_resp_master_id(vrsp_mid), .vpu_resp_rob_index(vrsp_idx), .vpu_resp_data(vrsp_data),
         .snoop_request_valid(snp_valid), .snoop_request_ready(snp_ready), .snoop_request_addr(snp_addr),
         .snoop_request_invalidate(snp_inv),
         .snoop_response_valid(snpr_valid), .snoop_response_ready(snpr_ready), .snoop_response_addr(snpr_addr),
@@ -128,13 +153,13 @@
     wire [ADDR_W-1:0]        r_line, rdone_line;
 `endif
     axi_mem_model #(.ID_W(AXI_IDW), .ADDR_W(AXI_AW), .DATA_W(AXI_DW), .MEM_BITS(MEM_BITS),
-                    .LAT(8), .READY_PCT(70), .SEED(SEED0 + 7), .SHARED_PCT(0),
+                    .LAT(8), .READY_PCT(70), .SEED(SEED0 + 7), .SHARED_PCT(MEM_SHARED_PCT),
                     .LINE_BYTES(LINE), .HOLD_N(OPEN_N)) u_mem (
         .clk(clk), .rst(rst),
         .awid(awid), .awaddr(awaddr), .awlen(awlen), .awsize(awsize), .awvalid(awvalid), .awready(awready),
         .wdata(wdata), .wstrb(wstrb), .wlast(wlast), .wvalid(wvalid), .wready(wready),
         .bid(bid), .bresp(bresp), .bvalid(bvalid), .bready(bready),
-        .arid(arid), .araddr(araddr), .arlen(arlen), .arsize(arsize), .aruser(aruser), .sh_mode(2'd0),
+        .arid(arid), .araddr(araddr), .arlen(arlen), .arsize(arsize), .aruser(aruser), .sh_mode(mem_sh_mode),
         .arvalid(arvalid), .arready(arready),
         .rid(rid), .rdata(rdata), .rresp(rresp), .rlast(rlast), .ruser(ruser), .rvalid(rvalid), .rready(rready),
         .hold_v(hold_v), .hold_a(hold_a), .r_busy(r_busy), .r_line(r_line),
@@ -152,6 +177,15 @@
     integer          got_t    [0:NOUT-1];
     reg [WDW-1:0]    got_d    [0:NOUT-1];
     integer          n_out    [0:PORTS-1];
+    reg              vout_v   [0:NIDX-1];
+    reg              vout_wr  [0:NIDX-1];
+    reg [LINE*8-1:0] vout_exp [0:NIDX-1];
+    reg [ADDR_W-1:0] vout_addr[0:NIDX-1];
+    integer          vout_t   [0:NIDX-1];
+    integer          vgot_t   [0:NIDX-1];
+    integer          vn_out;
+    integer          n_vld, n_vst;
+    integer          vlat_max, vlat_sum, vlat_cnt, vlat_4;
     integer seed, errors, issued, answered, total_out, cycles, wd_limit;
     integer lat_max_port [0:PORTS-1];
     integer lat_sum_port [0:PORTS-1];
@@ -255,13 +289,79 @@
     function can_send;
         input integer pt;
         begin
-            can_send = !stop_seen(pt) && (n_out[pt] < NIDX) && !req_valid[pt];
+            can_send = !stop_seen(pt) && (n_out[pt] < NIDX) && !req_valid[pt] && !((HAS_VPU_TB != 0) && (pt == VPU_PORT));
+        end
+    endfunction
+    function can_send_vpu;
+        input integer dummy;
+        begin
+            can_send_vpu = (HAS_VPU_TB != 0) && !stop_seen(VPU_PORT) && (vn_out < NIDX) && !vreq_valid;
         end
     endfunction
     task tick;
         begin
             @(negedge clk);
-            req_valid = {PORTS{1'b0}};
+            req_valid  = {PORTS{1'b0}};
+            vreq_valid = 1'b0;
+        end
+    endtask
+    task send_vpu;
+        input              is_write;
+        input [ADDR_W-1:0] a;
+        input [LINE*8-1:0] wd;
+        output integer     entry;
+        integer f, k;
+        reg [LINE*8-1:0] exp_line;
+        begin
+            f = -1;
+            for (k = NIDX - 1; k >= 0; k = k - 1) if (!vout_v[k]) f = k;
+            if (HAS_VPU_TB == 0) begin
+                errors = errors + 1;
+                $display("ERROR %0t: testbench: send_vpu without a VPU port (define TBP_VPU)", $time);
+            end
+            if (f < 0) begin
+                errors = errors + 1;
+                $display("ERROR %0t: testbench rule R2: no free VPU ROB index", $time);
+                f = 0;
+            end
+            if (stop_seen(VPU_PORT)) begin
+                errors = errors + 1;
+                $display("ERROR %0t: testbench rule R1: VPU send while its stop is 1", $time);
+            end
+            if (vreq_valid) begin
+                errors = errors + 1;
+                $display("ERROR %0t: testbench: the VPU sent twice in one cycle", $time);
+            end
+            if (a[5:0] != 6'd0) begin
+                errors = errors + 1;
+                $display("ERROR %0t: testbench: VPU address %h is not line aligned", $time, a);
+            end
+            if (rule_r3_clash(a, is_write)) begin
+                errors = errors + 1;
+                $display("ERROR %0t: testbench rule R3: two requests to line %h in one cycle, one of them writes", $time, line_of(a));
+            end
+            if (cl_cyc != cyc) begin cl_cyc = cyc; cl_n = 0; end
+            cl_line[cl_n] = line_of(a); cl_wr[cl_n] = is_write; cl_n = cl_n + 1;
+            entry = f;
+            vreq_valid    = 1'b1;
+            vreq_is_write = is_write;
+            vreq_idx      = f;
+            vreq_addr     = a;
+            vreq_data     = wd;
+            vout_v[f]     = 1'b1;
+            vout_wr[f]    = is_write;
+            vout_addr[f]  = a;
+            vout_t[f]     = cyc;
+            vgot_t[f]     = -1;
+            for (k = 0; k < LINE; k = k + 1) begin
+                if (is_write) ref_mem[a[MEM_BITS-1:0] + k] = wd[k*8 +: 8];
+                exp_line[k*8 +: 8] = ref_mem[a[MEM_BITS-1:0] + k];
+            end
+            vout_exp[f] = is_write ? {(LINE*8){1'b0}} : exp_line;
+            vn_out    = vn_out + 1;
+            total_out = total_out + 1;
+            issued    = issued + 1;
+            if (is_write) n_vst = n_vst + 1; else n_vld = n_vld + 1;
         end
     endtask
     task send;
@@ -357,9 +457,11 @@
                 tick;
                 for (pp = 0; pp < PORTS; pp = pp + 1)
                     read_enable[pp] = (rnd_pct == 0) ? 1'b1 : (({$random(seed)} % 100) < rnd_pct);
+                vread_enable = (rnd_pct == 0) ? 1'b1 : (({$random(seed)} % 100) < rnd_pct);
                 t = t + 1;
             end
-            read_enable = {PORTS{1'b1}};
+            read_enable  = {PORTS{1'b1}};
+            vread_enable = 1'b1;
             if (total_out != 0) begin
                 errors = errors + 1;
                 $display("ERROR %0t: %0d requests never answered", $time, total_out);
@@ -423,6 +525,46 @@
                         n_out[chk_port]  = n_out[chk_port] - 1;
                         total_out        = total_out - 1;
                     end
+                end
+            end
+            if (HAS_VPU_TB != 0 && vrsp_valid === 1'bx) begin
+                errors = errors + 1;
+                $display("ERROR %0t: VPU response valid is X", $time);
+            end
+            if (HAS_VPU_TB != 0 && vrsp_valid === 1'b1 && vread_enable) begin
+                chk_entry = vrsp_idx;
+                answered  = answered + 1;
+                if (!vout_v[chk_entry]) begin
+                    errors = errors + 1;
+                    $display("ERROR %0t: VPU answer for idx %0d which is not outstanding (duplicate or lost)", $time, chk_entry);
+                end else begin
+                    if (vrsp_is_write_ack !== vout_wr[chk_entry] || vrsp_mid !== 2'd0) begin
+                        errors = errors + 1;
+                        $display("ERROR %0t: VPU idx %0d wrong write_ack / master id", $time, chk_entry);
+                    end
+                    if (!vout_wr[chk_entry] && vrsp_data !== vout_exp[chk_entry]) begin
+                        errors = errors + 1;
+                        $display("ERROR %0t: VPU idx %0d vector load @%h: got %h expected %h", $time, chk_entry,
+                                 vout_addr[chk_entry], vrsp_data, vout_exp[chk_entry]);
+                    end
+                    chk_lat = cyc - vout_t[chk_entry];
+                    if (chk_lat < 4) begin
+                        errors = errors + 1;
+                        $display("ERROR %0t: VPU idx %0d answered after %0d cycles (an answer cannot come before 4)", $time, chk_entry, chk_lat);
+                    end
+                    if (chk_lat > 400 && n_slow < 20) begin
+                        n_slow = n_slow + 1;
+                        $display("SLOW %0t: VPU idx %0d %s @%h took %0d cycles", $time, chk_entry,
+                                 vout_wr[chk_entry] ? "store" : "load", vout_addr[chk_entry], chk_lat);
+                    end
+                    if (chk_lat > vlat_max) vlat_max = chk_lat;
+                    vlat_sum = vlat_sum + chk_lat;
+                    vlat_cnt = vlat_cnt + 1;
+                    if (chk_lat == 4) vlat_4 = vlat_4 + 1;
+                    vgot_t[chk_entry] = cyc;
+                    vout_v[chk_entry] = 1'b0;
+                    vn_out    = vn_out - 1;
+                    total_out = total_out - 1;
                 end
             end
         end
@@ -501,6 +643,8 @@
             end
             for (init_i = 0; init_i < 8; init_i = init_i + 1) lat_hist[init_i] = 0;
             for (init_i = 0; init_i < 5; init_i = init_i + 1) n_kind[init_i] = 0;
+            for (init_i = 0; init_i < NIDX; init_i = init_i + 1) begin vout_v[init_i] = 1'b0; vgot_t[init_i] = -1; end
+            vn_out = 0; n_vld = 0; n_vst = 0; vlat_max = 0; vlat_sum = 0; vlat_cnt = 0; vlat_4 = 0;
             for (init_i = 0; init_i < (1 << MEM_BITS); init_i = init_i + 1) ref_mem[init_i] = pattern(init_i);
             repeat (5) @(posedge clk);
         end
@@ -527,6 +671,9 @@
                      lat_max_port[0], lat_max_port[1], lat_max_port[2], lat_max_port[3]);
             $display("latency histogram (cycles 4 | 5 | 6-7 | 8-11 | 12-23 | 24-63 | 64-255 | more): %0d %0d %0d %0d %0d %0d %0d %0d",
                      lat_hist[0], lat_hist[1], lat_hist[2], lat_hist[3], lat_hist[4], lat_hist[5], lat_hist[6], lat_hist[7]);
+            if (HAS_VPU_TB != 0)
+                $display("VPU: %0d vector loads, %0d vector stores, %0d answered; latency max %0d, mean %0d, %0d answers in exactly 4 cycles",
+                         n_vld, n_vst, vlat_cnt, vlat_max, (vlat_cnt != 0) ? (vlat_sum / vlat_cnt) : 0, vlat_4);
             if (mem_err) begin errors = errors + 1; $display("ERROR: mem_err is set"); end
             if (amo_err) begin errors = errors + 1; $display("ERROR: amo_err is set"); end
 `ifdef TBP_SNOOP

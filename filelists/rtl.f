@@ -11,6 +11,7 @@ rtl/front/l1d_resp_merge.v
 rtl/bank/fifo/l1d_lsu_req_buf.v
 rtl/bank/fifo/l1d_snoop_buf.v
 rtl/bank/fifo/l1d_fifo_stage.v
+rtl/bank/fifo/l1d_vec_store_buf.v
 rtl/bank/s0/l1d_inflight_tracker.v
 rtl/bank/s0/l1d_prio_select.v
 rtl/bank/s0/l1d_bank_fifo_s0.v

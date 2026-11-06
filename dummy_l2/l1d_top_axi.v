@@ -135,7 +135,8 @@ module l1d_top_axi #(
         .SNP_BUF_DEPTH(SNP_BUF_DEPTH), .SNP_RESP_DEPTH(SNP_RESP_DEPTH), .PF_FIFO_DEPTH(PF_FIFO_DEPTH),
         .SNP_STARVE(SNP_STARVE), .LOCK_TIMEOUT(LOCK_TIMEOUT), .RSV_CLR_ON_EVICT(RSV_CLR_ON_EVICT),
         .HAS_SNOOP(HAS_SNOOP), .HAS_AMO(HAS_AMO), .AXI_DATA_W(AXI_DATA_W), .AXI_ADDR_W(AXI_ADDR_W), .AXI_ID_W(AXI_ID_W),
-        .LSU_PORTS(LSU_PORTS), .HAS_MISS(HAS_MISS), .HAS_VC(HAS_VC), .HAS_NC(HAS_NC), .BRIDGE_SLOTS(BRIDGE_SLOTS)
+        .LSU_PORTS(LSU_PORTS), .HAS_MISS(HAS_MISS), .HAS_VC(HAS_VC), .HAS_NC(HAS_NC), .BRIDGE_SLOTS(BRIDGE_SLOTS),
+        .HAS_VPU(0)
     ) u_ports (
         .clk(clk), .rst(rst),
         .flush_request(flush_request), .clean_request(clean_request), .flush_complete(flush_complete), .clean_complete(clean_complete),
@@ -158,6 +159,10 @@ module l1d_top_axi #(
         .lsu_response_master_id   (port_rsp_master_id),
         .lsu_response_rob_index   (port_rsp_rob_index),
         .lsu_response_data        (port_rsp_data),
+        .vpu_req_valid (1'b0), .vpu_req_is_write (1'b0), .vpu_req_cacheable (1'b1), .vpu_req_master_id ({MASTER_ID_BITS{1'b0}}),
+        .vpu_req_rob_index ({IDX_BITS{1'b0}}), .vpu_req_addr ({ADDR_W{1'b0}}), .vpu_req_wdata ({(LINE_BYTES*8){1'b0}}),
+        .vpu_req_stop (), .vpu_resp_read_enable (1'b1), .vpu_resp_valid (), .vpu_resp_is_write_ack (),
+        .vpu_resp_master_id (), .vpu_resp_rob_index (), .vpu_resp_data (),
         .snoop_request_valid(snoop_request_valid), .snoop_request_ready(snoop_request_ready), .snoop_request_addr(snoop_request_addr),
         .snoop_request_invalidate(snoop_request_invalidate),
         .snoop_response_valid(snoop_response_valid), .snoop_response_ready(snoop_response_ready), .snoop_response_addr(snoop_response_addr),

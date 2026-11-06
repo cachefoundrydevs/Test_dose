@@ -14,7 +14,8 @@ module l1d_bank #(`L1D_PARAMS, parameter BANK_ID = 0) (
     refill_handover_busy,
     maint_start, maint_op_is_flush, maint_done,
     amo_lock_timeout_pulse,
-    rsv_event_pulse, other_bank_rsv_event
+    rsv_event_pulse, other_bank_rsv_event,
+    lsu_request_line_data, lsu_response_line_data
 );
     `include "l1d_encodings.vh"
     `include "l1d_fields.vh"
@@ -28,6 +29,8 @@ module l1d_bank #(`L1D_PARAMS, parameter BANK_ID = 0) (
     input  wire [LSU_PORTS*RCNT_W-1:0] lsu_response_fifo_free;
     output wire                     rsv_event_pulse;
     input  wire                     other_bank_rsv_event;
+    input  wire [LINE_W-1:0]        lsu_request_line_data;
+    output wire [LINE_W-1:0]        lsu_response_line_data;
     input  wire                     snoop_request_valid;
     input  wire [LINE_ADDR_W-1:0]   snoop_request_line_addr;
     input  wire                     snoop_request_invalidate;
@@ -215,6 +218,15 @@ module l1d_bank #(`L1D_PARAMS, parameter BANK_ID = 0) (
     wire [WAY_W-1:0]        mt_way;
     wire                    mt_op;
     wire                    vc_drain;
+    wire                    vec_slot_available;
+    wire [VEC_SLOT_W-1:0]   vec_write_slot;
+    wire                    vec_write_valid;
+    wire [VEC_SLOT_W-1:0]   vec_read_slot;
+    wire [LINE_W-1:0]       vec_read_line_data;
+    wire                    vec_release_valid;
+    wire [VEC_SLOT_W-1:0]   vec_release_slot;
+    wire                    s2_alloc_no_response;
+    wire [LINE_W-1:0]       s2_line_answer;
     wire [ADDR_W-1:0]           s2_addr  = s2_req[REQ_ADDR_LSB +: ADDR_W];
     wire [OFFSET_W-1:0]         s2_off   = s2_addr[OFFSET_W-1:0];
     wire [MEM_SIZE_BITS-1:0]    s2_size  = s2_req[REQ_SIZE_LSB +: MEM_SIZE_BITS];
@@ -222,6 +234,19 @@ module l1d_bank #(`L1D_PARAMS, parameter BANK_ID = 0) (
     wire [IDX_BITS-1:0]         s2_idx   = s2_req[REQ_IDX_LSB +: IDX_BITS];
     wire [PORT_W-1:0]           s2_port  = s2_req[REQ_PORT_LSB +: PORT_W];
     wire [WRITE_DATA_WIDTH-1:0] s2_wdata = s2_req[REQ_DATA_LSB +: WRITE_DATA_WIDTH];
+    l1d_vec_store_buf #(`L1D_PARAMS_PASS, .BANK_ID(BANK_ID)) u_vec_buf (
+        .clk             (clk),
+        .rst             (rst),
+        .write_valid     (vec_write_valid),
+        .write_line_data (lsu_request_line_data),
+        .slot_available  (vec_slot_available),
+        .write_slot      (vec_write_slot),
+        .read_slot       (vec_read_slot),
+        .read_line_data  (vec_read_line_data),
+        .release_valid   (vec_release_valid),
+        .release_slot    (vec_release_slot)
+    );
+    assign lsu_response_line_data = s2_line_answer;
     l1d_bank_fifo_s0 #(`L1D_PARAMS_PASS, .BANK_ID(BANK_ID)) u_fifo_s0 (
         .clk                        (clk),
         .rst                        (rst),
@@ -253,7 +278,8 @@ module l1d_bank #(`L1D_PARAMS, parameter BANK_ID = 0) (
         .any_gnt (any_gnt), .g_set (g_set), .gnt_refill (gnt_refill), .gnt_maint (gnt_maint),
         .r_valid (r_valid), .r_kind (r_kind), .r_seat (r_seat), .r_req (r_req), .r_fast (r_fast), .r_mid (r_mid),
         .r_line (r_line), .r_mway (r_mway), .r_mop (r_mop), .r_sinv (r_sinv), .r_sid (r_sid),
-        .seat_blk (seat_blk), .buf_empty (buf_empty), .miss_ok (miss_ok)
+        .seat_blk (seat_blk), .buf_empty (buf_empty), .miss_ok (miss_ok),
+        .vec_slot_available (vec_slot_available), .vec_write_slot (vec_write_slot), .vec_write_valid (vec_write_valid)
     );
     l1d_bank_r #(`L1D_PARAMS_PASS, .BANK_ID(BANK_ID)) u_r (
         .clk (clk), .rst (rst),
@@ -277,6 +303,7 @@ module l1d_bank #(`L1D_PARAMS, parameter BANK_ID = 0) (
         .q1_state (q1_state), .q1_swap (q1_swap), .q1_slot (q1_slot), .vc_al_ok (vc_al_ok), .vc_al_slot (vc_al_slot),
         .rsv_sc_match (rsv_sc_match),
         .r_held (r_held), .rsv_clear_valid (rsv_clear_valid), .rsv_clear_line (rsv_clear_line),
+        .vec_read_slot (vec_read_slot), .vec_read_line_data (vec_read_line_data),
         .s2_valid (s2_valid), .s2_kind (s2_kind), .s2_seat (s2_seat), .s2_req (s2_req), .s2_mid (s2_mid),
         .s2_line (s2_line), .s2_sinv (s2_sinv), .s2_sid (s2_sid),
         .s2_hit (s2_hit), .s2_scfail (s2_scfail), .s2_snp_hit (s2_snp_hit), .s2_hand (s2_hand), .s2_way (s2_way),
@@ -298,7 +325,8 @@ module l1d_bank #(`L1D_PARAMS, parameter BANK_ID = 0) (
         .vc_hit (vc_hit), .vc_slot (vc_slot), .vc_state (vc_state), .vc_data (vc_data), .vc_dirty (vc_dirty),
         .nc_can (nc_can),
         .s2_refill (s2_refill), .s2_maint (s2_maint), .s2_st_wr (s2_st_wr),
-        .s2_uniq (s2_uniq), .s2_amo1 (s2_amo1), .s2_alloc_is_write (s2_alloc_is_write),
+        .s2_uniq (s2_uniq), .s2_amo1 (s2_amo1), .s2_alloc_is_write (s2_alloc_is_write), .s2_alloc_no_response (s2_alloc_no_response),
+        .s2_line_answer (s2_line_answer), .vec_release_valid (vec_release_valid), .vec_release_slot (vec_release_slot),
         .line_q (line_q), .st_merged (st_merged),
         .act_valid (act_valid), .act_code (act_code), .act_id (act_id),
         .s3_load (s3_load), .s2_pkt (s2_pkt),
@@ -377,7 +405,7 @@ module l1d_bank #(`L1D_PARAMS, parameter BANK_ID = 0) (
         .allocate_unique_read     (s2_uniq),
         .allocate_seat            (s2_seat),
         .allocate_is_write        (s2_alloc_is_write),
-        .allocate_no_response     (s2_amo1),
+        .allocate_no_response     (s2_alloc_no_response),
         .allocate_access_size     (s2_size),
         .allocate_master_id       (s2_mstid),
         .allocate_rob_index       (s2_idx),

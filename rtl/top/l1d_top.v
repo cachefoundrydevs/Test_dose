@@ -37,7 +37,8 @@ module l1d_top #(
     parameter LSU_PORTS        = `L1D_LSU_PORTS,
     parameter HAS_MISS         = `L1D_HAS_MISS,
     parameter HAS_VC           = `L1D_HAS_VC,
-    parameter HAS_NC           = `L1D_HAS_NC
+    parameter HAS_NC           = `L1D_HAS_NC,
+    parameter HAS_VPU          = `L1D_HAS_VPU
 ) (
     input  wire                         clk,
     input  wire                         rst,
@@ -64,6 +65,20 @@ module l1d_top #(
     output wire [LSU_PORTS*MASTER_ID_BITS-1:0]   lsu_response_master_id,
     output wire [LSU_PORTS*IDX_BITS-1:0]         lsu_response_rob_index,
     output wire [LSU_PORTS*WRITE_DATA_WIDTH-1:0] lsu_response_data,
+    input  wire                         vpu_req_valid,
+    input  wire                         vpu_req_is_write,
+    input  wire                         vpu_req_cacheable,
+    input  wire [MASTER_ID_BITS-1:0]    vpu_req_master_id,
+    input  wire [IDX_BITS-1:0]          vpu_req_rob_index,
+    input  wire [ADDR_W-1:0]            vpu_req_addr,
+    input  wire [LINE_BYTES*8-1:0]      vpu_req_wdata,
+    output wire                         vpu_req_stop,
+    input  wire                         vpu_resp_read_enable,
+    output wire                         vpu_resp_valid,
+    output wire                         vpu_resp_is_write_ack,
+    output wire [MASTER_ID_BITS-1:0]    vpu_resp_master_id,
+    output wire [IDX_BITS-1:0]          vpu_resp_rob_index,
+    output wire [LINE_BYTES*8-1:0]      vpu_resp_data,
     input  wire                         snoop_request_valid,
     output wire                         snoop_request_ready,
     input  wire [ADDR_W-1:0]            snoop_request_addr,
@@ -87,38 +102,65 @@ module l1d_top #(
     `include "l1d_encodings.vh"
     `include "l1d_fields.vh"
     localparam NB = NUM_BANKS;
+    localparam VPU_PORT = LSU_PORTS - 1;
+    wire [LSU_PORTS-1:0]       port_req_valid;
     wire [LSU_PORTS*REQ_W-1:0] port_req_packet;
     genvar pkt_port;
     generate
         for (pkt_port = 0; pkt_port < LSU_PORTS; pkt_port = pkt_port + 1) begin : g_req_pkt
-            wire                  amo_in  = (HAS_AMO != 0) && cpu_request_is_atomic[pkt_port];
-            wire                  seq_in  = amo_in && cpu_request_atomic_is_amo[pkt_port];
             wire [PORT_W-1:0]     port_id = pkt_port;
-            wire [AMOOP_W-1:0]    amo_op  = seq_in ? cpu_request_amo_op[pkt_port*4 +: AMOOP_W] : {AMOOP_W{1'b0}};
-            assign port_req_packet[pkt_port*REQ_W +: REQ_W] =
-                {port_id, amo_op, seq_in, amo_in, (cpu_request_is_write[pkt_port] || seq_in), cpu_request_cacheable[pkt_port],
-                 cpu_request_size[pkt_port*MEM_SIZE_BITS +: MEM_SIZE_BITS],
-                 cpu_request_master_id[pkt_port*MASTER_ID_BITS +: MASTER_ID_BITS],
-                 cpu_request_rob_index[pkt_port*IDX_BITS +: IDX_BITS],
-                 cpu_request_addr[pkt_port*ADDR_W +: ADDR_W],
-                 cpu_request_store_data[pkt_port*WRITE_DATA_WIDTH +: WRITE_DATA_WIDTH]};
+            if ((HAS_VPU != 0) && (pkt_port == VPU_PORT)) begin : g_vpu
+                assign port_req_valid[pkt_port] = vpu_req_valid;
+                assign port_req_packet[pkt_port*REQ_W +: REQ_W] =
+                    {1'b1, port_id, {AMOOP_W{1'b0}}, 1'b0, 1'b0, vpu_req_is_write, 1'b1,
+                     {MEM_SIZE_BITS{1'b1}},
+                     vpu_req_master_id,
+                     vpu_req_rob_index,
+                     vpu_req_addr,
+                     {WRITE_DATA_WIDTH{1'b0}}};
+            end else begin : g_scalar
+                wire                  amo_in  = (HAS_AMO != 0) && cpu_request_is_atomic[pkt_port];
+                wire                  seq_in  = amo_in && cpu_request_atomic_is_amo[pkt_port];
+                wire [AMOOP_W-1:0]    amo_op  = seq_in ? cpu_request_amo_op[pkt_port*4 +: AMOOP_W] : {AMOOP_W{1'b0}};
+                assign port_req_valid[pkt_port] = cpu_request_valid[pkt_port];
+                assign port_req_packet[pkt_port*REQ_W +: REQ_W] =
+                    {1'b0, port_id, amo_op, seq_in, amo_in, (cpu_request_is_write[pkt_port] || seq_in), cpu_request_cacheable[pkt_port],
+                     cpu_request_size[pkt_port*MEM_SIZE_BITS +: MEM_SIZE_BITS],
+                     cpu_request_master_id[pkt_port*MASTER_ID_BITS +: MASTER_ID_BITS],
+                     cpu_request_rob_index[pkt_port*IDX_BITS +: IDX_BITS],
+                     cpu_request_addr[pkt_port*ADDR_W +: ADDR_W],
+                     cpu_request_store_data[pkt_port*WRITE_DATA_WIDTH +: WRITE_DATA_WIDTH]};
+            end
         end
     endgenerate
+    assign vpu_req_stop = (HAS_VPU != 0) ? input_queue_full[VPU_PORT] : 1'b1;
+    always @(posedge clk) begin
+        if (!rst && (HAS_VPU != 0) && vpu_req_valid) begin
+            if (vpu_req_addr[OFFSET_W-1:0] != {OFFSET_W{1'b0}})
+                $display("[%0t] L1D TOP  ERROR VPU request idx %0d address %h is not 64-byte aligned", $time, vpu_req_rob_index, vpu_req_addr);
+            if (!vpu_req_cacheable)
+                $display("[%0t] L1D TOP  ERROR VPU request idx %0d is non-cacheable: not built (open item PO-6), done as cacheable", $time, vpu_req_rob_index);
+        end
+    end
     wire [NB-1:0]       bk_req_valid;
     wire [NB*REQ_W-1:0] bk_req;
     wire [NB-1:0]       bk_req_ready;
-    l1d_port_front #(`L1D_PARAMS_PASS, .PORT_QUEUE_DEPTH(PORT_QUEUE_DEPTH)) u_front (
-        .clk                 (clk),
-        .rst                 (rst),
-        .port_request_valid  (cpu_request_valid),
-        .port_request_packet (port_req_packet),
-        .port_stop           (input_queue_full),
-        .bank_request_valid  (bk_req_valid),
-        .bank_request_packet (bk_req),
-        .bank_request_ready  (bk_req_ready)
+    wire [NB*LINE_W-1:0] bk_req_line;
+    l1d_port_front #(`L1D_PARAMS_PASS, .PORT_QUEUE_DEPTH(PORT_QUEUE_DEPTH), .LINE_PORT_ON(HAS_VPU)) u_front (
+        .clk                    (clk),
+        .rst                    (rst),
+        .port_request_valid     (port_req_valid),
+        .port_request_packet    (port_req_packet),
+        .port_stop              (input_queue_full),
+        .bank_request_valid     (bk_req_valid),
+        .bank_request_packet    (bk_req),
+        .bank_request_ready     (bk_req_ready),
+        .port_line_data         (vpu_req_wdata),
+        .bank_request_line_data (bk_req_line)
     );
     wire [NB-1:0]               bk_resp_valid;
     wire [NB*RESP_W-1:0]        bk_resp;
+    wire [NB*LINE_W-1:0]        bk_resp_line;
     wire [NB*LSU_PORTS*RCNT_W-1:0] bk_resp_free;
     wire [NB-1:0]               bk_rsv_event;
     reg  [NB-1:0]               other_rsv_event_q;
@@ -209,7 +251,9 @@ module l1d_top #(
                 .maint_done                   (mt_done[b]),
                 .amo_lock_timeout_pulse       (bk_lock_err[b]),
                 .rsv_event_pulse              (bk_rsv_event[b]),
-                .other_bank_rsv_event         (other_rsv_event_q[b])
+                .other_bank_rsv_event         (other_rsv_event_q[b]),
+                .lsu_request_line_data        (bk_req_line[b*LINE_W +: LINE_W]),
+                .lsu_response_line_data       (bk_resp_line[b*LINE_W +: LINE_W])
             );
         end
     endgenerate
@@ -234,36 +278,69 @@ module l1d_top #(
         .snoop_response_dirty          (snoop_response_dirty),
         .snoop_response_data           (snoop_response_data)
     );
+    localparam VPKT_W = RESP_W + LINE_W;
+    localparam [RESP_W-1:0] RESP_DATA_MASK = {{(RESP_W-WRITE_DATA_WIDTH){1'b0}}, {WRITE_DATA_WIDTH{1'b1}}} << RESP_DATA_LSB;
     wire [LSU_PORTS-1:0]        out_valid;
     wire [LSU_PORTS*RESP_W-1:0] out_resp;
+    wire [VPKT_W-1:0]           vpu_out_resp;
     genvar out_port;
     genvar route_bank;
     generate
         for (out_port = 0; out_port < LSU_PORTS; out_port = out_port + 1) begin : g_port_out
             wire [NB-1:0]        for_this_port;
             wire [NB*RCNT_W-1:0] port_fifo_free;
+            wire [NB*VPKT_W-1:0] vpu_bank_resp;
             for (route_bank = 0; route_bank < NB; route_bank = route_bank + 1) begin : g_route
                 assign for_this_port[route_bank] = bk_resp_valid[route_bank] &&
                     (bk_resp[route_bank*RESP_W + RESP_PORT_LSB +: PORT_W] == out_port);
                 assign bk_resp_free[(route_bank*LSU_PORTS + out_port)*RCNT_W +: RCNT_W] =
                     port_fifo_free[route_bank*RCNT_W +: RCNT_W];
+                assign vpu_bank_resp[route_bank*VPKT_W +: VPKT_W] =
+                    {bk_resp_line[route_bank*LINE_W +: LINE_W], (bk_resp[route_bank*RESP_W +: RESP_W] & ~RESP_DATA_MASK)};
             end
-            l1d_resp_merge #(`L1D_PARAMS_PASS) u_merge (
-                .clk                     (clk),
-                .rst                     (rst),
-                .bank_response_valid     (for_this_port),
-                .bank_response_packet    (bk_resp),
-                .bank_response_fifo_free (port_fifo_free),
-                .merged_response_valid   (out_valid[out_port]),
-                .merged_response_packet  (out_resp[out_port*RESP_W +: RESP_W]),
-                .lsu_read_enable         (lsu_response_read_enable[out_port])
-            );
-            assign lsu_response_valid[out_port]        = out_valid[out_port];
+            if ((HAS_VPU != 0) && (out_port == VPU_PORT)) begin : g_vpu_out
+                l1d_resp_merge #(`L1D_PARAMS_PASS, .EXTRA_W(LINE_W)) u_merge (
+                    .clk                     (clk),
+                    .rst                     (rst),
+                    .bank_response_valid     (for_this_port),
+                    .bank_response_packet    (vpu_bank_resp),
+                    .bank_response_fifo_free (port_fifo_free),
+                    .merged_response_valid   (out_valid[out_port]),
+                    .merged_response_packet  (vpu_out_resp),
+                    .lsu_read_enable         (vpu_resp_read_enable)
+                );
+                assign out_resp[out_port*RESP_W +: RESP_W] = {RESP_W{1'b0}};
+                assign vpu_resp_valid        = out_valid[out_port];
+                assign vpu_resp_is_write_ack = vpu_out_resp[RESP_RDWR_BIT];
+                assign vpu_resp_master_id    = vpu_out_resp[RESP_MID_LSB +: MASTER_ID_BITS];
+                assign vpu_resp_rob_index    = vpu_out_resp[RESP_IDX_LSB +: IDX_BITS];
+                assign vpu_resp_data         = vpu_out_resp[RESP_W +: LINE_W];
+            end else begin : g_scalar_out
+                l1d_resp_merge #(`L1D_PARAMS_PASS) u_merge (
+                    .clk                     (clk),
+                    .rst                     (rst),
+                    .bank_response_valid     (for_this_port),
+                    .bank_response_packet    (bk_resp),
+                    .bank_response_fifo_free (port_fifo_free),
+                    .merged_response_valid   (out_valid[out_port]),
+                    .merged_response_packet  (out_resp[out_port*RESP_W +: RESP_W]),
+                    .lsu_read_enable         (lsu_response_read_enable[out_port])
+                );
+            end
+            assign lsu_response_valid[out_port]        = ((HAS_VPU != 0) && (out_port == VPU_PORT)) ? 1'b0 : out_valid[out_port];
             assign lsu_response_is_write_ack[out_port] = out_resp[out_port*RESP_W + RESP_RDWR_BIT];
             assign lsu_response_size[out_port*MEM_SIZE_BITS +: MEM_SIZE_BITS]        = out_resp[out_port*RESP_W + RESP_SIZE_LSB +: MEM_SIZE_BITS];
             assign lsu_response_master_id[out_port*MASTER_ID_BITS +: MASTER_ID_BITS] = out_resp[out_port*RESP_W + RESP_MID_LSB  +: MASTER_ID_BITS];
             assign lsu_response_rob_index[out_port*IDX_BITS +: IDX_BITS]             = out_resp[out_port*RESP_W + RESP_IDX_LSB  +: IDX_BITS];
             assign lsu_response_data[out_port*WRITE_DATA_WIDTH +: WRITE_DATA_WIDTH]  = out_resp[out_port*RESP_W + RESP_DATA_LSB +: WRITE_DATA_WIDTH];
+        end
+        if (HAS_VPU == 0) begin : g_no_vpu
+            assign vpu_out_resp          = {VPKT_W{1'b0}};
+            assign vpu_resp_valid        = 1'b0;
+            assign vpu_resp_is_write_ack = 1'b0;
+            assign vpu_resp_master_id    = {MASTER_ID_BITS{1'b0}};
+            assign vpu_resp_rob_index    = {IDX_BITS{1'b0}};
+            assign vpu_resp_data         = {LINE_W{1'b0}};
         end
     endgenerate
     integer lr_bank;

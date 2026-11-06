@@ -27,6 +27,10 @@
 `define L1D_AXI_ADDR_W        64
 `define L1D_LSU_PORTS         4
 `define L1D_PORT_QUEUE_DEPTH  2
+`ifndef L1D_HAS_VPU
+`define L1D_HAS_VPU           1
+`endif
+`define L1D_VEC_SLOTS         2
 `define L1D_HAS_MISS          1
 `define L1D_HAS_VC            1
 `define L1D_HAS_NC            1

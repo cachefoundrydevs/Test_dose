@@ -13,6 +13,7 @@ module l1d_bank_s1 #(
     q1_state, q1_swap, q1_slot, vc_al_ok, vc_al_slot,
     rsv_sc_match,
     r_held, rsv_clear_valid, rsv_clear_line,
+    vec_read_slot, vec_read_line_data,
     s2_valid, s2_kind, s2_seat, s2_req, s2_mid, s2_line, s2_sinv, s2_sid,
     s2_hit, s2_scfail, s2_snp_hit, s2_hand, s2_way, s2_held, s2_swap, s2_kill,
     s2_words, s2_lines, s2_st_be, s2_st_din,
@@ -48,6 +49,8 @@ module l1d_bank_s1 #(
     output wire                        r_held;
     output wire                        rsv_clear_valid;
     output wire [LINE_ADDR_W-1:0]      rsv_clear_line;
+    output wire [VEC_SLOT_W-1:0]       vec_read_slot;
+    input  wire [LINE_W-1:0]           vec_read_line_data;
     output reg                         s2_valid;
     output reg  [1:0]                  s2_kind;
     output reg  [SEAT_W-1:0]           s2_seat;
@@ -86,6 +89,8 @@ module l1d_bank_s1 #(
     wire               s1_refill = s1_valid && (s1_kind == K_REFILL);
     wire               s1_maint  = s1_valid && (s1_kind == K_MAINT);
     wire               s1_snp    = s1_valid && (s1_kind == K_SNOOP);
+    wire               s1_line_op = s1_req[REQ_LINE_BIT];
+    assign             vec_read_slot = s1_req[REQ_DATA_LSB +: VEC_SLOT_W];
     wire s1_lsu = s1_valid && (s1_kind == K_LSU);
     wire s2_lsu = s2_valid && (s2_kind == K_LSU);
     wire [2*WAYS-1:0] m_states;
@@ -177,13 +182,13 @@ module l1d_bank_s1 #(
     assign pl_we  = s1_hit || (s1_refill && !r_held);
     reg  [LINE_BYTES-1:0] st_be;
     wire [LINE_W-1:0]     st_wext = s1_wdata;
-    wire [LINE_W-1:0]     st_din  = st_wext << {s1_off, 3'b000};
+    wire [LINE_W-1:0]     st_din  = s1_line_op ? vec_read_line_data : (st_wext << {s1_off, 3'b000});
     integer bi;
     integer nby;
     always @* begin
         nby = 1 << s1_size;
         for (bi = 0; bi < LINE_BYTES; bi = bi + 1)
-            st_be[bi] = (bi >= s1_off) && (bi < s1_off + nby);
+            st_be[bi] = s1_line_op || ((bi >= s1_off) && (bi < s1_off + nby));
     end
     wire [WAYS*WRITE_DATA_WIDTH-1:0] s1_words;
     genvar gwd;

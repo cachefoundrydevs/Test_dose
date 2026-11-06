@@ -4,11 +4,13 @@
 `include "l1d_defines.vh"
 module l1d_port_front #(
     `L1D_PARAMS,
-    parameter PORT_QUEUE_DEPTH = `L1D_PORT_QUEUE_DEPTH
+    parameter PORT_QUEUE_DEPTH = `L1D_PORT_QUEUE_DEPTH,
+    parameter LINE_PORT_ON     = 0
 ) (
     clk, rst,
     port_request_valid, port_request_packet, port_stop,
-    bank_request_valid, bank_request_packet, bank_request_ready
+    bank_request_valid, bank_request_packet, bank_request_ready,
+    port_line_data, bank_request_line_data
 );
     `include "l1d_encodings.vh"
     `include "l1d_fields.vh"
@@ -20,6 +22,8 @@ module l1d_port_front #(
     output wire [NUM_BANKS-1:0]           bank_request_valid;
     output wire [NUM_BANKS*REQ_W-1:0]     bank_request_packet;
     input  wire [NUM_BANKS-1:0]           bank_request_ready;
+    input  wire [LINE_W-1:0]              port_line_data;
+    output wire [NUM_BANKS*LINE_W-1:0]    bank_request_line_data;
     wire [LSU_PORTS*BANK_W-1:0] port_bank;
     genvar decode_port;
     generate
@@ -38,7 +42,8 @@ module l1d_port_front #(
                 assign for_this_bank[match_port] = port_request_valid[match_port] &&
                                                    (port_bank[match_port*BANK_W +: BANK_W] == room_bank);
             end
-            l1d_bank_queue #(`L1D_PARAMS_PASS, .BANK_ID(room_bank), .PORT_QUEUE_DEPTH(PORT_QUEUE_DEPTH)) u_queue (
+            l1d_bank_queue #(`L1D_PARAMS_PASS, .BANK_ID(room_bank), .PORT_QUEUE_DEPTH(PORT_QUEUE_DEPTH),
+                             .LINE_PORT_ON(LINE_PORT_ON)) u_queue (
                 .clk                         (clk),
                 .rst                         (rst),
                 .port_request_valid          (for_this_bank),
@@ -46,7 +51,9 @@ module l1d_port_front #(
                 .bank_request_valid          (bank_request_valid[room_bank]),
                 .bank_request_packet         (bank_request_packet[room_bank*REQ_W +: REQ_W]),
                 .bank_request_ready          (bank_request_ready[room_bank]),
-                .port_queue_nearly_full_next (nearly_full_next[room_bank*LSU_PORTS +: LSU_PORTS])
+                .port_queue_nearly_full_next (nearly_full_next[room_bank*LSU_PORTS +: LSU_PORTS]),
+                .port_line_data              (port_line_data),
+                .bank_request_line_data      (bank_request_line_data[room_bank*LINE_W +: LINE_W])
             );
         end
     endgenerate
