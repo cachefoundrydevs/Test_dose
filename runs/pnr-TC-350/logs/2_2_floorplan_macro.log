@@ -1,0 +1,42 @@
+OpenROAD unknown 
+Features included (+) or not (-): -GPU +GUI
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+[INFO ORD-0030] Using 4 thread(s).
+source /OpenROAD-flow-scripts/flow/platforms/asap7/liberty_suppressions.tcl
+read_liberty /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_AO_RVT_TT_nldm_211120.lib.gz
+read_liberty /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_INVBUF_RVT_TT_nldm_220122.lib.gz
+read_liberty /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_OA_RVT_TT_nldm_211120.lib.gz
+read_liberty /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_SEQ_RVT_TT_nldm_220123.lib
+read_liberty /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_SIMPLE_RVT_TT_nldm_211120.lib.gz
+read_liberty /__w/Test_dose/Test_dose/pnr_out/macros/l1d_macro_data_tdp.lib
+read_liberty /__w/Test_dose/Test_dose/pnr_out/macros/l1d_macro_tag_tdp.lib
+read_db /__w/Test_dose/Test_dose/pnr_out/work/results/asap7/l1d_bank/base/2_1_floorplan.odb
+read_sdc /__w/Test_dose/Test_dose/pnr_out/work/results/asap7/l1d_bank/base/2_1_floorplan.sdc
+source /OpenROAD-flow-scripts/flow/platforms/asap7/setRC.tcl
+[INFO GPL-0190] Using 2 of 4 threads for placement: one per core, SMT siblings idle.
+[INFO GPL-0022] Initialize gpl and calculate uniform density.
+Placement density is 0.5060000038146972, computed from PLACE_DENSITY_LB_ADDON  0.20 and lower bound 0.3700000047683716
+rtl_macro_placer -max_num_level 2 -min_channel_size "20 20" -pin_aware_channels -min_ar 0.33 -area_weight 0.1 -wirelength_weight 100.0 -outline_weight 100.0 -boundary_weight 50.0 -notch_weight 50.0 -report_directory /__w/Test_dose/Test_dose/pnr_out/work/objects/asap7/l1d_bank/base/rtlmp -fence_lx 0.0 -fence_ly 0.0 -fence_ux 0.0 -fence_uy 0.0 -target_util 0.5060000038146972
+Die Area: (0.00, 0.00) (316.00, 316.00),  Floorplan Area: (1.03, 1.08) (314.98, 314.82)
+	Number of std cell instances: 189506
+	Area of std cell instances: 24031.63
+	Number of macros: 8
+	Macros to be placed: 8
+	Area of macros: 10587.70
+	Minimum channel (Width, Height): (20.00, 20.00)
+	Area of macros with halos: 15405.36
+	Area of std cell instances + Area of macros: 34619.34
+	Floorplan area: 98500.56
+	Design Utilization: 0.35
+	Floorplan Utilization: 0.27
+	Manufacturing Grid: 1
+
+[INFO MPL-0500] Runtime: 70.03s
+Took 70 seconds: rtl_macro_placer -max_num_level 2 -min_channel_size "20 20" -pin_aware_channels -min_ar 0.33 -area_weight 0.1 -wirelength_weight 100.0 -outline_weight 100.0 -boundary_weight 50.0 -notch_weight 50.0 -report_directory /__w/Test_dose/Test_dose/pnr_out/work/objects/asap7/l1d_bank/base/rtlmp -fence_lx 0.0 -fence_ly 0.0 -fence_ux 0.0 -fence_uy 0.0 -target_util 0.5060000038146972
+Design area 34619 um^2 35% utilization.
+write_db /__w/Test_dose/Test_dose/pnr_out/work/results/asap7/l1d_bank/base/2_2_floorplan_macro.odb
+Elapsed time: 1:13.37[h:]min:sec. CPU time: user 122.40 sys 1.00 (168%). Peak memory: 825500KB.
+Log                    Ext     Elapsed      CPU     CPU/ Peak Mem sha1sum
+                                     s        s  Elapsed       MB [0:10)
+2_2_floorplan_macro    .odb         73      123     1.68      806 e6833372ef

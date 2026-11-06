@@ -1,0 +1,140 @@
+Yosys 0.68+post (git sha1 UNKNOWN, Release, GNU /usr/local/bin/wrapped-cc/g++ 15.2.0)
+Using ABC speed script.
+1. Executing Liberty frontend: /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_AO_RVT_TT_nldm_211120.lib.gz
+2. Executing Liberty frontend: /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_INVBUF_RVT_TT_nldm_220122.lib.gz
+3. Executing Liberty frontend: /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_OA_RVT_TT_nldm_211120.lib.gz
+4. Executing Liberty frontend: /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_SEQ_RVT_TT_nldm_220123.lib
+5. Executing Liberty frontend: /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_SIMPLE_RVT_TT_nldm_211120.lib.gz
+6. Executing Liberty frontend: /__w/Test_dose/Test_dose/pnr_out/macros/l1d_macro_data_tdp.lib
+7. Executing Liberty frontend: /__w/Test_dose/Test_dose/pnr_out/macros/l1d_macro_tag_tdp.lib
+8. Executing Liberty frontend: /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_AO_RVT_TT_nldm_211120.lib.gz
+9. Executing Liberty frontend: /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_INVBUF_RVT_TT_nldm_220122.lib.gz
+10. Executing Liberty frontend: /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_OA_RVT_TT_nldm_211120.lib.gz
+11. Executing Liberty frontend: /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_SEQ_RVT_TT_nldm_220123.lib
+12. Executing Liberty frontend: /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_SIMPLE_RVT_TT_nldm_211120.lib.gz
+13. Executing Liberty frontend: /__w/Test_dose/Test_dose/pnr_out/macros/l1d_macro_data_tdp.lib
+14. Executing Liberty frontend: /__w/Test_dose/Test_dose/pnr_out/macros/l1d_macro_tag_tdp.lib
+15. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/common/l1d_fifo.v
+16. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/common/l1d_pri_enc.v
+17. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/common/l1d_arb_rr.v
+18. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/common/l1d_age_matrix.v
+19. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/common/l1d_cam.v
+20. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/front/l1d_bank_queue.v
+21. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/front/l1d_port_front.v
+22. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/front/l1d_resp_merge.v
+23. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/bank/fifo/l1d_lsu_req_buf.v
+24. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/bank/fifo/l1d_snoop_buf.v
+25. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/bank/fifo/l1d_fifo_stage.v
+26. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/bank/s0/l1d_inflight_tracker.v
+27. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/bank/s0/l1d_prio_select.v
+28. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/bank/s1/l1d_plru.v
+29. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/bank/s1/l1d_meta_flops.v
+30. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/bank/s1/l1d_s1_lookup.v
+31. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/bank/s1/l1d_mesi_next.v
+32. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/bank/s1/l1d_reservation_unit.v
+33. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/bank/s2/l1d_resp_gen.v
+34. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/bank/s2/l1d_amo_alu.v
+35. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/bank/arrays/l1d_tag_array.v
+36. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/bank/arrays/l1d_data_array.v
+37. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/bank/miss/l1d_mshr_entry.v
+38. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/bank/miss/l1d_mshr.v
+39. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/bank/miss/l1d_mshr_nc.v
+40. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/bank/miss/l1d_victim_cache.v
+41. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/bank/l1d_maint.v
+42. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/bank/l1d_bank.v
+43. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/snoop/l1d_snoop_ctrl.v
+44. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/l2/l1d_l2_port.v
+45. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/rtl/top/l1d_top.v
+46. Executing Verilog-2005 frontend: /__w/Test_dose/Test_dose/flow/l1d_sram_tdp_asap7.v
+47. Executing Verilog-2005 frontend: /OpenROAD-flow-scripts/flow/platforms/asap7/yoSys/cells_clkgate_R.v
+48. Executing HIERARCHY pass (managing design hierarchy).
+49. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_bank'.
+49.1. Analyzing design hierarchy..
+49.2. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_resp_gen'.
+49.3. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_maint'.
+49.4. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_victim_cache'.
+Warning: Replacing memory \use_c with list of registers. See /__w/Test_dose/Test_dose/rtl/bank/miss/l1d_victim_cache.v:236
+Warning: Replacing memory \lka_c with list of registers. See /__w/Test_dose/Test_dose/rtl/bank/miss/l1d_victim_cache.v:235
+Warning: Replacing memory \iss with list of registers. See /__w/Test_dose/Test_dose/rtl/bank/miss/l1d_victim_cache.v:253
+Warning: Replacing memory \st with list of registers. See /__w/Test_dose/Test_dose/rtl/bank/miss/l1d_victim_cache.v:250
+Warning: Replacing memory \st_n with list of registers. See /__w/Test_dose/Test_dose/rtl/bank/miss/l1d_victim_cache.v:198
+49.5. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_mshr_nc'.
+49.6. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_mshr'.
+49.7. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_reservation_unit'.
+49.8. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_amo_alu'.
+49.9. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_mesi_next'.
+49.10. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_s1_lookup'.
+49.11. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_meta_flops'.
+49.12. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_data_array'.
+49.13. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_tag_array'.
+49.14. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_prio_select'.
+49.15. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_fifo_stage'.
+49.16. Analyzing design hierarchy..
+49.17. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_age_matrix'.
+Warning: Replacing memory \older with list of registers. See /__w/Test_dose/Test_dose/rtl/common/l1d_age_matrix.v:24
+49.18. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_fifo'.
+Warning: Replacing memory \mem with list of registers. See /__w/Test_dose/Test_dose/rtl/common/l1d_fifo.v:61
+49.19. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_mshr_entry'.
+49.20. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_arb_rr'.
+49.21. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_pri_enc'.
+49.22. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_cam'.
+49.23. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_plru'.
+49.24. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_pri_enc'.
+49.25. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_sram_tdp'.
+49.26. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_sram_tdp'.
+49.27. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_fifo'.
+49.28. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_snoop_buf'.
+Warning: Replacing memory \sm with list of registers. See /__w/Test_dose/Test_dose/rtl/bank/fifo/l1d_snoop_buf.v:149
+Warning: Replacing memory \wid with list of registers. See /__w/Test_dose/Test_dose/rtl/bank/fifo/l1d_snoop_buf.v:148
+Warning: Replacing memory \ei with list of registers. See /__w/Test_dose/Test_dose/rtl/bank/fifo/l1d_snoop_buf.v:147
+Warning: Replacing memory \el with list of registers. See /__w/Test_dose/Test_dose/rtl/bank/fifo/l1d_snoop_buf.v:146
+Warning: Replacing memory \hs with list of registers. See /__w/Test_dose/Test_dose/rtl/bank/fifo/l1d_snoop_buf.v:145
+Warning: Replacing memory \ev with list of registers. See /__w/Test_dose/Test_dose/rtl/bank/fifo/l1d_snoop_buf.v:144
+49.29. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_lsu_req_buf'.
+Warning: Replacing memory \req with list of registers. See /__w/Test_dose/Test_dose/rtl/bank/fifo/l1d_lsu_req_buf.v:331
+Warning: Replacing memory \wv_q with list of registers. See /__w/Test_dose/Test_dose/rtl/bank/fifo/l1d_lsu_req_buf.v:282
+Warning: Replacing memory \wm_q with list of registers. See /__w/Test_dose/Test_dose/rtl/bank/fifo/l1d_lsu_req_buf.v:281
+Warning: Replacing memory \am with list of registers. See /__w/Test_dose/Test_dose/rtl/bank/fifo/l1d_lsu_req_buf.v:280
+Warning: Replacing memory \pb with list of registers. See /__w/Test_dose/Test_dose/rtl/bank/fifo/l1d_lsu_req_buf.v:279
+Warning: Replacing memory \wid with list of registers. See /__w/Test_dose/Test_dose/rtl/bank/fifo/l1d_lsu_req_buf.v:278
+Warning: Replacing memory \st with list of registers. See /__w/Test_dose/Test_dose/rtl/bank/fifo/l1d_lsu_req_buf.v:277
+Warning: Replacing memory \am_col_n with list of registers. See /__w/Test_dose/Test_dose/rtl/bank/fifo/l1d_lsu_req_buf.v:215, /__w/Test_dose/Test_dose/rtl/bank/fifo/l1d_lsu_req_buf.v:205
+Warning: Replacing memory \pb_col_n with list of registers. See /__w/Test_dose/Test_dose/rtl/bank/fifo/l1d_lsu_req_buf.v:214, /__w/Test_dose/Test_dose/rtl/bank/fifo/l1d_lsu_req_buf.v:204
+49.30. Analyzing design hierarchy..
+49.31. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_age_matrix'.
+49.32. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_age_matrix'.
+49.33. Analyzing design hierarchy..
+49.34. Analyzing design hierarchy..
+50. Executing OPT_CLEAN pass (remove unused cells and wires).
+Warning: Ignoring module $paramod$4fa8c00a82fd1121cd8a11bc12a2e692101f480f\l1d_snoop_buf because it contains processes (run 'proc' command first).
+Warning: Ignoring module $paramod$876e87d7330d79b9a361dc8d546205a4ef2c5cf1\l1d_fifo because it contains processes (run 'proc' command first).
+Warning: Ignoring module $paramod$d5afdc3c831df247a77dddb733d1f817c4308982\l1d_pri_enc because it contains processes (run 'proc' command first).
+Warning: Ignoring module $paramod$143cd049a19791751d876fd29769de6d5a0bf693\l1d_plru because it contains processes (run 'proc' command first).
+Warning: Ignoring module $paramod$9eeafe1549ef80e08ee72281c647b8267694184e\l1d_pri_enc because it contains processes (run 'proc' command first).
+Warning: Ignoring module $paramod$9eeafe1549ef80e08ee72281c647b8267694184e\l1d_arb_rr because it contains processes (run 'proc' command first).
+Warning: Ignoring module $paramod$4fa8c00a82fd1121cd8a11bc12a2e692101f480f\l1d_mshr_entry because it contains processes (run 'proc' command first).
+Warning: Ignoring module $paramod$68e20358c89161098af6841897f78277b4e1dbeb\l1d_fifo because it contains processes (run 'proc' command first).
+Warning: Ignoring module $paramod$9eeafe1549ef80e08ee72281c647b8267694184e\l1d_age_matrix because it contains processes (run 'proc' command first).
+Warning: Ignoring module $paramod$8c53a0b99e814915fd9754c53bb511d4f873b70a\l1d_prio_select because it contains processes (run 'proc' command first).
+Warning: Ignoring module $paramod$8d09e3f47d06b6906f61a6742afd94e22a2b729a\l1d_meta_flops because it contains processes (run 'proc' command first).
+Warning: Ignoring module l1d_mesi_next because it contains processes (run 'proc' command first).
+Warning: Ignoring module $paramod$3bbac9876d48911eddfc20e30f7a57fd37db5fcb\l1d_amo_alu because it contains processes (run 'proc' command first).
+Warning: Ignoring module $paramod$4fa8c00a82fd1121cd8a11bc12a2e692101f480f\l1d_reservation_unit because it contains processes (run 'proc' command first).
+Warning: Ignoring module $paramod$4fa8c00a82fd1121cd8a11bc12a2e692101f480f\l1d_mshr because it contains processes (run 'proc' command first).
+Warning: Ignoring module $paramod$4fa8c00a82fd1121cd8a11bc12a2e692101f480f\l1d_mshr_nc because it contains processes (run 'proc' command first).
+Warning: Ignoring module $paramod$4fa8c00a82fd1121cd8a11bc12a2e692101f480f\l1d_victim_cache because it contains processes (run 'proc' command first).
+Warning: Ignoring module $paramod$4fa8c00a82fd1121cd8a11bc12a2e692101f480f\l1d_maint because it contains processes (run 'proc' command first).
+Warning: Ignoring module $paramod$862e2aadd06fc4759615bbfec756a05f4a46841d\l1d_resp_gen because it contains processes (run 'proc' command first).
+Warning: Ignoring module l1d_bank because it contains processes (run 'proc' command first).
+Warning: Ignoring module $paramod$16876cf48dee5610fa1405ec31818d1482cc5fb0\l1d_age_matrix because it contains processes (run 'proc' command first).
+Warning: Ignoring module $paramod$29dbb8b9f6d511fd8b23c10e81dba3114ef784ed\l1d_age_matrix because it contains processes (run 'proc' command first).
+Warning: Ignoring module $paramod$4fa8c00a82fd1121cd8a11bc12a2e692101f480f\l1d_lsu_req_buf because it contains processes (run 'proc' command first).
+51. Executing RTLIL backend.
+Warnings: 45 unique messages, 48 total
+End of script. Logfile hash: bae3bb017d, time: 1.73s, user: 1.67s, system: 0.05s, MEM: 95.09 MB peak
+Yosys 0.68+post (git sha1 UNKNOWN, Release, GNU /usr/local/bin/wrapped-cc/g++ 15.2.0)
+Time spent: 57% 1x hierarchy (0 sec), 33% 16x read_liberty (0 sec), ...
+Elapsed time: 0:01.76[h:]min:sec. CPU time: user 1.71 sys 0.06 (100%). Peak memory: 97376KB.
+Log                    Ext     Elapsed      CPU     CPU/ Peak Mem sha1sum
+                                     s        s  Elapsed       MB [0:10)
+1_1_yosys_canonicalize .rtlil        1        2     1.01       95 2fa24b38d2

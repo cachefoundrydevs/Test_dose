@@ -1,0 +1,2 @@
+top=l1d_bank period=350 corner=TC util=35
+flow/run_pnr.sh: line 60: openroad: command not found

@@ -1,0 +1,400 @@
+    13500 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13510 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13520 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13530 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13540 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13550 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13560 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13570 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13580 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13590 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13600 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13610 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13620 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13630 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13640 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13650 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13660 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13670 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13680 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13690 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13700 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13710 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13720 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13730 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13740 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13750 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13760 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13770 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13780 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13790 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13800 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13810 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13820 |       0 |     958 |            0 |    +0.2% | -427.590 | -2019701.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13830 |       0 |     962 |            0 |    +0.2% | -427.590 | -2019668.500 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13840 |       0 |     962 |            0 |    +0.2% | -427.590 | -2019668.500 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13850 |       0 |     962 |            0 |    +0.2% | -427.590 | -2019668.500 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13860 |       0 |     962 |            0 |    +0.2% | -427.590 | -2019668.500 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13870 |       0 |     962 |            0 |    +0.2% | -427.590 | -2019668.500 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13880 |       0 |     962 |            0 |    +0.2% | -427.590 | -2019668.500 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13890 |       0 |     962 |            0 |    +0.2% | -427.590 | -2019668.500 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13900 |       0 |     962 |            0 |    +0.2% | -427.590 | -2019668.500 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13910 |       0 |     966 |            0 |    +0.2% | -427.590 | -2019287.875 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13920 |       0 |     966 |            0 |    +0.2% | -427.590 | -2019287.875 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13930 |       0 |     966 |            0 |    +0.2% | -427.590 | -2019287.875 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13940 |       0 |     966 |            0 |    +0.2% | -427.590 | -2019287.875 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13950 |       0 |     966 |            0 |    +0.2% | -427.590 | -2019287.875 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13960 |       0 |     966 |            0 |    +0.2% | -427.590 | -2019287.875 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13970 |       0 |     966 |            0 |    +0.2% | -427.590 | -2019287.875 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13980 |       0 |     970 |            0 |    +0.2% | -427.590 | -2019243.375 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    13990 |       0 |     970 |            0 |    +0.2% | -427.590 | -2019243.375 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14000 |       0 |     970 |            0 |    +0.2% | -427.590 | -2019243.375 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14010 |       0 |     975 |            0 |    +0.2% | -427.590 | -2019226.750 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14020 |       0 |     975 |            0 |    +0.2% | -427.590 | -2019226.750 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14030 |       0 |     975 |            0 |    +0.2% | -427.590 | -2019226.750 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14040 |       0 |     975 |            0 |    +0.2% | -427.590 | -2019226.750 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14050 |       0 |     975 |            0 |    +0.2% | -427.590 | -2019226.750 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14060 |       0 |     979 |            0 |    +0.2% | -427.590 | -2019207.125 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14070 |       0 |     979 |            0 |    +0.2% | -427.590 | -2019207.125 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14080 |       0 |     979 |            0 |    +0.2% | -427.590 | -2019207.125 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14090 |       0 |     983 |            0 |    +0.2% | -427.590 | -2019190.375 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14100 |       0 |     983 |            0 |    +0.2% | -427.590 | -2019190.375 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14110 |       0 |     983 |            0 |    +0.2% | -427.590 | -2019190.375 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14120 |       0 |     983 |            0 |    +0.2% | -427.590 | -2019190.375 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14130 |       0 |     983 |            0 |    +0.2% | -427.590 | -2019190.375 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14140 |       0 |     983 |            0 |    +0.2% | -427.590 | -2019190.375 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14150 |       0 |     984 |            0 |    +0.2% | -427.590 | -1991404.875 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14160 |       0 |     984 |            0 |    +0.2% | -427.590 | -1991404.875 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14170 |       0 |     984 |            0 |    +0.2% | -427.590 | -1991404.875 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14180 |       0 |     984 |            0 |    +0.2% | -427.590 | -1991404.875 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14190 |       0 |     987 |            0 |    +0.2% | -427.590 | -1991389.625 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14200 |       0 |     987 |            0 |    +0.2% | -427.590 | -1991389.625 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14210 |       0 |     987 |            0 |    +0.2% | -427.590 | -1991389.625 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14220 |       0 |     987 |            0 |    +0.2% | -427.590 | -1991389.625 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14230 |       0 |     992 |            0 |    +0.2% | -427.590 | -1991381.125 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14240 |       0 |     992 |            0 |    +0.2% | -427.590 | -1991381.125 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14250 |       0 |     992 |            0 |    +0.2% | -427.590 | -1991381.125 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14260 |       0 |     992 |            0 |    +0.2% | -427.590 | -1991381.125 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14270 |       0 |     992 |            0 |    +0.2% | -427.590 | -1991381.125 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14280 |       0 |     992 |            0 |    +0.2% | -427.590 | -1991381.125 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14290 |       0 |     992 |            0 |    +0.2% | -427.590 | -1991381.125 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14300 |       0 |     992 |            0 |    +0.2% | -427.590 | -1991381.125 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14310 |       0 |     992 |            0 |    +0.2% | -427.590 | -1991381.125 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14320 |       0 |     992 |            0 |    +0.2% | -427.590 | -1991381.125 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14330 |       0 |     992 |            0 |    +0.2% | -427.590 | -1991381.125 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14340 |       0 |     992 |            0 |    +0.2% | -427.590 | -1991381.125 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14350 |       0 |     992 |            0 |    +0.2% | -427.590 | -1991381.125 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    14360 |       0 |     993 |            0 |    +0.2% | -427.590 | -1991360.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+    final |       0 |     993 |            0 |    +0.2% | -427.590 | -1991360.000 | u_fifo.u_lsu.req[7][89]$_DFFE_PP_/D
+--------------------------------------------------------------------------------------
+[WARNING RSZ-0066] Unable to repair all hold violations.
+[INFO RSZ-0032] Inserted 993 hold buffers.
+[INFO RSZ-0506] Runtime: 17.21s
+Took 166 seconds: repair_timing -setup_margin 0 -hold_margin 0 -repair_tns 100 -verbose
+global_route -start_incremental
+detailed_placement -quiet
+[INFO DPL-0009] Utilization: 40.5%
+[INFO DPL-0501] Legalized with 14396 moves: displacement total 777.6 u, max 9.3 u; HPWL 2232218.7 -> 2232725.3 u (+0.0 %).
+[INFO DPL-0500] Runtime: 2.95s
+check_placement -placeable -verbose
+global_route -end_incremental -resistance_aware -congestion_report_file /__w/Test_dose/Test_dose/pnr_out/work/reports/asap7/l1d_bank/base/congestion_post_repair_timing.rpt
+Took 6 seconds: global_route -end_incremental -resistance_aware -congestion_report_file /__w/Test_dose/Test_dose/pnr_out/work/reports/asap7/l1d_bank/base/congestion_post_repair_timing.rpt
+estimate_parasitics -global_routing
+repair_timing -setup -sequence "vt_swap reroute" -skip_last_gasp -repair_tns 0 -verbose
+[INFO RSZ-0100] Repair move sequence: RerouteMove 
+[INFO RSZ-0094] Found 20864 endpoints with setup violations.
+[INFO RSZ-0099] Repairing 1 out of 20864 (0.00%) violating endpoints...
+   Iter   | Removed | Resized | Inserted | Cloned |  Pin  |   Area   |    WNS   |    TNS     |  Viol  |  Worst
+          | Buffers |  Gates  | Buffers  |  Gates | Swaps |          |          |            | Endpts | Endpoint
+------------------------------------------------------------------------------------------------------------------------------
+       0* |       0 |       0 |        0 |      0 |     0 |    +0.0% | -938.924 | -6962235.0 |  20864 | lsu_response_packet[25]
+       1* |       0 |       0 |        0 |      0 |     0 |    +0.0% | -938.924 | -6962235.0 |  20864 | lsu_response_packet[25]
+       1* |       0 |       0 |        0 |      0 |     0 |    +0.0% | -938.924 | -6962235.0 |  20864 | lsu_response_packet[25]
+    final |       0 |       0 |        0 |      0 |     0 |    +0.0% | -938.924 | -6962235.0 |  20864 | lsu_response_packet[25]
+------------------------------------------------------------------------------------------------------------------------------
+[WARNING RSZ-0062] Unable to repair all setup violations.
+[INFO RSZ-0505] Runtime: 8.36s
+Took 8 seconds: repair_timing -setup -sequence "vt_swap reroute" -skip_last_gasp -repair_tns 0 -verbose
+Repair antennas...
+[WARNING GRT-0246] No diode with LEF class CORE ANTENNACELL found.
+check_placement -placeable -verbose
+[INFO ANT-0002] Found 0 net violations.
+[INFO ANT-0001] Found 0 pin violations.
+Estimate parasitics...
+estimate_parasitics -global_routing
+Report metrics stage 5, global route...
+
+==========================================================================
+global route report_design_area
+--------------------------------------------------------------------------
+Design area 39915 um^2 41% utilization.
+[INFO FLW-0007] clock clk period 250.000000
+[INFO FLW-0008] Clock clk period 1129.478
+[INFO FLW-0009] Clock clk slack -938.924
+write_sdc -no_timestamp /__w/Test_dose/Test_dose/pnr_out/work/results/asap7/l1d_bank/base/updated_clks.sdc
+[INFO FLW-0011] Path endpoint path count 34355
+write_db /__w/Test_dose/Test_dose/pnr_out/work/results/asap7/l1d_bank/base/5_1_grt.odb
+write_sdc -no_timestamp /__w/Test_dose/Test_dose/pnr_out/work/results/asap7/l1d_bank/base/5_1_grt.sdc
+Elapsed time: 13:58.68[h:]min:sec. CPU time: user 2150.04 sys 27.38 (259%). Peak memory: 4881704KB.
+Log                    Ext     Elapsed      CPU     CPU/ Peak Mem sha1sum
+                                     s        s  Elapsed       MB [0:10)
+5_1_grt                .odb        838     2177     2.60     4767 c46a56030e
+5_1_grt                .sdc                                       c9be1b1047
+/OpenROAD-flow-scripts/flow/scripts/flow.sh 5_2_route detail_route
+Running detail_route.tcl, stage 5_2_route
+source /OpenROAD-flow-scripts/flow/platforms/asap7/liberty_suppressions.tcl
+read_liberty /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_AO_RVT_TT_nldm_211120.lib.gz
+read_liberty /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_INVBUF_RVT_TT_nldm_220122.lib.gz
+read_liberty /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_OA_RVT_TT_nldm_211120.lib.gz
+read_liberty /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_SEQ_RVT_TT_nldm_220123.lib
+read_liberty /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_SIMPLE_RVT_TT_nldm_211120.lib.gz
+read_liberty /__w/Test_dose/Test_dose/pnr_out/macros/l1d_macro_data_tdp.lib
+read_liberty /__w/Test_dose/Test_dose/pnr_out/macros/l1d_macro_tag_tdp.lib
+read_db /__w/Test_dose/Test_dose/pnr_out/work/results/asap7/l1d_bank/base/5_1_grt.odb
+read_sdc /__w/Test_dose/Test_dose/pnr_out/work/results/asap7/l1d_bank/base/5_1_grt.sdc
+source /OpenROAD-flow-scripts/flow/platforms/asap7/setRC.tcl
+detailed_route -output_drc /__w/Test_dose/Test_dose/pnr_out/work/reports/asap7/l1d_bank/base/5_route_drc.rpt -output_maze /__w/Test_dose/Test_dose/pnr_out/work/results/asap7/l1d_bank/base/maze.log -droute_end_iter 64 -verbose 1 -drc_report_iter_step 5
+[INFO DRT-0149] Reading tech and libs.
+
+Units:                1000
+Number of layers:     21
+Number of macros:     214
+Number of vias:       22
+Number of viarulegen: 11
+
+[INFO DRT-0150] Reading design.
+
+Design:                   l1d_bank
+Die area:                 ( 0 0 ) ( 315998 315998 )
+Number of track patterns: 32
+Number of DEF vias:       0
+Number of components:     234979
+Number of terminals:      1774
+Number of snets:          2
+Number of nets:           228567
+
+[INFO DRT-0167] List of default vias:
+  Layer V2
+    default via: VIA23
+  Layer V3
+    default via: VIA34
+  Layer V4
+    default via: VIA45
+  Layer V5
+    default via: VIA56
+  Layer V6
+    default via: VIA67
+  Layer V7
+    default via: VIA78
+  Layer V8
+    default via: VIA89
+  Layer V9
+    default via: VIA9Pad
+[INFO DRT-0162] Library cell analysis.
+[INFO DRT-0163] Instance analysis.
+  Complete 100000 instances.
+  Complete 200000 instances.
+[INFO DRT-0164] Number of unique instances = 313.
+[INFO DRT-0168] Init region query.
+[INFO DRT-0018]   Complete 100000 insts.
+[INFO DRT-0018]   Complete 200000 insts.
+[INFO DRT-0024]   Complete Active.
+[INFO DRT-0024]   Complete V0.
+[INFO DRT-0024]   Complete M1.
+[INFO DRT-0024]   Complete V1.
+[INFO DRT-0024]   Complete M2.
+[INFO DRT-0024]   Complete V2.
+[INFO DRT-0024]   Complete M3.
+[INFO DRT-0024]   Complete V3.
+[INFO DRT-0024]   Complete M4.
+[INFO DRT-0024]   Complete V4.
+[INFO DRT-0024]   Complete M5.
+[INFO DRT-0024]   Complete V5.
+[INFO DRT-0024]   Complete M6.
+[INFO DRT-0024]   Complete V6.
+[INFO DRT-0024]   Complete M7.
+[INFO DRT-0024]   Complete V7.
+[INFO DRT-0024]   Complete M8.
+[INFO DRT-0024]   Complete V8.
+[INFO DRT-0024]   Complete M9.
+[INFO DRT-0024]   Complete V9.
+[INFO DRT-0024]   Complete Pad.
+[INFO DRT-0033] Active shape region query size = 0.
+[INFO DRT-0033] V0 shape region query size = 0.
+[INFO DRT-0033] M1 shape region query size = 4050267.
+[INFO DRT-0033] V1 shape region query size = 9156971.
+[INFO DRT-0033] M2 shape region query size = 145648.
+[INFO DRT-0033] V2 shape region query size = 182016.
+[INFO DRT-0033] M3 shape region query size = 182016.
+[INFO DRT-0033] V3 shape region query size = 121344.
+[INFO DRT-0033] M4 shape region query size = 131268.
+[INFO DRT-0033] V4 shape region query size = 122040.
+[INFO DRT-0033] M5 shape region query size = 68921.
+[INFO DRT-0033] V5 shape region query size = 14046.
+[INFO DRT-0033] M6 shape region query size = 7139.
+[INFO DRT-0033] V6 shape region query size = 0.
+[INFO DRT-0033] M7 shape region query size = 0.
+[INFO DRT-0033] V7 shape region query size = 0.
+[INFO DRT-0033] M8 shape region query size = 0.
+[INFO DRT-0033] V8 shape region query size = 0.
+[INFO DRT-0033] M9 shape region query size = 0.
+[INFO DRT-0033] V9 shape region query size = 0.
+[INFO DRT-0033] Pad shape region query size = 0.
+[INFO DRT-0165] Start pin access.
+[INFO DRT-0076]   Complete 1000 pins.
+[INFO DRT-0076]   Complete 2000 pins.
+[INFO DRT-0076]   Complete 3000 pins.
+[INFO DRT-0076]   Complete 4000 pins.
+[INFO DRT-0076]   Complete 5000 pins.
+[INFO DRT-0076]   Complete 6000 pins.
+[INFO DRT-0078]   Complete 6687 pins.
+[INFO DRT-0079]   Complete 100 unique inst patterns.
+[INFO DRT-0079]   Complete 200 unique inst patterns.
+[INFO DRT-0079]   Complete 300 unique inst patterns.
+[INFO DRT-0081]   Complete 303 unique inst patterns.
+[INFO DRT-0082]   Complete 10000 groups.
+[INFO DRT-0082]   Complete 20000 groups.
+[INFO DRT-0082]   Complete 30000 groups.
+[INFO DRT-0082]   Complete 40000 groups.
+[INFO DRT-0082]   Complete 50000 groups.
+[INFO DRT-0082]   Complete 60000 groups.
+[INFO DRT-0082]   Complete 70000 groups.
+[INFO DRT-0082]   Complete 80000 groups.
+[INFO DRT-0082]   Complete 90000 groups.
+[INFO DRT-0082]   Complete 100000 groups.
+[INFO DRT-0084]   Complete 157920 groups.
+#scanned instances     = 234979
+#unique  instances     = 309
+#stdCellGenAp          = 8776
+#stdCellValidPlanarAp  = 44
+#stdCellValidViaAp     = 7132
+#stdCellPinNoAp        = 0
+#stdCellPinCnt         = 746872
+#instTermValidViaApCnt = 0
+#macroGenAp            = 37902
+#macroValidPlanarAp    = 37902
+#macroValidViaAp       = 37902
+#macroNoAp             = 0
+[INFO DRT-0166] Complete pin access.
+[INFO DRT-0267] cpu time = 00:14:17, elapsed time = 00:03:37, memory = 2410.75 (MB), peak = 2722.51 (MB)
+[INFO DRT-0156] guideIn read 100000 guides.
+[INFO DRT-0156] guideIn read 200000 guides.
+[INFO DRT-0156] guideIn read 300000 guides.
+[INFO DRT-0156] guideIn read 400000 guides.
+[INFO DRT-0156] guideIn read 500000 guides.
+[INFO DRT-0156] guideIn read 600000 guides.
+[INFO DRT-0156] guideIn read 700000 guides.
+[INFO DRT-0156] guideIn read 800000 guides.
+[INFO DRT-0156] guideIn read 900000 guides.
+[INFO DRT-0156] guideIn read 1000000 guides.
+[INFO DRT-0156] guideIn read 2000000 guides.
+[INFO DRT-0156] guideIn read 3000000 guides.
+
+[INFO DRT-0157] Number of guides:     3052894
+
+[INFO DRT-0169] Post process guides.
+[INFO DRT-0176] GCELLGRID X 0 DO 554 STEP 570 ;
+[INFO DRT-0177] GCELLGRID Y 0 DO 554 STEP 570 ;
+[INFO DRT-0026]   Complete 100000 origin guides.
+[INFO DRT-0026]   Complete 200000 origin guides.
+[INFO DRT-0026]   Complete 300000 origin guides.
+[INFO DRT-0026]   Complete 400000 origin guides.
+[INFO DRT-0026]   Complete 500000 origin guides.
+[INFO DRT-0026]   Complete 600000 origin guides.
+[INFO DRT-0026]   Complete 700000 origin guides.
+[INFO DRT-0026]   Complete 800000 origin guides.
+[INFO DRT-0026]   Complete 900000 origin guides.
+[INFO DRT-0027]   Complete 1000000 origin guides.
+[INFO DRT-0027]   Complete 2000000 origin guides.
+[INFO DRT-0027]   Complete 3000000 origin guides.
+[INFO DRT-0028]   Complete Active.
+[INFO DRT-0028]   Complete V0.
+[INFO DRT-0028]   Complete M1.
+[INFO DRT-0028]   Complete V1.
+[INFO DRT-0028]   Complete M2.
+[INFO DRT-0028]   Complete V2.
+[INFO DRT-0028]   Complete M3.
+[INFO DRT-0028]   Complete V3.
+[INFO DRT-0028]   Complete M4.
+[INFO DRT-0028]   Complete V4.
+[INFO DRT-0028]   Complete M5.
+[INFO DRT-0028]   Complete V5.
+[INFO DRT-0028]   Complete M6.
+[INFO DRT-0028]   Complete V6.
+[INFO DRT-0028]   Complete M7.
+[INFO DRT-0028]   Complete V7.
+[INFO DRT-0028]   Complete M8.
+[INFO DRT-0028]   Complete V8.
+[INFO DRT-0028]   Complete M9.
+[INFO DRT-0028]   Complete V9.
+[INFO DRT-0028]   Complete Pad.
+  complete 100000 nets.
+  complete 200000 nets.
+[INFO DRT-0178] Init guide query.
+[INFO DRT-0029]   Complete 100000 nets (guide).
+[INFO DRT-0029]   Complete 200000 nets (guide).
+[INFO DRT-0035]   Complete Active (guide).
+[INFO DRT-0035]   Complete V0 (guide).
+[INFO DRT-0035]   Complete M1 (guide).
+[INFO DRT-0035]   Complete V1 (guide).
+[INFO DRT-0035]   Complete M2 (guide).
+[INFO DRT-0035]   Complete V2 (guide).
+[INFO DRT-0035]   Complete M3 (guide).
+[INFO DRT-0035]   Complete V3 (guide).
+[INFO DRT-0035]   Complete M4 (guide).
+[INFO DRT-0035]   Complete V4 (guide).
+[INFO DRT-0035]   Complete M5 (guide).
+[INFO DRT-0035]   Complete V5 (guide).
+[INFO DRT-0035]   Complete M6 (guide).
+[INFO DRT-0035]   Complete V6 (guide).
+[INFO DRT-0035]   Complete M7 (guide).
+[INFO DRT-0035]   Complete V7 (guide).
+[INFO DRT-0035]   Complete M8 (guide).
+[INFO DRT-0035]   Complete V8 (guide).
+[INFO DRT-0035]   Complete M9 (guide).
+[INFO DRT-0035]   Complete V9 (guide).
+[INFO DRT-0035]   Complete Pad (guide).
+[INFO DRT-0036] Active guide region query size = 0.
+[INFO DRT-0036] V0 guide region query size = 0.
+[INFO DRT-0036] M1 guide region query size = 662229.
+[INFO DRT-0036] V1 guide region query size = 0.
+[INFO DRT-0036] M2 guide region query size = 585682.
+[INFO DRT-0036] V2 guide region query size = 0.
+[INFO DRT-0036] M3 guide region query size = 423119.
+[INFO DRT-0036] V3 guide region query size = 0.
+[INFO DRT-0036] M4 guide region query size = 286933.
+[INFO DRT-0036] V4 guide region query size = 0.
+[INFO DRT-0036] M5 guide region query size = 239894.
+[INFO DRT-0036] V5 guide region query size = 0.
+[INFO DRT-0036] M6 guide region query size = 186518.
+[INFO DRT-0036] V6 guide region query size = 0.
+[INFO DRT-0036] M7 guide region query size = 85713.
+[INFO DRT-0036] V7 guide region query size = 0.
+[INFO DRT-0036] M8 guide region query size = 0.
+[INFO DRT-0036] V8 guide region query size = 0.
+[INFO DRT-0036] M9 guide region query size = 0.
+[INFO DRT-0036] V9 guide region query size = 0.
+[INFO DRT-0036] Pad guide region query size = 0.
+[INFO DRT-0179] Init gr pin query.
+[INFO DRT-0267] cpu time = 00:00:07, elapsed time = 00:00:03, memory = 3513.31 (MB), peak = 3512.95 (MB)
+[INFO DRT-0245] skipped writing guide updates to database.
+[INFO DRT-0181] Start track assignment.
+[INFO DRT-0184] Done with 1410955 vertical wires in 12 frboxes and 1059133 horizontal wires in 12 frboxes.
+[INFO DRT-0186] Done with 140239 vertical wires in 12 frboxes and 194416 horizontal wires in 12 frboxes.
+[INFO DRT-0182] Complete track assignment.
+[INFO DRT-0267] cpu time = 00:03:01, elapsed time = 00:01:06, memory = 3947.96 (MB), peak = 6588.42 (MB)
+[INFO DRT-0187] Start routing data preparation.
+[INFO DRT-0267] cpu time = 00:00:02, elapsed time = 00:00:02, memory = 4403.22 (MB), peak = 6588.42 (MB)
+[INFO DRT-0194] Start detail routing.
+[INFO DRT-0195] Start 0th optimization iteration.
+    Completing 10% with 0 violations.
+    elapsed time = 00:01:51, memory = 10396.96 (MB).
+    Completing 20% with 11343 violations.
+    elapsed time = 00:05:22, memory = 5878.02 (MB).
+    Completing 30% with 16305 violations.
+    elapsed time = 00:07:30, memory = 5445.94 (MB).
+    Completing 40% with 16305 violations.
+    elapsed time = 00:11:11, memory = 14949.55 (MB).
+Elapsed time: 16:16.37[h:]min:sec. CPU time: user 3649.44 sys 25.16 (376%). Peak memory: 15502700KB.
+make[1]: *** [Makefile:616: do-5_2_route] Error 247
+make: *** [Makefile:616: /__w/Test_dose/Test_dose/pnr_out/work/results/asap7/l1d_bank/base/5_2_route.odb] Error 2

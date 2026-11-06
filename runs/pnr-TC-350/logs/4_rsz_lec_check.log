@@ -1,0 +1,221 @@
+[2026-11-06 04:15:43.078] [miter_logger] [info] MiterStrategy::run starting
+[2026-11-06 04:15:43.078] [miter_logger] [info] Collecting POs for design 0: l1d_bank
+
+[2026-11-06 04:15:43.839] [miter_logger] [info] Collected 34130 PIs for design 0
+
+[2026-11-06 04:15:43.839] [miter_logger] [info] Collected 59829 POs for design 0
+
+[2026-11-06 04:15:43.842] [miter_logger] [info] design 0 PI summary by model/term (34130 total terminals, 37 unique rows):
+| Model                | Term                         | Count |
+|----------------------|------------------------------|-------|
+| DFFHQNx1_ASAP7_75t_R | QN                           | 26742 |
+| TIELOx1_ASAP7_75t_R  | L                            |  2269 |
+| l1d_macro_data_tdp   | a_rdata                      |  2048 |
+| l1d_macro_data_tdp   | b_rdata                      |  2048 |
+| l1d_macro_tag_tdp    | a_rdata                      |   200 |
+| l1d_macro_tag_tdp    | b_rdata                      |   200 |
+| DFFHQNx2_ASAP7_75t_R | QN                           |   160 |
+| l1d_bank             | lsu_request_packet           |   145 |
+| l1d_bank             | axi_read_data                |   128 |
+| l1d_bank             | prefetch_request_line_addr   |    58 |
+| l1d_bank             | snoop_request_line_addr      |    58 |
+| DFFHQNx3_ASAP7_75t_R | QN                           |    25 |
+| l1d_bank             | lsu_response_fifo_free       |    12 |
+| TIEHIx1_ASAP7_75t_R  | H                            |     9 |
+| l1d_bank             | axi_read_data_sub_id         |     3 |
+| l1d_bank             | axi_write_resp_sub_id        |     3 |
+| l1d_bank             | snoop_response_fifo_free     |     2 |
+| l1d_bank             | axi_read_data_error          |     1 |
+| l1d_bank             | axi_read_data_last           |     1 |
+| l1d_bank             | axi_read_data_non_cacheable  |     1 |
+| l1d_bank             | axi_read_data_shared         |     1 |
+| l1d_bank             | axi_read_data_valid          |     1 |
+| l1d_bank             | axi_read_req_ready           |     1 |
+| l1d_bank             | axi_write_req_ready          |     1 |
+| l1d_bank             | axi_write_resp_error         |     1 |
+| l1d_bank             | axi_write_resp_non_cacheable |     1 |
+| l1d_bank             | axi_write_resp_valid         |     1 |
+| l1d_bank             | clk                          |     1 |
+| l1d_bank             | lsu_request_valid            |     1 |
+| l1d_bank             | maint_op_is_flush            |     1 |
+| l1d_bank             | maint_start                  |     1 |
+| l1d_bank             | other_bank_rsv_event         |     1 |
+| l1d_bank             | prefetch_request_valid       |     1 |
+| l1d_bank             | refill_handover_busy         |     1 |
+| l1d_bank             | rst                          |     1 |
+| l1d_bank             | snoop_request_invalidate     |     1 |
+| l1d_bank             | snoop_request_valid          |     1 |
+
+[2026-11-06 04:15:43.847] [miter_logger] [info] design 0 PO summary by model/term (59829 total terminals, 49 unique rows):
+| Model                | Term                        | Count |
+|----------------------|-----------------------------|-------|
+| DFFHQNx1_ASAP7_75t_R | CLK                         | 26742 |
+| DFFHQNx1_ASAP7_75t_R | D                           | 26742 |
+| l1d_macro_data_tdp   | a_wdata                     |  2048 |
+| l1d_macro_data_tdp   | b_wdata                     |  2048 |
+| l1d_bank             | snoop_response_packet       |   572 |
+| l1d_bank             | axi_write_req_data          |   512 |
+| l1d_macro_tag_tdp    | a_wdata                     |   200 |
+| l1d_macro_tag_tdp    | b_wdata                     |   200 |
+| DFFHQNx2_ASAP7_75t_R | CLK                         |   160 |
+| DFFHQNx2_ASAP7_75t_R | D                           |   160 |
+| l1d_bank             | lsu_response_packet         |    74 |
+| l1d_bank             | axi_read_req_addr           |    64 |
+| l1d_bank             | axi_write_req_addr          |    64 |
+| DFFHQNx3_ASAP7_75t_R | CLK                         |    25 |
+| DFFHQNx3_ASAP7_75t_R | D                           |    25 |
+| l1d_macro_data_tdp   | a_addr                      |    24 |
+| l1d_macro_data_tdp   | b_addr                      |    24 |
+| l1d_macro_tag_tdp    | a_addr                      |    24 |
+| l1d_macro_tag_tdp    | b_addr                      |    24 |
+| l1d_bank             | axi_write_req_strobe        |    16 |
+| l1d_bank             | axi_read_req_burst_len      |     8 |
+| l1d_bank             | axi_write_req_burst_len     |     8 |
+| l1d_macro_data_tdp   | a_en                        |     4 |
+| l1d_macro_data_tdp   | a_we                        |     4 |
+| l1d_macro_data_tdp   | b_en                        |     4 |
+| l1d_macro_data_tdp   | b_we                        |     4 |
+| l1d_macro_data_tdp   | clk                         |     4 |
+| l1d_macro_tag_tdp    | a_en                        |     4 |
+| l1d_macro_tag_tdp    | a_we                        |     4 |
+| l1d_macro_tag_tdp    | b_en                        |     4 |
+| l1d_macro_tag_tdp    | b_we                        |     4 |
+| l1d_macro_tag_tdp    | clk                         |     4 |
+| l1d_bank             | axi_read_req_size           |     3 |
+| l1d_bank             | axi_read_req_sub_id         |     3 |
+| l1d_bank             | axi_write_req_size          |     3 |
+| l1d_bank             | axi_write_req_sub_id        |     3 |
+| l1d_bank             | amo_lock_timeout_pulse      |     1 |
+| l1d_bank             | axi_read_req_non_cacheable  |     1 |
+| l1d_bank             | axi_read_req_unique         |     1 |
+| l1d_bank             | axi_read_req_valid          |     1 |
+| l1d_bank             | axi_write_req_non_cacheable |     1 |
+| l1d_bank             | axi_write_req_valid         |     1 |
+| l1d_bank             | lsu_request_ready           |     1 |
+| l1d_bank             | lsu_response_valid          |     1 |
+| l1d_bank             | maint_done                  |     1 |
+| l1d_bank             | prefetch_request_ready      |     1 |
+| l1d_bank             | rsv_event_pulse             |     1 |
+| l1d_bank             | snoop_request_ready         |     1 |
+| l1d_bank             | snoop_response_valid        |     1 |
+
+[2026-11-06 04:15:43.855] [miter_logger] [info] Collecting POs for design 1: l1d_bank
+
+[2026-11-06 04:15:44.639] [miter_logger] [info] size of common inputs: 27356
+[2026-11-06 04:15:44.640] [miter_logger] [info] size of diff0 inputs: 0
+[2026-11-06 04:15:44.640] [miter_logger] [info] size of diff1 inputs: 0
+[2026-11-06 04:15:44.644] [miter_logger] [info] Collected 34130 PIs for design 1
+
+[2026-11-06 04:15:44.644] [miter_logger] [info] Collected 59829 POs for design 1
+
+[2026-11-06 04:15:44.647] [miter_logger] [info] design 1 PI summary by model/term (34130 total terminals, 37 unique rows):
+| Model                | Term                         | Count |
+|----------------------|------------------------------|-------|
+| DFFHQNx1_ASAP7_75t_R | QN                           | 26742 |
+| TIELOx1_ASAP7_75t_R  | L                            |  2269 |
+| l1d_macro_data_tdp   | a_rdata                      |  2048 |
+| l1d_macro_data_tdp   | b_rdata                      |  2048 |
+| l1d_macro_tag_tdp    | a_rdata                      |   200 |
+| l1d_macro_tag_tdp    | b_rdata                      |   200 |
+| DFFHQNx2_ASAP7_75t_R | QN                           |   160 |
+| l1d_bank             | lsu_request_packet           |   145 |
+| l1d_bank             | axi_read_data                |   128 |
+| l1d_bank             | prefetch_request_line_addr   |    58 |
+| l1d_bank             | snoop_request_line_addr      |    58 |
+| DFFHQNx3_ASAP7_75t_R | QN                           |    25 |
+| l1d_bank             | lsu_response_fifo_free       |    12 |
+| TIEHIx1_ASAP7_75t_R  | H                            |     9 |
+| l1d_bank             | axi_read_data_sub_id         |     3 |
+| l1d_bank             | axi_write_resp_sub_id        |     3 |
+| l1d_bank             | snoop_response_fifo_free     |     2 |
+| l1d_bank             | axi_read_data_error          |     1 |
+| l1d_bank             | axi_read_data_last           |     1 |
+| l1d_bank             | axi_read_data_non_cacheable  |     1 |
+| l1d_bank             | axi_read_data_shared         |     1 |
+| l1d_bank             | axi_read_data_valid          |     1 |
+| l1d_bank             | axi_read_req_ready           |     1 |
+| l1d_bank             | axi_write_req_ready          |     1 |
+| l1d_bank             | axi_write_resp_error         |     1 |
+| l1d_bank             | axi_write_resp_non_cacheable |     1 |
+| l1d_bank             | axi_write_resp_valid         |     1 |
+| l1d_bank             | clk                          |     1 |
+| l1d_bank             | lsu_request_valid            |     1 |
+| l1d_bank             | maint_op_is_flush            |     1 |
+| l1d_bank             | maint_start                  |     1 |
+| l1d_bank             | other_bank_rsv_event         |     1 |
+| l1d_bank             | prefetch_request_valid       |     1 |
+| l1d_bank             | refill_handover_busy         |     1 |
+| l1d_bank             | rst                          |     1 |
+| l1d_bank             | snoop_request_invalidate     |     1 |
+| l1d_bank             | snoop_request_valid          |     1 |
+
+[2026-11-06 04:15:44.652] [miter_logger] [info] design 1 PO summary by model/term (59829 total terminals, 49 unique rows):
+| Model                | Term                        | Count |
+|----------------------|-----------------------------|-------|
+| DFFHQNx1_ASAP7_75t_R | CLK                         | 26742 |
+| DFFHQNx1_ASAP7_75t_R | D                           | 26742 |
+| l1d_macro_data_tdp   | a_wdata                     |  2048 |
+| l1d_macro_data_tdp   | b_wdata                     |  2048 |
+| l1d_bank             | snoop_response_packet       |   572 |
+| l1d_bank             | axi_write_req_data          |   512 |
+| l1d_macro_tag_tdp    | a_wdata                     |   200 |
+| l1d_macro_tag_tdp    | b_wdata                     |   200 |
+| DFFHQNx2_ASAP7_75t_R | CLK                         |   160 |
+| DFFHQNx2_ASAP7_75t_R | D                           |   160 |
+| l1d_bank             | lsu_response_packet         |    74 |
+| l1d_bank             | axi_read_req_addr           |    64 |
+| l1d_bank             | axi_write_req_addr          |    64 |
+| DFFHQNx3_ASAP7_75t_R | CLK                         |    25 |
+| DFFHQNx3_ASAP7_75t_R | D                           |    25 |
+| l1d_macro_data_tdp   | a_addr                      |    24 |
+| l1d_macro_data_tdp   | b_addr                      |    24 |
+| l1d_macro_tag_tdp    | a_addr                      |    24 |
+| l1d_macro_tag_tdp    | b_addr                      |    24 |
+| l1d_bank             | axi_write_req_strobe        |    16 |
+| l1d_bank             | axi_read_req_burst_len      |     8 |
+| l1d_bank             | axi_write_req_burst_len     |     8 |
+| l1d_macro_data_tdp   | a_en                        |     4 |
+| l1d_macro_data_tdp   | a_we                        |     4 |
+| l1d_macro_data_tdp   | b_en                        |     4 |
+| l1d_macro_data_tdp   | b_we                        |     4 |
+| l1d_macro_data_tdp   | clk                         |     4 |
+| l1d_macro_tag_tdp    | a_en                        |     4 |
+| l1d_macro_tag_tdp    | a_we                        |     4 |
+| l1d_macro_tag_tdp    | b_en                        |     4 |
+| l1d_macro_tag_tdp    | b_we                        |     4 |
+| l1d_macro_tag_tdp    | clk                         |     4 |
+| l1d_bank             | axi_read_req_size           |     3 |
+| l1d_bank             | axi_read_req_sub_id         |     3 |
+| l1d_bank             | axi_write_req_size          |     3 |
+| l1d_bank             | axi_write_req_sub_id        |     3 |
+| l1d_bank             | amo_lock_timeout_pulse      |     1 |
+| l1d_bank             | axi_read_req_non_cacheable  |     1 |
+| l1d_bank             | axi_read_req_unique         |     1 |
+| l1d_bank             | axi_read_req_valid          |     1 |
+| l1d_bank             | axi_write_req_non_cacheable |     1 |
+| l1d_bank             | axi_write_req_valid         |     1 |
+| l1d_bank             | lsu_request_ready           |     1 |
+| l1d_bank             | lsu_response_valid          |     1 |
+| l1d_bank             | maint_done                  |     1 |
+| l1d_bank             | prefetch_request_ready      |     1 |
+| l1d_bank             | rsv_event_pulse             |     1 |
+| l1d_bank             | snoop_request_ready         |     1 |
+| l1d_bank             | snoop_response_valid        |     1 |
+
+[2026-11-06 04:15:44.653] [miter_logger] [info] normalizeInputs: starting
+[2026-11-06 04:15:44.712] [miter_logger] [info] size of common inputs: 34130
+[2026-11-06 04:15:44.712] [miter_logger] [info] size of diff0 inputs: 0
+[2026-11-06 04:15:44.712] [miter_logger] [info] size of diff1 inputs: 0
+[2026-11-06 04:15:44.721] [miter_logger] [info] normalizeOutputs: starting
+[2026-11-06 04:15:44.810] [miter_logger] [info] size of common outputs: 59829
+[2026-11-06 04:15:44.810] [miter_logger] [info] size of diff0 outputs: 0
+[2026-11-06 04:15:44.810] [miter_logger] [info] size of diff1 outputs: 0
+[2026-11-06 04:15:44.821] [miter_logger] [info] size of PIs in circuit 0: 34130
+[2026-11-06 04:15:44.821] [miter_logger] [info] size of PIs in circuit 1: 34130
+[2026-11-06 04:15:44.821] [miter_logger] [info] size of POs in circuit 0: 59829
+[2026-11-06 04:15:44.821] [miter_logger] [info] size of POs in circuit 1: 59829
+[2026-11-06 04:15:48.413] [miter_logger] [info] Building miter expression
+[2026-11-06 04:15:48.427] [miter_logger] [info] Finished building miter expression
+[2026-11-06 04:15:48.978] [miter_logger] [info] Starting solver
+[2026-11-06 04:16:59.806] [miter_logger] [info] SAT solver finished: UNSAT
+[2026-11-06 04:16:59.806] [miter_logger] [info] Circuits are IDENTICAL

@@ -1,0 +1,4 @@
+
+20. Executing CHECK pass (checking for obvious problems).
+Checking module l1d_bank...
+Found and reported 0 problems.
